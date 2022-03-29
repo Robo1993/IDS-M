@@ -1,0 +1,120 @@
+@-webkit-keyframes rotate-left-segment {
+	0% { }
+	50% { transform: rotate(-180deg);  opacity: 1; }
+	51% {  opacity: 0; }
+	100% { transform: rotate(0deg); opacity: 0;}
+}
+@keyframes rotate-left-segment {
+	0% { }
+	50% { transform: rotate(-180deg); opacity: 1; }
+	51% {  opacity: 0; }
+	100% { transform: rotate(0deg); opacity: 0;}
+}
+
+@-webkit-keyframes rotate-right-segment {
+	0% { transform: rotate(0deg); }
+	50% { transform: rotate(0deg); }
+	100% { transform: rotate(-180deg); }	
+}
+@keyframes rotate-right-segment {
+	0% { transform: rotate(0deg); }
+	50% { transform: rotate(0deg); }
+	100% { transform: rotate(-180deg); }
+}
+
+@keyframes rotate-pointer {
+	0% { transform: rotate(0deg); }
+	50% { transform: -360deg; }
+}
+@-webkit-keyframes rotate-pointer {
+	0% { transform: rotate(0deg); }
+	50% { transform: -360deg; }
+}
+	
+#clock {
+	display: none;
+	width: 20rem;
+	height: 20rem;
+	position: absolute;
+	top: 6rem;
+	left: 0rem;
+	transform: scale(0.5);
+	box-sizing: unset;
+}
+
+#digit-board {
+	z-index: 1;
+	border: 3px solid #000;
+	border-radius: 50%;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow: hidden;
+}
+
+.clock-segment {
+	width: 20rem;
+	height: 20rem;
+	position: absolute;
+	background-color: #ffdfdf;
+	/*background-color: #ff3333;
+	border: 1px solid #33ff33;*/
+}
+
+#first-half {
+	z-index: 19;
+	background-color: #dbffdb;
+	transform-origin: right center;
+}
+
+.first-half-animation {
+	animation: rotate-left-segment linear;
+	animation-duration: 30s;
+}
+
+#second-half {
+	z-index: 19;
+	z-index: 5;
+	left: 1px;
+	top: 0;
+	background-color: #dbffdb;
+	transform-origin: left center;
+}
+
+.second-half-animation {
+	z-index: 5;
+	animation: rotate-right-segment linear;
+	animation-duration: 30s;
+}
+
+#time-pointer {
+	z-index: 25;
+	position: absolute;
+	left: calc(10rem - 4.5px);
+	top: 1rem;
+	width: 3px;
+	height: 9rem;
+	background-color: #000;
+	transform: rotate(-360deg);
+	transform-origin: bottom center;
+}
+
+.time-pointer-animation-30 {
+	animation: rotate-pointer linear;
+	animation-duration: 30s;
+}
+
+.time-pointer-animation-infinite {
+	animation: rotate-pointer linear;
+	animation-duration: 15s;
+	animation-iteration-count: infinite;
+}
+
+#seal {
+	z-index: 24;
+	width: 20rem;
+	height: 20rem;
+	position: absolute;
+	background-image: url("../files/dial.png");
+	background-size: 97% 97%;
+}

@@ -1,0 +1,103 @@
+{#
+    LimeSurvey
+    Copyright (C) 2007-2017 The LimeSurvey Project Team / Louis Gac
+    All rights reserved.
+    License: GNU/GPL License v2 or later, see LICENSE.php
+    LimeSurvey is free software. This version may have been modified pursuant
+    to the GNU General Public License, and as distributed it includes or
+    is derivative of works licensed under the GNU General Public License or
+    other free or open source software licenses.
+    See COPYRIGHT.php for copyright notices and details.
+
+    (¯`·._.·(¯`·._.· Custom Header  ·._.·´¯)·._.·´¯)
+
+    If you extend a template, and want to add custom headers (js, css, scripts, meta etc), you'd rather do it here.
+
+#}
+
+{#
+------------------------------------------------------------------------------------------
+	custom CSS
+------------------------------------------------------------------------------------------
+#}
+
+<link rel='stylesheet' href='{{ processString("{TEMPLATEURL}") }}/css/bootstrap.min.css'>
+<link rel='stylesheet' href='{{ processString("{TEMPLATEURL}") }}/css/clock.css'>
+
+{#
+------------------------------------------------------------------------------------------
+	custom JS
+------------------------------------------------------------------------------------------
+{% if aSurveyInfo.name == "IDS-M_VM" %}
+
+{% endif %}
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/main.js"></script>
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/bootstrap.bundle.min.js"></script>
+{#
+	Visuomotorik
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/vm/vm.js"></script>
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/vm/canvas.js"></script>
+{#
+	Figuren Nachlegen
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/fn/raphael-min.js"></script>
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/fn/underscore-min.js"></script>
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/fn/SAT.js"></script>
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/fn/example.js"></script>
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/fn/data.js"></script>
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/fn/fn.js"></script>
+{#
+	Matrizen ergänzen
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/me/me.js"></script>
+
+{#
+	Tierfarben zuordnen
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/tfz/tfz.js"></script>
+
+{#
+	Aufmerksamkeit aufteilen
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/aa/aa.js"></script>
+
+{#
+	Symbole finden
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/sf/sf.js"></script>
+
+{#
+    Figuren wiedererkennen
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/fw/fw.js"></script>
+
+{#
+    Reaktionsgeschwindigkeit
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/rg/rg.js"></script>
+
+{#
+    PPVT
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/ppvt/ppvt.js"></script>
+
+{#
+    Ishihara Farbtafeln
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/ish/ish.js"></script>
+
+{#
+    Mitarbeit in der Testsituation
+#}
+<script type="text/javascript" src="{{ processString("{TEMPLATEURL}") }}scripts/mt/mt.js"></script>
+
+{# Custom logo option #}
+{% if ( aSurveyInfo.options.brandlogo == "on" ) %}
+    <style>
+        body .top-container {
+            margin-top: 70px;
+        }
+    </style>
+{% endif %}

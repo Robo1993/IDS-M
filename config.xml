@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    (¯`·._.·(¯`·._.· Vanilla Theme Manifest  ·._.·´¯)·._.·´¯)
+
+    Base configuration for Vanilla Theme.
+    The content of this file is imported into DB when you install the template.
+
+-->
+<config>
+    <!-- Those metadata are displayed in the theme configuration page.  -->
+    <metadata>
+        <name>IDS-M</name>
+        <title>IDS Migrationsfair</title>
+        <creationDate>2021-03-25 11:57</creationDate>
+        <author>admin</author>
+        <authorEmail>roman.alt.f.e@gmail.com</authorEmail>
+        <authorUrl>http://www.limesurvey.org</authorUrl>
+        <copyright>Copyright (C) 2005 - 2016 LimeSurvey Gmbh, Inc. All rights reserved.</copyright>
+        <license>GNU General Public License version 2 or later</license>
+        <version>3.0</version>
+        <apiVersion>3</apiVersion>
+        <description twig="on"><![CDATA[<strong>{{gT("LimeSurvey IDS-M Theme")}}</strong><br>{{gT("Containing Scripts, Css, Images and Audio for the IDS-M Test-Battery.")}}]]></description>
+        <last_update>2022-02-16 13:29:06</last_update>
+    <extends>vanilla</extends></metadata>
+
+    <!--
+        Here the list of the css/js files to add to the template package.
+        About packages in Yii: http://www.yiiframework.com/doc/api/1.1/CClientScript#packages-detail
+
+        NOTE: The "add" tag also count as a "replace" tag.
+              Eg: You can't just "add" a file in the extended theme with the same name as a file here. It will always "replace" it. You must use a diffrent file name.
+              Eg: Vanilla manifest already has "<add>css/theme.css</add>". So if you use "<add>css/theme.css</add>" in an extended theme, it will replace the vanilla css/theme.css
+
+        NOTE: If an extended theme, if you don't change a file that is defined here, you don't need to add it again.
+              Eg: css/ajaxify.css is already added in vanilla. Nor fruity nor bootswatch modify it, so ne need to add / replace it in fruity or bootswatch.
+                  Even if no mention at all about  "css/ajaxify.css" is theme extending vanilla, it will still be added because it's added here
+
+        NOTE: To easy test changes in config file, you can force the use of the XML file rather than DB. To do so, turn debug mode on, and in config.php config array, on bottom of debug mode, add:
+              'force_xmlsettings_for_survey_rendering' => true,
+
+              Then, you will not need anymore to reset your theme each time you change the config file.
+              But, once turning the setting off, You will still must reset the theme to the changes are pushed to DB
+
+    -->
+    <files>
+        <css>
+            <add>css/base.css</add>
+            <add>css/theme.css</add>
+            <add>css/custom.css</add>
+            <add>css/clock.css</add>
+        </css>
+        <js>
+            <add>scripts/theme.js</add>
+            <add>scripts/custom.js</add>
+            <add>scripts/main.js</add>
+            <!--  Aufmerksamkeit aufteilen -->
+            <add>scripts/aa/aa.js</add>
+            <!--  Figuren nachlegend -->
+            <add>scripts/fn/fn.js</add>
+            <add>scripts/fn/example.js</add>
+            <add>scripts/fn/data.js</add>
+            <add>scripts/fn/raphael-min.js</add>
+            <add>scripts/fn/SAT.js</add>
+            <add>scripts/fn/underscore-min.js</add>
+            <!--  Figuren wiedererkennen -->
+            <add>scripts/fw/fw.js</add>
+            <!--  Matrizen erkennen -->
+            <add>scripts/me/me.js</add>
+            <!--  Symbole finden -->
+            <add>scripts/sf/sf.js</add>
+            <!--  Tierfarben zuordnen -->
+            <add>scripts/tfz/tfz.js</add>
+            <!--  Visuomotorik -->
+            <add>scripts/vm/vm.js</add>
+            <!--  Mitarbeit -->
+            <add>scripts/mt/mt.js</add>
+            <!--  PPVT -->
+            <add>scripts/ppvt/ppvt.js</add>
+            <!--  Ishihara -->
+            <add>scripts/ish/ish.js</add>
+        </js>
+        <print_css>
+            <add>css/print_theme.css</add>
+        </print_css>
+    </files>
+
+    <!-- You can add here any option you want. It will be available in twig file via aSurveyInfo.options.youroptionname -->
+    <options>
+        <animatebody>off</animatebody>
+        <hideprivacyinfo>off</hideprivacyinfo>
+        <container>on</container>
+        <bodyanimation>fadeInRight</bodyanimation>
+        <brandlogo>on</brandlogo>
+        <brandlogofile>./files/logo.png</brandlogofile>
+        <font>noto</font>
+        <showpopups>1</showpopups>
+        <fixnumauto>off</fixnumauto>
+    </options>
+
+    <!-- Here datas about how LimeSurvey should load the theme -->
+    
+</config>

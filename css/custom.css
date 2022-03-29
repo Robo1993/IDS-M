@@ -1,0 +1,972 @@
+/******************
+    User custom CSS
+    ---------------
+
+    In this file you can add your own custom CSS
+    It will be loaded last, so you can override any other property.
+    Also, it will never be updated. So if you inheritate a core template and just add here some CSS, you'll still benefit of all the updates
+*/
+
+/*
+--------------------------------------------------------------------------------
+Variables
+--------------------------------------------------------------------------------
+*/
+
+:root {
+    --theme-colour: #a5d7d2;
+    --eval-color-correct: #99d2a7;
+    --eval-color-false: #f597a1;
+    --eval-color-missed:  #ffd592;
+    --alert-wrong-color: #f00;
+}
+
+/*
+--------------------------------------------------------------------------------
+General CSS
+--------------------------------------------------------------------------------
+*/
+
+#bootstrap-alert-box-modal {
+    opacity: 1 !important;
+}
+
+* {
+    touch-action: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+h1, h2, h3, p, span {
+    touch-action: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+body {
+    touch-action: none;
+    user-select: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    font-family: Arial !important;
+}
+
+#page-load-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 100;
+}
+
+#unibas-logo {
+    position: relative;
+    height: 6rem;
+    margin: 3rem;
+}
+
+#navigator-container {
+    padding: 0px !important; 
+    height: 0px !important;
+    width: 0px !important;
+}
+
+.script-container {
+    height: 0px;
+    width: 0px;
+}
+
+.question-text {
+    opacity: 0;
+}
+
+#ls-button-submit {
+    display: none;
+}
+
+img {
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+#orientation-alert {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 100;
+}
+
+.orientation-img {
+    display: none;
+    width: 25rem;
+    height: 25rem;
+    transform: rotate(180deg);
+}
+
+/** Skip **/
+
+#skip-alert {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 100;
+}
+
+#skip-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40rem;
+    height: 40rem;
+    background-color: #fff;
+    box-shadow: var(--theme-colour) 0px 0px 12px 2px;
+    /**transform: rotate(180deg);**/
+    font-size: 12pt;
+}
+
+#skip-box label {
+    margin-top: 1rem;
+}
+
+#skip-box-buttons {
+    margin-top: 1rem;
+    width: 50%;
+}
+
+#skip-box-input {
+    width: 50%;
+}
+
+#skip-alert-wrong-code {
+    display: none;
+    color: var(--alert-wrong-color);
+    width: 50%;
+    font-size: 9pt;
+    margin-top: 1rem;
+}
+
+/** Demographics **/
+
+#demographics-container {
+    display: none;
+    width: 35rem;
+    font-size: 12pt;
+}
+
+.dc-i {
+    margin-bottom: 2rem;
+}
+
+#demographics-container input {
+    font-size: 10pt;
+}
+
+#demographics-container label {
+    font-size: 14pt;
+}
+
+#options-sex label {
+    font-size: 10pt;
+}
+
+#demographics-container select {
+    font-size: 10pt;
+}
+
+/*
+--------------------------------------------------------------------------------
+General Layout for Subtests
+--------------------------------------------------------------------------------
+*/
+
+#test-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+#background-banner {
+    display: none;
+    position: absolute;
+    z-index: 0;
+    height: 12rem;
+    top: calc(100% - 12rem);
+    width: 100%;
+    background-color: var(--theme-colour);
+    overflow: hidden;
+}
+
+#tl-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 6rem;
+    z-index: 1;
+    /*background-color: #99D2A7;*/
+}
+
+#tp-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 6rem;
+    position: sticky;
+    /*background-color: #F597A1;*/
+}
+
+#item-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 12rem);
+    /*background-color: #99DBF7;*/
+}
+
+
+#instructions {
+    transform: rotate(180deg);
+}
+
+#center-area {
+    width: 30rem;
+    height: 15rem;
+    /*background-color: #ccc;*/
+    position: absolute;
+    left: calc((100vw - 30rem)/2);
+    top: calc((100vh - 15rem)/2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#question-code {
+    display: flex;
+    width: 100px;
+    height: 6rem;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(180deg);
+    font-size: 9pt;
+    
+}
+
+.answers {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+    transform: scale(1.5);
+}
+
+.answers .btn {
+    display: table-cell;
+    padding: .375rem 1.2rem;;
+}
+
+.answers .btn-group {
+    display: inline-table;
+}
+
+.question-area {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+/*
+--------------------------------------------------------------------------------
+Warnings
+--------------------------------------------------------------------------------
+*/
+
+.warning-container {
+    display: none;
+    transform: rotate(180deg);
+}
+
+#warning-restart {
+    font-size: 15pt;
+}
+
+/*
+--------------------------------------------------------------------------------
+Images
+--------------------------------------------------------------------------------
+*/
+
+
+/*
+--------------------------------------------------------------------------------
+Buttons
+--------------------------------------------------------------------------------
+*/
+
+.btn-unib {
+    color: #fff !important;
+    background-color: var(--theme-colour) !important;
+    border-color: var(--theme-colour) !important;
+}
+
+.answers .btn-primary {
+    color: #fff !important;
+    background-color: var(--theme-colour) !important;
+    border-color: var(--theme-colour) !important;
+}
+
+.feedback-button {
+    display: none !important;
+}
+
+.feedback-button svg {
+    width: 30px;
+    height: 30px;
+}
+
+#feedback-button-correct {
+    background-color: var(--eval-color-correct) !important;
+    border-color: var(--eval-color-correct) !important;
+}
+
+#feedback-button-false {
+    background-color: var(--eval-color-false) !important;
+    border-color: var(--eval-color-false) !important;
+}
+
+button svg {
+    width: 20px;
+    height: 20px;
+}
+
+#skip-button {
+    color: #777;
+    background-color: #ddd;
+    border-color: #666;
+}
+
+#ish-buttons {
+    display: none;
+}
+
+#color-blind-button {
+    background-color: var(--eval-color-false);
+}
+
+#red-green-colorblind-button {
+    background-color: var(--eval-color-missed);
+}
+
+#no-colorblind-button {
+    background-color: var(--eval-color-correct);
+}
+
+#feedback-button {
+    display: none;
+}
+
+#next-button {
+    display: none;
+}
+
+#proceed-button {
+    display: none;
+}
+
+#proceed-button > svg {
+    display: none;
+}
+
+#tp-response-button {
+    display: none;
+    color: #fff;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+#horse-button {
+    display: none;
+    position: absolute;
+    bottom: 2rem;
+    border: 1px solid #333;
+    background-color: fff;
+}
+
+#horse-button > img {
+    width: 12rem;
+    height: 12rem;
+}
+
+#tp-response-button > svg {
+    width: 25px;
+    height: 25px;
+}
+
+#play-button > svg {
+    width: 25px;
+    height: 25px;
+}
+#play-button {
+    display: none;
+    margin: auto;
+}
+
+#media-play-button > svg {
+    width: 25px;
+    height: 25px;
+}
+
+#media-play-button {
+    display: none;
+    margin: auto;
+}
+
+.basic-button {
+    width: 6rem;
+    height: 6rem;
+    background-color: #ccc;
+}
+
+#buttons-top-left {
+    /*width: 6rem;
+    height: 6rem;*/
+    display: flex;
+    flex-direction: row;
+}
+
+#buttons-top-middle {
+    /*width: 6rem;
+    height: 6rem;*/
+    display: flex;
+    flex-direction: row;
+}
+
+#buttons-top-right {
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    flex-direction: row;
+}
+
+/*
+--------------------------------------------------------------------------------
+Animations
+--------------------------------------------------------------------------------
+*/
+
+@keyframes feedback_blink { 
+   50% { 
+        Background-color: #ffd28b; 
+        transform: scale(1.1);
+   } 
+}
+  .feedback-blink{ 
+    background-color: rgba(0, 0, 0, 0);
+    animation: feedback_blink 1.5s ease-in-out infinite alternate;
+}
+
+/*
+--------------------------------------------------------------------------------
+ME content
+--------------------------------------------------------------------------------
+*/
+
+#matrix-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#thumbnail-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.me-matrix {
+    height: 36rem;
+    margin-bottom: 4rem;
+}
+
+.me-thumbnail {
+    height: 16rem;
+    margin: 2rem;
+}
+/*
+--------------------------------------------------------------------------------
+VM content
+--------------------------------------------------------------------------------
+*/
+
+#eval-img {
+    display: none;
+}
+
+/*
+--------------------------------------------------------------------------------
+EZLE content
+--------------------------------------------------------------------------------
+*/
+
+.ezle-img {
+    display: none;
+}
+
+/*
+--------------------------------------------------------------------------------
+FS content
+--------------------------------------------------------------------------------
+*/
+
+.draw-fs {
+    position: relative;
+    z-index: 30;
+}
+
+ .vmImg-fs {
+     opacity: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+    border: 1px solid #ccc;
+ }
+
+ .vmImg-overlay {
+     -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+    position: absolute;
+    left: 50%;
+    z-index: 0;
+ }
+ 
+ .vmImg-overlay-fs {
+    display: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+    position: absolute;
+    z-index: 20;
+    border: 1px solid #ccc;
+    left: calc(50% + 1px);
+ }
+ 
+ .vmImg {
+     opacity: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+ }
+
+/*
+--------------------------------------------------------------------------------
+FA content
+--------------------------------------------------------------------------------
+*/
+
+.draw-fa {
+    position: relative;
+    z-index: 30;
+}
+
+.canvas-fa {
+    display: flex;
+    flex-direction: column;
+}
+
+ .vmImg-overlay-fa {
+     -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+    position: absolute;
+    top: 50%;
+    z-index: 20;
+ }
+ 
+ #schablone {
+     display: none;
+ }
+ 
+ /*
+--------------------------------------------------------------------------------
+VM Eval content
+--------------------------------------------------------------------------------
+*/
+
+#eval-container {
+    width: 500px;
+    height: 500px;
+    position: relative;
+}
+
+#field-container {
+    
+}
+
+.evalImg {
+    position: absolute;
+    z-index: 10;
+}
+
+.evalImg_drawing {
+    position: absolute;
+    z-index: 20;
+}
+
+.evaluation-field {
+    position: absolute;
+    z-index: 50;
+}
+
+.evaluation-field-b {
+    position: absolute;
+    border: 1px solid #000;
+    z-index: 10;
+}
+ 
+/*
+--------------------------------------------------------------------------------
+FN content
+--------------------------------------------------------------------------------
+*/
+
+.fn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.fnImg {
+    width: 56rem;
+    margin-top: -9rem;
+}
+
+.pre-img {
+    height: 10rem;
+}
+
+#fn-canvas-container {
+    border: 1px solid #ccc;
+}
+
+#fn-thumbnails {
+    position: absolute;
+    bottom: 0rem;
+    z-index: 1;
+}
+
+/*
+--------------------------------------------------------------------------------
+TFZ content
+--------------------------------------------------------------------------------
+*/
+
+.tfz-img-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.tfz-answer-container {
+    width: 86rem;
+}
+
+.tnRadio {
+    cursor: pointer;
+    margin: 2rem;
+    width: 390px;
+    height: 120px;
+    float: left;
+}
+
+.tnRadio-demo {
+    cursor: pointer;
+    margin: 2rem;
+    width: 390px;
+    height: 120px;
+    float: left;
+}
+
+.tierfarben-img {
+    width: 38rem;
+}
+
+.tierfarben-img-demo {
+    width: 28rem;
+}
+
+/*
+--------------------------------------------------------------------------------
+AA content
+--------------------------------------------------------------------------------
+*/
+
+#animal-sounds {
+    display: none;
+}
+
+.sd_table {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.aa_img {
+    margin: 1rem;
+    width: 55px;
+    height: 55px;
+}
+
+.sd_img {
+    padding: 1rem;
+}
+
+.sd_arrow {
+    width: 17rem;
+}
+
+.slide {
+    display: none;
+    position: absolute;
+    width: 1215px;
+    height: 800px;
+}
+
+#slides {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/*
+--------------------------------------------------------------------------------
+SF content
+--------------------------------------------------------------------------------
+*/
+
+.sf-img {
+    width: 8rem;
+    height: 8rem;
+}
+
+.custom-answer-block-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.custom-answer-block-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.custom-answer-block-2 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.custom-answer-block-4 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/*
+--------------------------------------------------------------------------------
+FW content
+--------------------------------------------------------------------------------
+*/
+
+#fw-answer-block {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-box {
+    padding:1rem;
+    border-radius: 2rem;
+}
+
+.figuren_img {
+    height:130px;
+    margin: auto;
+ }
+ 
+ .fw-target {
+     display: none;
+ }
+ 
+.fwFigures {
+    height: 13rem;
+    margin: 2rem;
+ }
+ 
+.fn_answers td {
+    padding: 7px;
+    max-height: 160px;
+ }
+ 
+/*
+--------------------------------------------------------------------------------
+RE content
+--------------------------------------------------------------------------------
+*/
+
+#sun-img {
+    position: relative;
+    z-index: 1;
+}
+
+#crossair {
+    position: absolute;
+    top: calc((100% - 5rem)/2);
+    left: calc((100% - 5rem)/2);
+    width: 5rem;
+    height: 5rem;
+    z-index: 0;
+}
+
+#vertical-line {
+    width: 2px;
+    height: 100%;
+    background-color: #ccc;
+    margin-left: calc(2.5rem - 1px);
+}
+
+#horizontal-line {
+    height: 2px;
+    width: 100%;
+    background-color: #ccc;
+    margin-top: -2.5rem;
+}
+
+/*
+--------------------------------------------------------------------------------
+PPVT content
+--------------------------------------------------------------------------------
+*/
+
+.ppvt-img {
+    margin: 5rem;
+    width: 375px;
+    height: 250px;
+}
+
+#ppvt-variable-container {
+    display: none;
+}
+
+/*
+--------------------------------------------------------------------------------
+PPVT content
+--------------------------------------------------------------------------------
+*/
+
+.ish-img {
+    width: 80rem;
+}
+
+#ppvt-variable-container {
+    display: none;
+}
+
+/*
+--------------------------------------------------------------------------------
+MT content
+--------------------------------------------------------------------------------
+*/
+
+.mt-table th {
+    font-size: 8pt;
+    width: 20rem;
+    height: 5rem;
+    padding: 6px;
+}
+
+.radio {
+    display: inline-block;
+}
+
+.td-MT {
+    text-align: center;
+}
+
+.tr-MT {
+    padding: .6rem;
+    border-bottom: solid 1px;
+}

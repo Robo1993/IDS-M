@@ -1,0 +1,115 @@
+:root {
+	--duration: 5s;
+	--fill-in-color: #fff;
+	--mint: #a5d7d2;
+}
+
+#clock {
+  display: none;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(.5);
+}
+.outer-shadow,
+.inner-shadow {
+  z-index: 4;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.inner-shadow {
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+  border-radius: 100%;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.hold {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  clip: rect(0px, 300px, 300px, 150px);
+  border-radius: 100%;
+  background-color: var(--mint);
+}
+.fill,
+.dot span {
+  background-color: var(--fill-in-color);
+}
+.fill {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  clip: rect(0px, 150px, 300px, 0px);
+}
+.left .fill {
+  z-index: 1;
+}
+.rotate-left {
+  -webkit-animation: left calc(var(--duration) / 2) linear;
+  -moz-animation: left calc(var(--duration) / 2) linear;
+  animation: left calc(var(--duration) / 2) linear both;
+}
+@keyframes left {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@-webkit-keyframes left {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+  }
+}
+.right {
+  z-index: 3;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.right .fill {
+  z-index: 3;
+}
+.rotate-right {
+  -webkit-animation: right calc(var(--duration) / 2) linear;
+  -moz-animation: right calc(var(--duration) / 2) linear;
+  animation: right calc(var(--duration) / 2) linear both;
+  -webkit-animation-delay: calc(var(--duration) / 2);
+  -moz-animation-delay: calc(var(--duration) / 2);
+  animation-delay: calc(var(--duration) / 2);
+}
+@keyframes right {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@-webkit-keyframes right {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+.inner-shadow img {
+  margin-left: 8px;
+  margin-top: 7px;
+}
