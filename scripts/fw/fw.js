@@ -33,10 +33,10 @@ function startFW() {
 	unLock();
 	$("#fw-target").css("display", "block");
 	start = new Date();
+	activateClock();
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#next-button").css("display", "block");
 	}else {
-		activateClock();
 		setTimeout(function() {
 			$("#clock").css("display", "none");
 			$("#tp-response-button").css("display", "block");
@@ -87,8 +87,8 @@ function feedbackFW() {
 }
 
 function nextFW() {
-	activateClock();
 	$("#tp-response-button").css("display", "block");
+	$("#clock").css("display", "none");
 	$("#fw-target").css("display", "none");
 	$("#fw-answer-block").css("display", "flex");
 }
