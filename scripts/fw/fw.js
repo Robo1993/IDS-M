@@ -36,11 +36,12 @@ function startFW() {
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#next-button").css("display", "block");
 	}else {
+		activateClock();
 		setTimeout(function() {
+			$("#clock").css("display", "none");
 			$("#tp-response-button").css("display", "block");
 			$("#fw-target").css("display", "none");
 			$("#fw-answer-block").css("display", "flex");
-			activateClock();
 		}, fw_transition_time);
 	}
 }
