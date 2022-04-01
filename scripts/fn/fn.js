@@ -212,8 +212,10 @@ function startFN() {
 	if(questionCode.indexOf("UBD") != -1 || questionCode.indexOf("UBV") != -1 || questionCode.indexOf("RD") != -1 || questionCode.indexOf("RV") != -1) {
 		$(":root").css("--duration", "180s");
 	}
-	setupCanvas();
-	checkForEntitiesOnStartup();
+	if(questionCode.indexOf("FND05") == -1) {
+		setupCanvas();
+		checkForEntitiesOnStartup();
+	}
 	start = new Date();
 	TimeRestrictions();
 	activateClock();
