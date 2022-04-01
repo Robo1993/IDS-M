@@ -172,6 +172,21 @@ img {
     margin-top: 1rem;
 }
 
+#skip-cancel{
+    /**background-color: #ccc !important;
+    border-color: #ccc !important;**/
+}
+
+#skip-proceed {
+    background-color: var(--eval-color-missed) !important;
+    border-color: var(--eval-color-missed) !important;
+}
+
+#skip-abort {
+    background-color: var(--eval-color-false) !important;
+    border-color: var(--eval-color-false) !important;
+}
+
 /** Demographics **/
 
 #demographics-container {

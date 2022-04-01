@@ -160,8 +160,6 @@ $( document ).ready(function() {
 	});
 
 	$("#skip-proceed").on("click", function() {
-		// Do Stuff
-		let cancel_password = "Abbrechen";
 		let code = localStorage.getItem("idsm/code");
 		let input = $("#skip-box-input-code").val();
 		if(input == code) {
