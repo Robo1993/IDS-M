@@ -215,6 +215,8 @@ function startFN() {
 	if(questionCode.indexOf("FND05") == -1) {
 		setupCanvas();
 		checkForEntitiesOnStartup();
+	}else {
+		$("#proceed-button").css("display", "block");
 	}
 	start = new Date();
 	TimeRestrictions();

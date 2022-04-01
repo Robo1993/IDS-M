@@ -720,6 +720,8 @@ FN content
 
 #fn-canvas-container {
     border: 1px solid #ccc;
+    max-width: 902px;
+    max-height: 722px;
 }
 
 #fn-thumbnails {
