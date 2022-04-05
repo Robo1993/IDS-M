@@ -458,7 +458,7 @@ function getURLStuff(path) {
 	// } else if(path.includes("quest")) {
 	// 	name = "/quest";
 	// }
-	let slash = "/";
+	let slash = "/index.php";
 	let path_array = path.split("/", 2);
 	let root = path_array[1];
 	return "/" + root;
