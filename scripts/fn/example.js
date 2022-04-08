@@ -13,7 +13,7 @@ var all_moved;
 var variation_counter = 0;
 var centroid;
 var correctly_rotated = false;
-var angle_of_shape;
+var angle_of_shape = 0;
 
 var log_overlap;
 
