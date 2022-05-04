@@ -33,6 +33,7 @@ const mt = "https://survey-1.psychologie.unibas.ch/roman/index.php/352793?lang=d
 const vm_eval = "https://survey-1.psychologie.unibas.ch/roman/index.php/925914?lang=de"
 const end_test = "https://survey-1.psychologie.unibas.ch/roman/index.php/856746?lang=de";
 const test_order = [ppvt, ish, rg, fn, sf, fw, me, aa, tfz, vm, mt, vm_eval, end_test];
+const test_test_order = [["ppvt", ppvt], ["ish", ish], ["rg", rg], ["fn", fn], ["sf", sf], ["fw", fw], ["me", me], ["aa", aa], ["tfz", tfz], ["vm", vm], ["mt", mt], ["vm_Eval", vm_eval], ["end_test", end_test]];
 let order_counter = localStorage.getItem("idsm/order_counter");
 
 $( document ).ready(function() {
@@ -214,14 +215,26 @@ function setup() {
 
 	if(questionCode.indexOf("StartI01") != -1) {
 		localStorage.clear();
+		localStorage.setItem("idsm/aa", "false");
+		localStorage.setItem("idsm/fn", "false");
+		localStorage.setItem("idsm/fw", "false");
+		localStorage.setItem("idsm/me", "false");
+		localStorage.setItem("idsm/rg", "false");
+		localStorage.setItem("idsm/sf", "false");
+		localStorage.setItem("idsm/tfz", "false");
+		localStorage.setItem("idsm/vm", "false");
+		localStorage.setItem("idsm/vm_Eval", "false");
+		localStorage.setItem("idsm/ppvt", "false");
+		localStorage.setItem("idsm/ish", "false");
+		localStorage.setItem("idsm/mt", "false");
 	}
 
 	if(questionCode.indexOf("I99") != -1) {
-		if(localStorage.getItem("idsm/order_counter")) {
-			order_counter = localStorage.getItem("idsm/order_counter");
-		}else {
-			order_counter = 0;
-		}
+		// if(localStorage.getItem("idsm/order_counter")) {
+		// 	order_counter = localStorage.getItem("idsm/order_counter");
+		// }else {
+		// 	order_counter = 0;
+		// }
 		progressTest();
 	}else {
 		start = new Date();
@@ -242,6 +255,10 @@ function initialize() {
 			unLock();
 			$("#proceed-button").css("display", "block");
 		}
+	}else if(questionCode.indexOf("Menu") != -1) {
+		$("#background-banner").css("display", "block");
+		initMenu();
+		unLock();
 	}else if(questionCode.indexOf("Lou") != -1) {
 		unLock();
 		$("#proceed-button").css("display", "block");
@@ -270,6 +287,39 @@ function initialize() {
 			initMT();
 		}
 	}
+}
+
+function initMenu() {
+	let aa_menu = localStorage.getItem("idsm/aa");
+	let fn_menu = localStorage.getItem("idsm/fn");
+	let fw_menu = localStorage.getItem("idsm/fw");
+	let me_menu = localStorage.getItem("idsm/me");
+	let rg_menu = localStorage.getItem("idsm/rg");
+	let sf_menu = localStorage.getItem("idsm/sf");
+	let tfz_menu = localStorage.getItem("idsm/tfz");
+	let vm_menu = localStorage.getItem("idsm/vm");
+	let vm_Eval_menu = localStorage.getItem("idsm/vm_Eval");
+	let ppvt_menu = localStorage.getItem("idsm/ppvt");
+	let ish_menu = localStorage.getItem("idsm/ish");
+	let mt_menu = localStorage.getItem("idsm/mt");
+	let test_battery = [["aa", aa_menu], ["fn", fn_menu], ["fw", fw_menu], ["me", me_menu], ["rg", rg_menu], ["sf", sf_menu], ["tfz", tfz_menu], ["vm", vm_menu], ["vm_Eval", vm_Eval_menu],["ppvt", ppvt_menu], ["ish", ish_menu], ["mt", mt_menu]];
+
+	test_battery.forEach(function (test, index) {
+		if(test[1] == "false") {
+			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().addClass("test-box-hover");
+			$("#" + test[0] + " .bi-x-circle-fill").css("display", "block");
+			$("#" + test[0]).on("click", function() {
+				test_test_order.forEach(function(item, index) {
+					if(item[0] == test[0]) {
+						window.location.replace(item[1]);
+					}
+				});
+			});
+		}else {
+			$("#" + test[0] + " .bi-check-circle-fill").css("display", "block");
+			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().css("background-color", "#ddd");
+		}
+	});
 }
 
 function pasteAnswers() {
@@ -330,7 +380,9 @@ function next() {
 }
 
 function checkOrientation() {
-	if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
+	if(questionCode.indexOf("I99") != -1) {
+		horizontalAlert();
+	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
 		horizontalAlert();
 	}else if(questionCode.indexOf("FA") != -1 || questionCode.indexOf("FN") != -1 || questionCode.indexOf("RG") != -1) {
 		verticalAlert();
@@ -352,10 +404,16 @@ function checkOrientation() {
 }
 
 function progressTest() {
-	let counter_counter = parseInt(order_counter);
-	order_counter++;
-	localStorage.setItem("idsm/order_counter", order_counter);
-	window.location.replace(test_order[counter_counter]);
+	// let counter_counter = parseInt(order_counter);
+	// order_counter++;
+	// localStorage.setItem("idsm/order_counter", order_counter);
+	// window.location.replace(test_order[counter_counter]);
+	let test_code = getTestCode();
+	localStorage.setItem("idsm/" + test_code, "true");
+	$("#ids-m-menu-box").css("display", "flex");
+	initMenu();
+	$("#background-banner").css("display", "block");
+	unLock();
 }
 
 function captureDemographics() {
@@ -459,9 +517,35 @@ function getURLStuff(path) {
 	// 	name = "/quest";
 	// }
 	let slash = "/index.php";
-	let path_array = path.split("/", 2);
-	let root = path_array[1];
-	return "/" + root;
+	let path_array = path.split(slash, 1);
+	let root = path_array[0];
+	return root;
+}
+
+function getTestCode() {
+	if(questionCode.indexOf("AA") != -1) {
+		return "aa";
+	}else if(questionCode.indexOf("FN") != -1) {
+		return "fn";
+	}else if(questionCode.indexOf("FW") != -1) {
+		return "fw";
+	}else if(questionCode.indexOf("ME") != -1) {
+		return "me";
+	}else if(questionCode.indexOf("RG") != -1) {
+		return "rg";
+	}else if(questionCode.indexOf("SF") != -1) {
+		return "sf";
+	}else if(questionCode.indexOf("TFZ") != -1) {
+		return "tfz";
+	}else if(questionCode.indexOf("VM") != -1) {
+		return "vm";
+	}else if(questionCode.indexOf("PPVT") != -1) {
+		return "ppvt";
+	}else if(questionCode.indexOf("ISH") != -1) {
+		return "ish";
+	}else if(questionCode.indexOf("MT") != -1) {
+		return "mt";
+	}
 }
 
 function getQuestionBlock() {

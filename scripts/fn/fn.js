@@ -359,20 +359,20 @@ function getPreIconPosition() {
 
 	if(icon_rows == 3) {
 		if(row_counter == 1) {
-			position.x = min_width + min_width/2;
+			position.x = min_width/2;
 		}else if(row_counter == 2) {
-			position.x = 2 * min_width + min_width/2;
+			position.x = 900 - min_width/2;
 		}else if(row_counter == 3) {
-			position.x = 3 * min_width + min_width/2;
+			position.x = min_width*1.5;
 		}
 	}else if(icon_rows == 2) {
 		if(row_counter == 1) {
-			position.x = 2 * min_width;
+			position.x = min_width/2;
 		}else if(row_counter == 2) {
-			position.x = 3 * min_width;
+			position.x = 900 - min_width/2;
 		}
 	}else if(icon_rows == 1) {
-		position.x = 450;
+		position.x = min_width/2;
 	}
 
 	return position;

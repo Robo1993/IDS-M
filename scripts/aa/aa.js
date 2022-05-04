@@ -312,7 +312,6 @@ function evaluateAA() {
 function renderAudio() {
 	$(animalSounds).trigger("play");
 	playTime = new Date() - 2500;
-
 	animalSounds.ontimeupdate = function() {audioLoop()};
 }
 
@@ -339,6 +338,8 @@ function getQuestionNr() {
 }
 
 function audioLoop() {
+	const AudioContext = window.AudioContext || window.webkitAudioContext;
+	const audioCtx = new AudioContext();
 	let currentTime = new Date();
 	let time_passed = currentTime - playTime;
 	let sound = animal_sounds_list[0];
@@ -352,7 +353,7 @@ function audioLoop() {
 			rt_start = new Date();
 			horse_hit_counter = 1;
 		}else if(sound == "D") {
-			animalSounds.currentTime = 2.9;
+			animalSounds.currentTime = 2.6;
 			rt_start = new Date();
 			horse_hit_counter = 1;
 		}else if(sound == "H") {

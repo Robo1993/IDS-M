@@ -217,6 +217,80 @@ img {
 
 /*
 --------------------------------------------------------------------------------
+CSS for the Test-Menu
+--------------------------------------------------------------------------------
+*/
+#ids-m-menu-box {
+    display: none;
+    width: 75vw;
+    flex-flow: wrap row;
+    justify-content: space-between;
+}
+
+.ids-m-test-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 18rem;
+    height: 18rem;
+    margin: 3rem;
+    padding: .2rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+}
+
+.test-box-hover:hover {
+    box-shadow: 3px 3px 15px 1px #777;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.ids-m-test-box label {
+    margin: 1rem;
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.ids-m-test-box .filler {
+    height: 2rem;
+}
+
+.ids-m-test-box p {
+    margin: 1.6rem;
+    text-align: justify;
+    font-size: 1em;
+}
+
+.completion-message {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: end;
+    width: 90%;
+    margin: 0.6rem;
+}
+
+.ids-m-menu-box-icon {
+    display: none;
+    width: 2rem;
+    height: 2rem;
+}
+
+.bi-check-circle-fill path {
+    fill: var(--eval-color-correct);
+}
+
+.bi-x-circle-fill path {
+    fill: var(--eval-color-false);
+}
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
+/*
+--------------------------------------------------------------------------------
 General Layout for Subtests
 --------------------------------------------------------------------------------
 */
