@@ -175,16 +175,19 @@ img {
 #skip-cancel{
     /**background-color: #ccc !important;
     border-color: #ccc !important;**/
+    color: #000 !important;
 }
 
 #skip-proceed {
     background-color: var(--eval-color-missed) !important;
     border-color: var(--eval-color-missed) !important;
+    color: #000 !important;
 }
 
 #skip-abort {
     background-color: var(--eval-color-false) !important;
     border-color: var(--eval-color-false) !important;
+    color: #000 !important;
 }
 
 /** Demographics **/
@@ -241,7 +244,7 @@ CSS for the Test-Menu
 }
 
 .test-box-hover:hover {
-    box-shadow: 3px 3px 15px 1px #777;
+    box-shadow: 1px 1px 10px 1px #ccc;
     transition: box-shadow 0.3s ease-in-out;
 }
 
@@ -465,6 +468,11 @@ button svg {
 
 #ish-buttons {
     display: none;
+}
+
+#ish-buttons svg {
+    width: 25px;
+    height: 25px;
 }
 
 #color-blind-button {

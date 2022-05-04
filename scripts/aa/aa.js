@@ -312,8 +312,8 @@ function evaluateAA() {
 		$("#answer"+ questionID +"SymbolsCorrectPage").attr("value", correct_crossed);
 		$("#answer"+ questionID +"SymbolsWrongPage").attr("value", false_crossed);
 		$("#answer"+ questionID +"SymbolsMissedPage").attr("value", false_left_out);
-		$("#answer"+ questionID +"AnimalReactionTimeCorrect").attr("value", artsc);
-		$("#answer"+ questionID +"AnimalReactionTimeFalse").attr("value", artsf);
+		$("#answer"+ questionID +"AnimalReactionTimeC").attr("value", artsc);
+		$("#answer"+ questionID +"AnimalReactionTimeF").attr("value", artsf);
 		$("#answer"+ questionID +"AnimalsCorrect").attr("value", correctly_identified_horses);
 		$("#answer"+ questionID +"AnimalsWrong").attr("value", mistakenly_identified_horses);
 		$("#answer"+ questionID +"AnimalsMissed").attr("value", how_many_horses - correctly_identified_horses);
