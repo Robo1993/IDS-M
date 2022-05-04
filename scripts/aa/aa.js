@@ -1,5 +1,6 @@
 let audioCommit = document.createElement("audio");
 let animalSounds = document.createElement("audio");
+let source;
 let playTime;
 let horse_hit_counter = 0;
 let animal_sounds_list = [];
@@ -12,8 +13,12 @@ let page_count = 0;
 let tid;
 let rt_start;
 let rt_end;
-let animal_reaction_time = [];
+let animal_reaction_time_correct = [];
+let animal_reaction_time_false = [];
 let animals_count = 0;
+
+let AudioContext;
+let audioCtx;
 
 function initAA() {
 
@@ -70,9 +75,10 @@ function initAA() {
 				if(animalSounds.currentTime >= 10 && animalSounds.currentTime < 14) {
 					correctly_identified_horses++;
 					correct_horse_button = true;
-					animal_reaction_time.push(current_time - rt_start);
+					animal_reaction_time_correct.push(current_time - rt_start);
 				}else {
 					mistakenly_identified_horses++;
+					animal_reaction_time_false.push(current_time - rt_start);
 				}
 				if(questionCode.indexOf("AA0UBD") != -1 || questionCode.indexOf("AA0UBV") != -1) {
 					if(correct_horse_button) {
@@ -117,6 +123,9 @@ function initAA() {
 
 function startAA() {
 
+	AudioContext = window.AudioContext || window.webkitAudioContext;
+	audioCtx = new AudioContext();
+
 	easeItUp();
 	start = new Date();
 	calcAnimals();
@@ -131,6 +140,9 @@ function startAA() {
 
 		audioCommit.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/button_audio/Commit/commit.mp3");
 		animalSounds.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/aa/animal_sounds.mp3")
+
+		source = audioCtx.createMediaElementSource(animalSounds);
+		source.connect(audioCtx.destination);
 
 		animalSounds.addEventListener("ended", function() {
 			locked = true;
@@ -293,12 +305,15 @@ function evaluateAA() {
 	$("#answer"+ questionID +"Total").attr("value", correct_crossed_total - false_crossed_total);
 	$("#answer"+ questionID +"Time").attr("value", time_total);
 	if($("#animal-sounds")) {
-		let arts = "";
-		animal_reaction_time.forEach(rt => arts = arts + rt + ";");
+		let artsc = "";
+		let artsf = "";
+		animal_reaction_time_correct.forEach(rt => artsc = artsc + rt + ";");
+		animal_reaction_time_false.forEach(rt => artsf = artsf + rt + ";");
 		$("#answer"+ questionID +"SymbolsCorrectPage").attr("value", correct_crossed);
 		$("#answer"+ questionID +"SymbolsWrongPage").attr("value", false_crossed);
 		$("#answer"+ questionID +"SymbolsMissedPage").attr("value", false_left_out);
-		$("#answer"+ questionID +"AnimalReactionTime").attr("value", arts);
+		$("#answer"+ questionID +"AnimalReactionTimeCorrect").attr("value", artsc);
+		$("#answer"+ questionID +"AnimalReactionTimeFalse").attr("value", artsf);
 		$("#answer"+ questionID +"AnimalsCorrect").attr("value", correctly_identified_horses);
 		$("#answer"+ questionID +"AnimalsWrong").attr("value", mistakenly_identified_horses);
 		$("#answer"+ questionID +"AnimalsMissed").attr("value", how_many_horses - correctly_identified_horses);
@@ -338,8 +353,6 @@ function getQuestionNr() {
 }
 
 function audioLoop() {
-	const AudioContext = window.AudioContext || window.webkitAudioContext;
-	const audioCtx = new AudioContext();
 	let currentTime = new Date();
 	let time_passed = currentTime - playTime;
 	let sound = animal_sounds_list[0];
@@ -349,7 +362,7 @@ function audioLoop() {
 		//}
 		playTime = new Date();
 		if(sound == "B") {
-			animalSounds.currentTime = 14.2;
+			animalSounds.currentTime = 14.1;
 			rt_start = new Date();
 			horse_hit_counter = 1;
 		}else if(sound == "D") {
@@ -357,7 +370,7 @@ function audioLoop() {
 			rt_start = new Date();
 			horse_hit_counter = 1;
 		}else if(sound == "H") {
-			animalSounds.currentTime = 10.3;
+			animalSounds.currentTime = 10.1;
 			rt_start = new Date();
 			horse_hit_counter = 1;
 			how_many_horses++;
