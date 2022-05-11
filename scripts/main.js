@@ -477,6 +477,7 @@ function whichButton() {
 
 function unLock() {
 	locked = false;
+	$("#tp-area").css("display", "flex");
 	$("#center-area").css("display", "none");
 	$(".question-text").css("opacity", "1");
 	$("#page-load-screen").css("display", "none");
@@ -486,6 +487,7 @@ function reLock() {
 	locked = true;
 	//$(".question-text").css("opacity", "0");
 	$(".question-text").css("display", "none");
+	$("#tp-area").css("display", "none");
 	//$("#center-area").css("display", "flex");
 	$("#clock").css("display", "none");
 	$("#speed").css("display", "none");
