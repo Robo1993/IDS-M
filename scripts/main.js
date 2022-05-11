@@ -165,6 +165,7 @@ $( document ).ready(function() {
 		let input = $("#skip-box-input-code").val();
 		if(input == code) {
 			progressTest();
+			hideSkip();
 		}else {
 			$("#skip-alert-wrong-code").css("display", "block");
 			$("#skip-box-input-code").val("");
