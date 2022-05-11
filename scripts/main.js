@@ -205,6 +205,7 @@ function setup() {
 
 	if(questionCode.indexOf("V") != -1 && questionCode.indexOf("VM") == -1 && questionCode.indexOf("PPVT") == -1) {
 		$("#repeat-svg").css("display", "inline");
+		expertIndication();
 	}else {
 		$("#proceed-svg").css("display", "inline");
 	}
@@ -415,6 +416,11 @@ function progressTest() {
 	initMenu();
 	$("#background-banner").css("display", "block");
 	reLock();
+}
+
+function expertIndication() {
+	$("#test-layout").css("box-sizing", "border-box");
+	$("#test-layout").css("border", "1rem solid #a5d7d2");
 }
 
 function captureDemographics() {
