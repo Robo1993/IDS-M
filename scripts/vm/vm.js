@@ -11,11 +11,12 @@ function initVM() {
 		$("#proceed-button").css("display", "block");
 	}else {
 		$("#play-button").css("display", "block");
+		$("#speed").css("display", "block");
 	}
 
-	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-		$("#clock").css("display", "block");
-	}
+	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
+		//$("#speed").css("display", "block");
+	//}
 
 	$(".evaluation-field").on("click", function() {
 		var b_id = $(this).attr("id").substring(1);
@@ -35,7 +36,7 @@ function initVM() {
 function startVM() {
 	start = new Date();
 	init();
-	activateClock();
+	activateSpeed();
 	$("#tp-response-button").css("display", "block");
 	//$("#time-bar-fluid").addClass("bar-load-10s-once");
 }
