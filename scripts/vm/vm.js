@@ -98,11 +98,13 @@ function evaluateVM() {
 function evaluateEZLE() {
 	checkPercentage();
 	var time = end - start;
+	localStorage.setItem("idsm/" + questionCode + "Eval", canvas.toDataURL("image/png"));
 	$("#answer"+ questionID + "Time").attr("value", time_drawing);
 	$("#answer"+ questionID + "Crossed").attr("value", crossing);
 	$("#answer"+ questionID + "Percent").attr("value", 100 - percentage +"%");
 	$("#answer"+ questionID + "Target").attr("value", target);
 	$("#answer"+ questionID + "Pickups").attr("value", pickups);
+	$("#answer"+ questionID + "UserDrawing").attr("value", localStorage.getItem("idsm/" + questionCode + "Eval"));
 	if(100 - percentage == 0 && target) {
 		answered_correctly = true;
 	}
@@ -118,6 +120,7 @@ function evaluateFS() {
 	$("#answer"+ questionID + "FieldsCrossed").attr("value", crossed_fields);
 	$("#answer"+ questionID + "FieldsMissed").attr("value", missed_fields);
 	$("#answer"+ questionID + "Pickups").attr("value", pickups);
+	$("#answer"+ questionID + "UserDrawing").attr("value", localStorage.getItem("idsm/" + questionCode + "Eval"));
 	if(100 - percentage == 0 && missed_fields == 0) {
 		answered_correctly = true;
 	}
@@ -133,6 +136,7 @@ function evaluateFA() {
 	$("#answer"+ questionID + "FieldsCrossed").attr("value", crossed_fields);
 	$("#answer"+ questionID + "FieldsMissed").attr("value", missed_fields);
 	$("#answer"+ questionID + "Pickups").attr("value", pickups);
+	$("#answer"+ questionID + "UserDrawing").attr("value", localStorage.getItem("idsm/" + questionCode + "Eval"));
 	if(100 - percentage == 0 && missed_fields == 0) {
 		answered_correctly = true;
 	}
