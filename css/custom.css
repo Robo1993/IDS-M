@@ -879,7 +879,7 @@ AA content
 }
 
 .sd_img {
-    padding: 1rem;
+    /**padding: 1rem;**/
 }
 
 .sd_arrow {

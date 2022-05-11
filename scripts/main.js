@@ -413,7 +413,7 @@ function progressTest() {
 	$("#ids-m-menu-box").css("display", "flex");
 	initMenu();
 	$("#background-banner").css("display", "block");
-	unLock();
+	reLock();
 }
 
 function captureDemographics() {
@@ -483,8 +483,11 @@ function unLock() {
 
 function reLock() {
 	locked = true;
-	$(".question-text").css("opacity", "0");
-	$("#center-area").css("display", "flex");
+	//$(".question-text").css("opacity", "0");
+	$(".question-text").css("display", "none");
+	//$("#center-area").css("display", "flex");
+	$("#clock").css("display", "none");
+	$("#speed").css("display", "none");
 }
 
 function showSkip() {
@@ -504,6 +507,16 @@ function activateClock() {
 }
 
 function deActivateClock() {
+	$(".right > .fill").removeClass("rotate-right");
+	$(".left > .fill").removeClass("rotate-left");
+}
+
+function activateSpeed() {
+	$(".right > .fill").addClass("rotate-right");
+	$(".left > .fill").addClass("rotate-left");
+}
+
+function deActivateSpeed() {
 	$(".right > .fill").removeClass("rotate-right");
 	$(".left > .fill").removeClass("rotate-left");
 }

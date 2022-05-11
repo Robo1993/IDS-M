@@ -3,14 +3,22 @@
 	--fill-in-color: #fff;
 	--mint: #a5d7d2;
 }
-
+#speed {
+  display: none;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: -1rem;
+  left: -4rem;
+  transform: scale(.5);
+}
 #clock {
   display: none;
   width: 300px;
   height: 300px;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -1rem;
+  left: -4rem;
   transform: scale(.5);
 }
 .outer-shadow,

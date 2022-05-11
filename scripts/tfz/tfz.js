@@ -10,7 +10,7 @@ function initTFZ() {
 		$(":root").css("--duration", "5s");
 	}
 	if(questionCode.indexOf("E") == -1) {
-		$("#clock").css("display", "block");
+		$("#speed").css("display", "block");
 	}
 
 	button_exceptions.forEach(function(e) {
@@ -25,7 +25,7 @@ function initTFZ() {
 	if(questionCode.indexOf("UBE") != -1) {
 		$("#proceed-button").css("display", "block");
 	}
-	activateClock();
+	activateSpeed();
 	start = new Date();
 	
 	$(".tnRadio").click(function() {
