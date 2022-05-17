@@ -203,7 +203,7 @@ function setup() {
 		$(".answers").css("display", "flex");
 	}
 	if(questionCode.indexOf("StartQ03") != -1) {
-		$('input[name=' + questionID + ']:checked').val("");
+		$('input[name=' + questionID + ']:checked').removeAttr("checked");
 	}
 
 	if(questionCode.indexOf("V") != -1 && questionCode.indexOf("VM") == -1 && questionCode.indexOf("PPVT") == -1) {
