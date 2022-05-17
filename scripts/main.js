@@ -202,6 +202,9 @@ function setup() {
 		$("#skip-button").css("display", "none");
 		$(".answers").css("display", "flex");
 	}
+	if(questionCode.indexOf("StartQ03") != -1) {
+		$('input[name=' + questionID + ']:checked').val("");
+	}
 
 	if(questionCode.indexOf("V") != -1 && questionCode.indexOf("VM") == -1 && questionCode.indexOf("PPVT") == -1) {
 		$("#repeat-svg").css("display", "inline");
