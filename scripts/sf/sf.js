@@ -25,6 +25,9 @@ function startSF() {
 		$("#feedback-button").css("display", "block");
 		$(":root").css("--duration", "15s");
 	}else {
+		//Clearing Timeout for pausing or stopping auto-proceed
+		//var id = setTimeout(function(){alert('hi');}, 3000);
+		//clearTimeout(id);
 		$(":root").css("--duration", "5s");
 		setTimeout(function() {
 			locked = true;
