@@ -310,7 +310,24 @@ function initMenu() {
 	let test_battery = [["aa", aa_menu], ["fn", fn_menu], ["fw", fw_menu], ["me", me_menu], ["rg", rg_menu], ["sf", sf_menu], ["tfz", tfz_menu], ["vm", vm_menu], ["vm_Eval", vm_Eval_menu],["ppvt", ppvt_menu], ["ish", ish_menu], ["mt", mt_menu]];
 
 	test_battery.forEach(function (test, index) {
-		if(test[1] == "false") {
+		let ppvt_test = getByIndex(test_battery, "ppvt");
+		let ish_test = getByIndex(test_battery, "ish");
+		let rg_test = getByIndex(test_battery, "rg");
+		let sf_test = getByIndex(test_battery, "sf");
+		let pre_conditions = false;
+		if(test[0] != "ppvt" && test[0] != "ish" && test[0] != "rg") {
+			if(ppvt_test[1] == "true" && ish_test[1] == "true" && rg_test[1] == "true") {
+				if(test[0] == "aa" && sf_test[1] == "true") {
+					pre_conditions = true;
+				}else if(test[0] != "aa") {
+					pre_conditions = true;
+				}
+			}
+		}else {
+			pre_conditions = true;
+		}
+
+		if(test[1] == "false" && pre_conditions == true) {
 			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().addClass("test-box-hover");
 			$("#" + test[0] + " .bi-x-circle-fill").css("display", "block");
 			$("#" + test[0]).on("click", function() {
@@ -320,11 +337,24 @@ function initMenu() {
 					}
 				});
 			});
+		}else if(test[1] == "false" && pre_conditions == false) {
+			$("#" + test[0] + " .bi-x-circle-fill").css("display", "block");
+			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().css("background-color", "#ddd");
 		}else {
 			$("#" + test[0] + " .bi-check-circle-fill").css("display", "block");
 			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().css("background-color", "#ddd");
 		}
 	});
+}
+
+function getByIndex(d_array, str) {
+	let returner;
+	d_array.forEach(function(item, index) {
+		if(item[0] == str) {
+			returner = item;
+		}
+	});
+	return returner;
 }
 
 function pasteAnswers() {
@@ -418,6 +448,7 @@ function progressTest() {
 	$("#ids-m-menu-box").css("display", "flex");
 	initMenu();
 	$("#background-banner").css("display", "block");
+	$("#page-load-screen").css("display", "none");
 	reLock();
 }
 
@@ -489,6 +520,7 @@ function unLock() {
 	$("#tp-area").css("display", "flex");
 	$("#center-area").css("display", "none");
 	$(".question-text").css("opacity", "1");
+	$(".question-text").css("display", "block");
 	$("#page-load-screen").css("display", "none");
 }
 
