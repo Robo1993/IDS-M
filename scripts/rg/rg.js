@@ -56,6 +56,7 @@ function initRG() {
 				false_positives = 0;
 				reLock();
 				$("#play-button").css("display", "block");
+				$("#center-area").css("display", "block");
 				$("#warning-restart").css("display", "block");
 			}else {
 				false_positives++;
