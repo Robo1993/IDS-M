@@ -4,14 +4,14 @@ let button_exceptions = ["1UBV01", "1UBV03", "1UBV05", "2UBV01", "2UBV02", "2UBV
 
 function initTFZ() {
 
-	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
+	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1 || questionCode.indexOf("BE") != -1) {
 		$(":root").css("--duration", "15s");
 	}else {
 		$(":root").css("--duration", "5s");
 	}
-	if(questionCode.indexOf("E") == -1) {
+	//if(questionCode.indexOf("E") == -1) {
 		$("#speed").css("display", "block");
-	}
+	//}
 
 	button_exceptions.forEach(function(e) {
 		if(questionCode.indexOf(e) != -1) {
