@@ -68,9 +68,9 @@ function initAA() {
 		let background = $("#horse-button").css("background-color");
 		//let active = (background == "rgb(245, 151, 161)" || background == "rgb(153, 210, 167)") ? true: false;
 		if(!animal_disabler) {
-			let current_time = new Date();
+			let current_time = performance.now();
 			if(horse_hit_counter == 1) {
-				rt_end = new Date();
+				rt_end = performance.now();
 				audioCommit.play();
 				if(animalSounds.currentTime >= 10 && animalSounds.currentTime < 14) {
 					correctly_identified_horses++;
@@ -127,7 +127,7 @@ function startAA() {
 	audioCtx = new AudioContext();
 
 	easeItUp();
-	start = new Date();
+	start = performance.now();
 	calcAnimals();
 
 	if($("#animal-sounds").length) {
@@ -266,7 +266,7 @@ function getFileNameAA(src) {
 }
 
 function evaluateAA() {
-	end = new Date();
+	end = performance.now();
 	var time_total = end - start;
 	//calculate how many items are wrong/correct/left out
 	let correct_crossed = "";
@@ -309,6 +309,12 @@ function evaluateAA() {
 		let artsf = "";
 		animal_reaction_time_correct.forEach(rt => artsc = artsc + rt + ";");
 		animal_reaction_time_false.forEach(rt => artsf = artsf + rt + ";");
+		if(artsc == "") {
+			artsc = "NULL";
+		}
+		if(artsf == "") {
+			artsf = "NULL";
+		}
 		$("#answer"+ questionID +"SymbolsCorrectPage").attr("value", correct_crossed);
 		$("#answer"+ questionID +"SymbolsWrongPage").attr("value", false_crossed);
 		$("#answer"+ questionID +"SymbolsMissedPage").attr("value", false_left_out);
@@ -326,7 +332,7 @@ function evaluateAA() {
 
 function renderAudio() {
 	$(animalSounds).trigger("play");
-	playTime = new Date() - 2500;
+	playTime = performance.now() - 2500;
 	animalSounds.ontimeupdate = function() {audioLoop()};
 }
 
@@ -353,30 +359,30 @@ function getQuestionNr() {
 }
 
 function audioLoop() {
-	let currentTime = new Date();
+	let currentTime = performance.now();
 	let time_passed = currentTime - playTime;
 	let sound = animal_sounds_list[0];
 	if(time_passed > 2500) {
 		//if($("#horse-button").css("background-color") == "rgb(204, 204, 204)") {
 			$("#horse-button").css("background-color", "#fff");
 		//}
-		playTime = new Date();
+		playTime = performance.now();
 		if(sound == "B") {
 			animalSounds.currentTime = 14.1;
-			rt_start = new Date();
+			rt_start = performance.now();
 			horse_hit_counter = 1;
 		}else if(sound == "D") {
 			animalSounds.currentTime = 2.6;
-			rt_start = new Date();
+			rt_start = performance.now();
 			horse_hit_counter = 1;
 		}else if(sound == "H") {
 			animalSounds.currentTime = 10.1;
-			rt_start = new Date();
+			rt_start = performance.now();
 			horse_hit_counter = 1;
 			how_many_horses++;
 		}else if(sound == "L") {
 			animalSounds.currentTime = 6.35;
-			rt_start = new Date();
+			rt_start = performance.now();
 			horse_hit_counter = 1;
 		}else if(!sound) {
 			animalSounds.currentTime = animalSounds.duration;

@@ -105,7 +105,8 @@ $( document ).ready(function() {
 
 	$("#tp-response-button").on("click", function() {
 		if(option_selected) {
-			end = new Date();
+			//end = new Date();
+			end = performance.now();
 			locked = true;
 			$("#clock").css("display", "none");
 			$(this).css("display", "none");
@@ -242,7 +243,8 @@ function setup() {
 		// }
 		progressTest();
 	}else {
-		start = new Date();
+		//start = new Date();
+		start = performance.now();
 		initialize();
 	}
 }
@@ -520,7 +522,7 @@ function unLock() {
 	$("#tp-area").css("display", "flex");
 	$("#center-area").css("display", "none");
 	$(".question-text").css("opacity", "1");
-	$(".question-text").css("display", "block");
+	$(".question-text").css("display", "blockac");
 	$("#page-load-screen").css("display", "none");
 }
 

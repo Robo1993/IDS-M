@@ -154,12 +154,12 @@
 						if(isInStartingArea(x, y)) {
 							isDrawing = true;
 							firstmove = false;
-							start = new Date();
+							start = performance.now();
 						}
 					}else if(questionCode.indexOf("FA") != -1 || questionCode.indexOf("FS") != -1) {
 						isDrawing = true;
 						firstmove = false;
-						start = new Date();
+						start = performance.now();
 					}
 				}else {
 					if(((last_position_x <= x + 10 && last_position_x >= x - 10) && (last_position_y <= y + 10 && last_position_y >= y - 10)) || questionCode.indexOf("EZLE") == -1) {
@@ -182,12 +182,12 @@
 						if(isInStartingArea(x, y)) {
 							isDrawing = true;
 							firstmove = false;
-							start = new Date();
+							start = performance.now();
 						}
 					}else {
 						isDrawing = true;
 						firstmove = false;
-						start = new Date();
+						start = performance.now();
 					}
 				}else {
 					if(((last_position_x <= x + 10 && last_position_x >= x - 10) && (last_position_y <= y + 10 && last_position_y >= y - 10)) || questionCode.indexOf("EZLE") == -1) {
@@ -203,7 +203,7 @@
 			canvas.addEventListener('mouseup', (e) => {
 				if(isDrawing) {
 					pickups++;
-					date_of_last_pickup = new Date();
+					date_of_last_pickup = performance.now();
 					isDrawing = false;
 					var rect = e.target.getBoundingClientRect();
 				}
@@ -221,7 +221,7 @@
 			canvas.addEventListener('touchend', (e) => {
 				if(isDrawing) {
 					pickups++;
-					date_of_last_pickup = new Date();
+					date_of_last_pickup = performance.now();
 					isDrawing = false;
 				}
 			});

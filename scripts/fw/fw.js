@@ -32,7 +32,7 @@ function initFW() {
 function startFW() {
 	unLock();
 	$("#fw-target").css("display", "block");
-	start = new Date();
+	start = new performance.now();
 	activateClock();
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#next-button").css("display", "block");

@@ -237,7 +237,7 @@ function startDrag(entity, world) {
     all_moved = true;
     option_selected = true;
     if(!locked) {
-      time_mouse_down = new Date();
+      time_mouse_down = performance.now();
       if(SAT.pointInPolygon(cursor, entity.data)) {
         if(entity.data.calcPoints.length >= 20) {
           var first_point = V((entity.data.calcPoints[0]).x + entity.data.pos.x, (entity.data.calcPoints[0]).y + entity.data.pos.y);
@@ -338,7 +338,7 @@ function moveDrag(entity, world) {
 function endDrag(entity) {
   return function () {
     if(!locked) {
-      time_mouse_up = new Date();
+      time_mouse_up = performance.now();
       previous_angle = 0;
       invert = false;
       drag_rotation = false;

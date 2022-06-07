@@ -18,7 +18,7 @@ function initSF() {
 }
 
 function startSF() {
-	start = new Date();
+	start = performance.now();
 	easeItUp();	
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#feedback-button").css("display", "block");
@@ -38,7 +38,7 @@ function startSF() {
 }
 
 function evaluateSF() {
-	end = new Date();
+	end = performance.now();
 	var time_total = end - start;
 	//calculate how many items are wrong/correct/left out
 	var correct_crossed = $(".sd_correct").filter(function() {

@@ -26,8 +26,9 @@ function initTFZ() {
 		$("#proceed-button").css("display", "block");
 	}
 	activateSpeed();
-	start = new Date();
-	
+	//start = new Date();
+	start = performance.now();
+
 	$(".tnRadio").click(function() {
 		if(!option_selected) {
 			if(questionCode.indexOf("D") == -1 && questionCode.indexOf("V") == -1) {
@@ -53,7 +54,7 @@ function evaluateTFZ() {
 	var fileName = getFileName($(".tierfarben-img").attr("src"));
 	var animalName = getAnimalName(fileName);
 	var animalColor = checkAnimalColor(animalName);
-	var end = new Date();
+	var end = performance.now();
 	var duration = end - start;
 	var total;
 	var result;

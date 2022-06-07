@@ -8,7 +8,7 @@ let restart = false;
 let tap_counter = 0;
 let false_positives = 0;
 let reaction_times = new Array();
-let sun_start = new Date();
+let sun_start;
 
 function initRG() {
 	if(questionCode.indexOf("H") != -1) {
@@ -30,7 +30,7 @@ function initRG() {
 		$("#page-load-screen").css("display", "none");
 
 		$("#sun-img").on("click", function() {
-			let sun_end = new Date();
+			let sun_end = performance.now();
 			let reaction_time = sun_end - sun_start;
 			reaction_times.push(reaction_time);
 			item++;
@@ -92,7 +92,7 @@ function nextLoad() {
 		setTimeout(function() {
 			if(!restart) {
 				tap_counter = 0;
-				sun_start = new Date();
+				sun_start = performance.now();
 				$("#sun-img").fadeIn(0);
 			}
 		}, time_out);

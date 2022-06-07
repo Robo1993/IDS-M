@@ -26,7 +26,7 @@ function initME() {
 
 function startME() {
 	unLock();
-	start = new Date();
+	start = performance.now();
 	$("#tp-response-button").css("display", "block");
 	timeLimits();
 	activateClock();
@@ -39,7 +39,7 @@ function timeLimits() {
 			$(":root").css("--duration", "30s");
 			setTimeout(function() {
 				if(!locked) {
-					end = new Date();
+					end = performance.now();
 					evaluateME();
 				}
 			}, 30000);
@@ -47,7 +47,7 @@ function timeLimits() {
 			$(":root").css("--duration", "45s");
 			setTimeout(function() {
 				if(!locked) {
-					end = new Date();
+					end = performance.now();
 					evaluateME();
 				}
 			}, 45000);
@@ -55,7 +55,7 @@ function timeLimits() {
 			$(":root").css("--duration", "60s");
 			setTimeout(function() {
 				if(!locked) {
-					end = new Date();
+					end = performance.now();
 					evaluateME();
 				}
 			}, 60000);
@@ -66,7 +66,7 @@ function timeLimits() {
 			$(":root").css("--duration", "60s");
 			setTimeout(function() {
 				if(!locked) {
-					end = new Date();
+					end = performance.now();
 					evaluateME();
 				}
 			}, 60000);
@@ -74,7 +74,7 @@ function timeLimits() {
 			$(":root").css("--duration", "90s");
 			setTimeout(function() {
 				if(!locked) {
-					end = new Date();
+					end = performance.now();
 					evaluateME();
 				}
 			}, 90000);
@@ -82,7 +82,7 @@ function timeLimits() {
 			$(":root").css("--duration", "120s");
 			setTimeout(function() {
 				if(!locked) {
-					end = new Date();
+					end = performance.now();
 					evaluateME();
 				}
 			}, 120000);

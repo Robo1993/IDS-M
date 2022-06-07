@@ -129,7 +129,7 @@ function initFN() {
 	});
 
 	$("#canvas-container").on("touchend", function(e) {
-		time_touch_end = new Date();
+		time_touch_end = performance.now();
 		if(time_touch_end - time_touch_start <= 150) {
 			var rect = canvass.canvas.getBoundingClientRect();
 			var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
@@ -218,7 +218,7 @@ function startFN() {
 	}else {
 		$("#proceed-button").css("display", "block");
 	}
-	start = new Date();
+	start = performance.now();
 	TimeRestrictions();
 	activateClock();
 }
@@ -274,7 +274,7 @@ function abort() {
 }
 
 function evaluateFN() {
-	end = new Date();
+	end = performance.now();
 	let time = end- start;
 
 	let eval_points = [];

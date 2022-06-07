@@ -34,7 +34,8 @@ function initVM() {
 }
 
 function startVM() {
-	start = new Date();
+	//start = new Date();
+	start = performance.now();
 	init();
 	activateSpeed();
 	$("#tp-response-button").css("display", "block");
