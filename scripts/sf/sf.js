@@ -1,4 +1,5 @@
 let tp_input = false;
+let pause_pressed = false;
 function initSF() {
 
 	unLock();
@@ -17,6 +18,11 @@ function initSF() {
 			}
 		}
 	});
+
+	$("#pause-button").click(function(){
+		pause_pressed = true;
+		$("#pause-button").css("display", "none");
+	});
 }
 
 function startSF() {
@@ -30,10 +36,12 @@ function startSF() {
 		//var id = setTimeout(function(){alert('hi');}, 3000);
 		//clearTimeout(id);
 		$(":root").css("--duration", "5s");
+		$("#pause-button").css("display", "block");
 		setTimeout(function() {
 			locked = true;
+			$("#pause-button").css("display", "none");
 			evaluateAA();
-			if(tp_input) {
+			if(tp_input && !pause_pressed) {
 				$("#proceed-button").click();
 			}else {
 				$("#proceed-button").css("display", "block");
