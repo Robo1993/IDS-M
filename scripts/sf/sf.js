@@ -1,3 +1,4 @@
+let tp_input = false;
 function initSF() {
 
 	unLock();
@@ -8,6 +9,7 @@ function initSF() {
 
 	$(".sd_img").click(function(){
 		if(locked == false) {
+			tp_input = true;
 			if($(this).css("background-color") == "rgba(0, 0, 0, 0)") {
 				$(this).css({"background-color":"#ccc"});
 			}else {
@@ -31,7 +33,11 @@ function startSF() {
 		setTimeout(function() {
 			locked = true;
 			evaluateAA();
-			$("#proceed-button").click();
+			if(tp_input) {
+				$("#proceed-button").click();
+			}else {
+				$("#proceed-button").css("display", "block");
+			}
 		}, 5000);
 	}
 	activateClock();
