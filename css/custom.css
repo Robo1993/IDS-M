@@ -537,6 +537,11 @@ button svg {
     margin: auto;
 }
 
+#pause-button {
+    display: none;
+    margin: auto;
+}
+
 #media-play-button > svg {
     width: 25px;
     height: 25px;
