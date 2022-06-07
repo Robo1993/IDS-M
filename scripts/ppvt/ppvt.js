@@ -126,7 +126,7 @@ function startPPVT() {
 	audioPPVT.play();
 
 	audioPPVT.addEventListener("ended", function() {
-		$("#media-play-button").css("display", "none");
+		$("#media-play-button").css("display", "block");
 	});
 
 	// audioPPVT.addEventListener("ended", function() {
@@ -216,6 +216,7 @@ function fillInImg() {
 
 function evaluatePPVT() {
 	$("#tp-response-button").css("display", "none");
+	$("#media-play-button").css("display", "none");
 	let item_src = "";
 	$("td").each(function() {
 		if($(this).css("background-color") == "rgb(204, 204, 204)") {
