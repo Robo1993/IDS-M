@@ -106,6 +106,10 @@ function initPPVT() {
 		$("#tp-response-button").css("display", "block");
 	});
 
+	$("#media-play-button").on("click", function() {
+		audioPPVT.play();
+	});
+
 	setupPPVT();
 }
 
@@ -120,6 +124,10 @@ function startPPVT() {
 	audioPPVT.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/ppvt/set" + set + "/" + item_counter + ".mp3");
 	$("#ppvt-table").css("display", "block");
 	audioPPVT.play();
+
+	audioPPVT.addEventListener("ended", function() {
+		$("#media-play-button").css("display", "none");
+	});
 
 	// audioPPVT.addEventListener("ended", function() {
 	// 	$("#tp-response-button").css("display", "block");
