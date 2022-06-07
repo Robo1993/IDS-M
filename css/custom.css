@@ -428,6 +428,7 @@ Buttons
     color: #fff !important;
     background-color: var(--theme-colour) !important;
     border-color: var(--theme-colour) !important;
+    margin-right: .7rem !important;
 }
 
 .answers .btn-primary {
@@ -537,6 +538,10 @@ button svg {
     margin: auto;
 }
 
+#pause-button > svg {
+    width: 25px;
+    height: 25px;
+}
 #pause-button {
     display: none;
     margin: auto;
