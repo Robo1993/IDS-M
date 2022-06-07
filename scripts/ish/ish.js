@@ -8,7 +8,7 @@ function initISH() {
 		$(".ish-button").each(function(e) {
 			$(this).css("border", "");
 		});
-		$(this).css("border", "1px solid #000")
+		$(this).css("border", "3px solid #555")
 		$("#answer"+ questionID +"ColorBlindness").attr("value", $(this).attr("value"));
 		$("#proceed-button").css("display", "block");
 	});
