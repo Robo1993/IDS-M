@@ -51,7 +51,8 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-drag: none;
-    font-family: Arial !important;
+    /**font-family: Arial !important;**/
+    font-family: 'Roboto', sans-serif !important;
 }
 
 #page-load-screen {
@@ -294,6 +295,86 @@ CSS for the Test-Menu
 
 /*
 --------------------------------------------------------------------------------
+Layout for the Motivation Scale
+--------------------------------------------------------------------------------
+*/
+
+#motivation-scale {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.motivation-scale-item {
+    width: 8rem;
+    height: 8rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.motivation-scale-item svg {
+    width: 4rem;
+    height: 4rem;
+    fill: var(--eval-color-missed);
+}
+
+/*
+--------------------------------------------------------------------------------
+Layout for the Sketch Book
+--------------------------------------------------------------------------------
+*/
+
+#sketch-book {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    position: absolute;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#sketch-container {
+    margin-top: -35rem;
+    width: 60vw;
+    padding: 4rem;
+    box-shadow: var(--theme-colour) 0px 0px 12px 2px;
+}
+
+#sketch-container h2 {
+    line-height: 2;
+}
+
+#sketch-container textarea {
+    font-size: 13pt;
+}
+
+#sketch-button-container {
+    margin-top: 1rem;
+}
+
+.sketch-btn {
+    color: #000 !important;
+    margin-right: 1rem;
+}
+
+#sketch-book-cancel {
+    background-color: var(--eval-color-false) !important;
+    border-color: var(--eval-color-false) !important;
+}
+
+#sketch-book-comment {
+    background-color: var(--eval-color-correct) !important;
+    border-color: var(--eval-color-correct) !important;
+}
+
+/*
+--------------------------------------------------------------------------------
 General Layout for Subtests
 --------------------------------------------------------------------------------
 */
@@ -428,7 +509,6 @@ Buttons
     color: #fff !important;
     background-color: var(--theme-colour) !important;
     border-color: var(--theme-colour) !important;
-    margin-right: .7rem !important;
 }
 
 .answers .btn-primary {
@@ -577,11 +657,19 @@ button svg {
     flex-direction: row;
 }
 
+#buttons-top-middle .btn-unib {
+    margin-right: .7rem !important;
+}
+
 #buttons-top-right {
     width: 6rem;
     height: 6rem;
     display: flex;
     flex-direction: row;
+}
+
+#sketch-book-button {
+    display: none;
 }
 
 /*

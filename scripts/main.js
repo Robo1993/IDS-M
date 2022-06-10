@@ -147,6 +147,50 @@ $( document ).ready(function() {
 		checkOrientation();
 	});
 
+	$("#sketch-book-button").on("click", function() {
+		let comment = $("#answer"+ questionID +"Comment").val();
+		let motivation = $("#answer"+ questionID +"Motivation").val();
+		$(".motivation-scale-item[name='"+motivation+"'").css("background-color", "#e3e3e3");
+		if(comment != "") {
+			$("#sketch-book-textarea").val(comment);
+			$("#sketch-book-comment").text("Update");
+		}else {
+			$("#sketch-book-comment").text("Comment");
+		}
+		$("#sketch-book").css("display", "flex");
+		$("#sketch-book").hide();
+		$("#sketch-book").fadeIn();
+		$(this).css("display", "none");
+	});
+
+	$("#sketch-book-cancel").on("click", function() {
+		$("#sketch-book").fadeOut();
+		$("#sketch-book-button").css("display", "block");
+	});
+
+	$("#sketch-book-comment").on("click", function() {
+		let comment = $("#sketch-book-textarea").val();
+		let m_s = $('.motivation-scale-item').filter(function(){
+										var color = $(this).css("background-color");
+										return color === "rgb(227, 227, 227)" ;
+									});
+		let motivation = $(m_s).attr("name");
+		$("#sketch-book").fadeOut();
+		$("#sketch-book-button").css("display", "block");
+		$("#answer"+ questionID +"Comment").attr("value", comment);
+		$("#answer"+ questionID +"Motivation").attr("value", motivation);
+	});
+
+	$(".motivation-scale-item").on("click", function() {
+		let background = $(this).css("background-color");
+		if(background == "rgb(227, 227, 227)") {
+			$(".motivation-scale-item").css('background-color', "");
+		}else {
+			$(".motivation-scale-item").css('background-color', "");
+			$(this).css("background-color", "#e3e3e3");
+		}
+	});
+
 	$("#skip-button").on("click", function() {
 		showSkip();
 	});
@@ -198,6 +242,9 @@ function setup() {
 	audioWrong.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/button_audio/Wrong/wrong.wav");
 
 	checkOrientation();
+
+	let test_code = getTestCodeFormal();
+	$("#sketch-book-test-code").text(test_code);
 
 	if(questionCode.indexOf("Q") != -1 || questionCode.indexOf("H") != -1 && questionCode.indexOf("ISH") == -1) {
 		$("#skip-button").css("display", "none");
@@ -448,6 +495,7 @@ function progressTest() {
 	let test_code = getTestCode();
 	localStorage.setItem("idsm/" + test_code, "true");
 	$("#ids-m-menu-box").css("display", "flex");
+	$("#sketch-book-button").css("display", "block");
 	initMenu();
 	$("#background-banner").css("display", "block");
 	$("#page-load-screen").css("display", "none");
@@ -604,6 +652,34 @@ function getTestCode() {
 		return "ish";
 	}else if(questionCode.indexOf("MT") != -1) {
 		return "mt";
+	}
+}
+
+function getTestCodeFormal() {
+	if(questionCode.indexOf("AA") != -1) {
+		return "Aufmerksamkeit aufteilen";
+	}else if(questionCode.indexOf("FN") != -1) {
+		return "Figuren nachlegen";
+	}else if(questionCode.indexOf("FW") != -1) {
+		return "Figuren wiedererkennen";
+	}else if(questionCode.indexOf("ME") != -1) {
+		return "Matrizen erkennen";
+	}else if(questionCode.indexOf("RG") != -1) {
+		return "Reaktiongeschwindigkeit";
+	}else if(questionCode.indexOf("SF") != -1) {
+		return "Symbole finden";
+	}else if(questionCode.indexOf("TFZ") != -1) {
+		return "Tierfarben zuordnen";
+	}else if(questionCode.indexOf("VM") != -1) {
+		return "Visuomotorik";
+	}else if(questionCode.indexOf("PPVT") != -1) {
+		return "PPVT";
+	}else if(questionCode.indexOf("ISH") != -1) {
+		return "Ishihara";
+	}else if(questionCode.indexOf("MT") != -1) {
+		return "Mitarbeit in der Testsituation";
+	}else if(questionCode.indexOf("VM_Eval") != -1) {
+		return "Visuomotorik Evaluation";
 	}
 }
 
