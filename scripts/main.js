@@ -174,7 +174,7 @@ $( document ).ready(function() {
 										var color = $(this).css("background-color");
 										return color === "rgb(227, 227, 227)" ;
 									});
-		let motivation = $(m_s).attr("name");
+		let motivation = ($(m_s).attr("name") != null) ? $(m_s).attr("name") : "";
 		$("#sketch-book").fadeOut();
 		$("#sketch-book-button").css("display", "block");
 		$("#answer"+ questionID +"Comment").attr("value", comment);
