@@ -166,6 +166,7 @@ $( document ).ready(function() {
 	$("#sketch-book-cancel").on("click", function() {
 		$("#sketch-book").fadeOut();
 		$("#sketch-book-button").css("display", "block");
+		$(".motivation-scale-item").css('background-color', "");
 	});
 
 	$("#sketch-book-comment").on("click", function() {
