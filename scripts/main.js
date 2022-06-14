@@ -465,7 +465,9 @@ function next() {
 }
 
 function checkOrientation() {
-	if(questionCode.indexOf("I99") != -1) {
+	if($("#ids-m-menu-box").css("display") != "none") {
+		horizontalAlert();
+	}else if(questionCode.indexOf("I99") != -1) {
 		horizontalAlert();
 	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
 		horizontalAlert();
@@ -493,6 +495,8 @@ function progressTest() {
 	// order_counter++;
 	// localStorage.setItem("idsm/order_counter", order_counter);
 	// window.location.replace(test_order[counter_counter]);
+	horizontalAlert();
+	$("#buttons-top-middle .btn").css("display", "none")
 	let test_code = getTestCode();
 	localStorage.setItem("idsm/" + test_code, "true");
 	$("#ids-m-menu-box").css("display", "flex");
