@@ -5,12 +5,14 @@
 }
 #speed {
   display: none;
-  width: 300px;
-  height: 300px;
   position: absolute;
   top: -1rem;
   left: -4rem;
   transform: scale(.5);
+}
+#speed img {
+  width: 35rem;
+  height: 35rem;
 }
 #clock {
   display: none;
