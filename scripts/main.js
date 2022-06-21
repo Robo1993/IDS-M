@@ -210,8 +210,10 @@ $( document ).ready(function() {
 		let code = localStorage.getItem("idsm/code");
 		let input = $("#skip-box-input-code").val();
 		if(input == code) {
-			progressTest();
-			hideSkip();
+			localStorage.setItem("idsm/skip", "true");
+			//progressTest();
+			//hideSkip();
+			skipTest();
 		}else {
 			$("#skip-alert-wrong-code").css("display", "block");
 			$("#skip-box-input-code").val("");
@@ -295,6 +297,16 @@ function setup() {
 		start = performance.now();
 		initialize();
 	}
+}
+
+function skipTest() {
+	$(".answers input").each(function() {
+		$(this).val("skipped");
+	});
+	$(".answers textarea").each(function() {
+		$(this).val("skipped");
+	});
+	$("#proceed-button").click();
 }
 
 function initialize() {
