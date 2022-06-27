@@ -6,7 +6,11 @@ function initSF() {
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#clock").css("display", "block");
 	//}
-	startSF();
+	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
+		$("#play-button").css("display", "none");
+	}else {
+		startSF();
+	}
 
 	$(".sd_img").click(function(){
 		if(locked == false) {
