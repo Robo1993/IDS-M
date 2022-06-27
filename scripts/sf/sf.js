@@ -46,7 +46,7 @@ function startSF() {
 			}else {
 				$("#proceed-button").css("display", "block");
 			}
-		}, 5000);
+		}, 3000);
 	}
 	activateClock();
 }
