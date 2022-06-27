@@ -93,7 +93,7 @@ function evaluateVM() {
 		}
 		feedbackVM();
 	}else {
-		$("#proceed-button").css("display", "block");
+		$("#proceed-button").on("click");
 	}
 }
 
