@@ -43,7 +43,6 @@ function initTFZ() {
 			evaluateTFZ();
 		}
 	});
-
 }
 
 //checks if the selected color matches to the questions animal
@@ -76,7 +75,8 @@ function evaluateTFZ() {
 	$("#answer"+ questionID +"Time").attr("value", duration);
 	//move to next question
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-		$("#feedback-button").css("display", "block");
+		$("#proceed-button").css("display", "block");
+		feedback();
 	}else {
 		$("#ls-button-submit").click();
 	}
