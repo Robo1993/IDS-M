@@ -19,6 +19,8 @@ let prevent = false;
 
 let feedback_mode = false;
 
+const menu = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
+
 const ppvt = "https://survey-1.psychologie.unibas.ch/roman/index.php/243727?lang=de";
 const ish = "https://survey-1.psychologie.unibas.ch/roman/index.php/518669?lang=de";
 const rg = "https://survey-1.psychologie.unibas.ch/roman/index.php/258331?lang=de";
@@ -292,6 +294,21 @@ function setup() {
 		// 	order_counter = 0;
 		// }
 		progressTest();
+	}else if(questionCode.indexOf("Menu") != -1) {
+		horizontalAlert();
+		let last_test = getUrlParameter("lasttest");
+		localStorage.setItem("idsm/" + last_test, "true");
+		$("#buttons-top-middle .btn").css("display", "none")
+		let test_code = getTestCode();
+		localStorage.setItem("idsm/" + test_code, "true");
+		$("#ids-m-menu-box").css("display", "flex");
+		$("#sketch-book-button").css("display", "block");
+		initMenu();
+		$("#answer"+ questionID + "Code").attr("value", localStorage.getItem("idsm/code"));
+		$("#answer"+ questionID + "Test").attr("value", localStorage.getItem(last_test));
+		$("#background-banner").css("display", "block");
+		$("#page-load-screen").css("display", "none");
+		reLock();
 	}else {
 		//start = new Date();
 		start = performance.now();
@@ -306,7 +323,9 @@ function skipTest() {
 	$(".answers textarea").each(function() {
 		$(this).val("skipped");
 	});
-	$("#proceed-button").click();
+	let testcode = getTestCode();
+	let menu_url = menu + "&lasttest=" +testcode;
+	window.location.href = menu_url;
 }
 
 function initialize() {
@@ -407,6 +426,7 @@ function initMenu() {
 			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().css("background-color", "#ddd");
 		}
 	});
+	$("#ids-m-menu-box").css("display", "flex");
 }
 
 function getByIndex(d_array, str) {
@@ -507,16 +527,19 @@ function progressTest() {
 	// order_counter++;
 	// localStorage.setItem("idsm/order_counter", order_counter);
 	// window.location.replace(test_order[counter_counter]);
-	horizontalAlert();
-	$("#buttons-top-middle .btn").css("display", "none")
-	let test_code = getTestCode();
-	localStorage.setItem("idsm/" + test_code, "true");
-	$("#ids-m-menu-box").css("display", "flex");
-	$("#sketch-book-button").css("display", "block");
-	initMenu();
-	$("#background-banner").css("display", "block");
-	$("#page-load-screen").css("display", "none");
-	reLock();
+	// horizontalAlert();
+	// $("#buttons-top-middle .btn").css("display", "none")
+	// let test_code = getTestCode();
+	// localStorage.setItem("idsm/" + test_code, "true");
+	// $("#ids-m-menu-box").css("display", "flex");
+	// $("#sketch-book-button").css("display", "block");
+	// initMenu();
+	// $("#background-banner").css("display", "block");
+	// $("#page-load-screen").css("display", "none");
+	// reLock();
+	let testcode = getTestCode();
+	let menu_url = menu + "&lasttest=" +testcode;
+	window.location.href = menu_url;
 }
 
 function expertIndication() {
@@ -727,3 +750,19 @@ function getQuestionType() {
 		return "F";
 	}
 }
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+};
