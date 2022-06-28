@@ -1,13 +1,12 @@
 let tp_input = false;
 let pause_pressed = false;
 function initSF() {
-
-	unLock();
+	$("#page-load-screen").css("display", "none");
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#clock").css("display", "block");
 	//}
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-		$("#play-button").css("display", "none");
+		$("#play-button").css("display", "block");
 	}else {
 		startSF();
 	}
@@ -31,15 +30,16 @@ function initSF() {
 
 function startSF() {
 	start = performance.now();
+	unLock();
 	easeItUp();	
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#feedback-button").css("display", "block");
-		$(":root").css("--duration", "15s");
+		$(":root").css("--duration", "10s");
 	}else {
 		//Clearing Timeout for pausing or stopping auto-proceed
 		//var id = setTimeout(function(){alert('hi');}, 3000);
 		//clearTimeout(id);
-		$(":root").css("--duration", "5s");
+		$(":root").css("--duration", "3s");
 		$("#pause-button").css("display", "block");
 		setTimeout(function() {
 			locked = true;
