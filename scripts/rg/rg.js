@@ -17,10 +17,10 @@ function initRG() {
 		unLock();
 		$("#proceed-button").css("display", "block");
 	}else {
-		$("#speed").css("display", "block");
 		if(questionCode.indexOf("D00") != -1 || questionCode.indexOf("V00") != -1) {
 			delay = pseudo_delay;
 		}else if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
+			$("#speed").css("display", "block");
 			delay = demo_delay;
 		}else {
 			delay = standard_delay;
