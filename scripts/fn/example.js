@@ -34,7 +34,7 @@ function initializeFNCore() {
   // Alias a few things in SAT.js to make the code shorter
   V = function (x, y) { return new SAT.Vector(x, y); };
   P = function (pos, points) { return new SAT.Polygon(pos, points); };
-  //var C = function (pos, r) { return new SAT.Circle(pos, r); };
+  CC = function (pos, r) { return new SAT.Circle(pos, r); };
   B = function (pos, w, h) { return new SAT.Box(pos, w, h); };
   H = function (pos, r) { 
       var points = [];
@@ -244,17 +244,17 @@ function startDrag(entity, world) {
           var last_point = V((entity.data.calcPoints[entity.data.calcPoints.length - 1]).x + entity.data.pos.x, (entity.data.calcPoints[entity.data.calcPoints.length - 1]).y + entity.data.pos.y);
           //important for quarter-circles
           var second_point = V((entity.data.calcPoints[1]).x + entity.data.pos.x, (entity.data.calcPoints[1]).y + entity.data.pos.y);
-          if(Math.abs(cursor.x - first_point.x) <= 30 && Math.abs(cursor.y - first_point.y) <= 30) {
+          if(Math.abs(cursor.x - first_point.x) <= 45 && Math.abs(cursor.y - first_point.y) <= 45) {
             drag_rotation = true;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
             original_angle = entity.data.angle;
-          }else if(Math.abs(cursor.x - second_point.x) <= 30 && Math.abs(cursor.y - second_point.y) <= 30) {
+          }else if(Math.abs(cursor.x - second_point.x) <= 45 && Math.abs(cursor.y - second_point.y) <= 45) {
             drag_rotation = true;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
             original_angle = entity.data.angle;
-          }else if(Math.abs(cursor.x - last_point.x) <= 30 && Math.abs(cursor.y - last_point.y) <= 30) {
+          }else if(Math.abs(cursor.x - last_point.x) <= 45 && Math.abs(cursor.y - last_point.y) <= 45) {
             drag_rotation = true;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
@@ -308,13 +308,14 @@ function moveDrag(entity, world) {
         var old_angle = entity.data.angle;
         //log_total.push(old_angle + dAngle);
         total_angle += dAngle;
-        if(total_angle >= 0.261799) {
-          entity.data.setAngle(old_angle + 0.261799);
-          total_angle = 0;
-        }else if(total_angle <= -0.261799) {
-          entity.data.setAngle(old_angle - 0.261799);
-          total_angle = 0;
-        }
+        entity.data.setAngle(old_angle + dAngle);
+        // if(total_angle >= 0.261799) {
+        //   entity.data.setAngle(old_angle + 0.261799);
+        //   total_angle = 0;
+        // }else if(total_angle <= -0.261799) {
+        //   entity.data.setAngle(old_angle - 0.261799);
+        //   total_angle = 0;
+        // }
         
         //entity.data.setAngle(roundToNearest(total_angle, 0.261799));
         old_cursor.x = cursor.x; old_cursor.y = cursor.y;
@@ -342,6 +343,7 @@ function endDrag(entity) {
       previous_angle = 0;
       invert = false;
       drag_rotation = false;
+      entity.data.setAngle(Math.round(entity.data.angle/0.261799) * 0.261799);
       moves++;
       entity.updateDisplay();
       world.simulate();
@@ -506,6 +508,7 @@ Entity.prototype = {
   },
   // Call this to update the display after changing the underlying data.
   updateDisplay: function () {
+    drawInnerCircles();
     if (this.data instanceof SAT.Circle) {
       this.displayAttrs.cx = this.data.pos.x;
       this.displayAttrs.cy = this.data.pos.y;

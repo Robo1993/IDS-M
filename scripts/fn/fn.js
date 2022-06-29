@@ -394,3 +394,18 @@ function rowCounter() {
 		icon_rows = 3;
 	}
 }
+
+function drawInnerCircles() {
+    //const context = canvass.getContext('2d');
+    // $("path[fill='#30f040']").remove();
+    // Object.keys(world.entities).forEach(function(key) {
+    //   	entity = world.entities[key];
+    //   	const centerX = entity.data.pos.x;
+	   //  const centerY = entity.data.pos.y;
+	   //  const radius = 15;
+
+	   //  //const circle = '<circle cx="' + centerX + '" cy="' + centerY + '" r="15" fill="blue"/>';
+	   //  const circle = '<path fill="#30f040" stroke="#30f040" d="M' + centerX + ', ' + centerY + ' m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>'
+	   //  $("#fn-canvas-container svg").append(circle);
+    // });
+}
