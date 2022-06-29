@@ -22,7 +22,10 @@ let audioCtx;
 
 function initAA() {
 
-	if(questionCode.indexOf("0UB") != -1) {
+	if(questionCode.indexOf("H") != -1) {
+		unLock();
+		$("#proceed-button").css("display", "block");
+	}else if(questionCode.indexOf("0UB") != -1) {
 		animalSounds.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/aa/animal_sounds.mp3")
 		unLock();
 		$("#media-play-button").css("display", "block");
