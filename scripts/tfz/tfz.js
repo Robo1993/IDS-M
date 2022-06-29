@@ -9,9 +9,9 @@ function initTFZ() {
 	}else {
 		$(":root").css("--duration", "5s");
 	}
-	//if(questionCode.indexOf("E") == -1) {
+	if(questionCode.indexOf("E") != -1 || questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#speed").css("display", "block");
-	//}
+	}
 
 	button_exceptions.forEach(function(e) {
 		if(questionCode.indexOf(e) != -1) {
