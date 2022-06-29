@@ -11,7 +11,9 @@ function initVM() {
 		$("#proceed-button").css("display", "block");
 	}else {
 		$("#play-button").css("display", "block");
-		$("#speed").css("display", "block");
+		if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
+			$("#speed").css("display", "block");
+		}
 	}
 
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
