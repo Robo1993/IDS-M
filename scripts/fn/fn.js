@@ -395,17 +395,53 @@ function rowCounter() {
 	}
 }
 
-function drawInnerCircles() {
+function drawInnerCircle(entity) {
     //const context = canvass.getContext('2d');
     // $("path[fill='#30f040']").remove();
     // Object.keys(world.entities).forEach(function(key) {
     //   	entity = world.entities[key];
-    //   	const centerX = entity.data.pos.x;
-	   //  const centerY = entity.data.pos.y;
-	   //  const radius = 15;
 
-	   //  //const circle = '<circle cx="' + centerX + '" cy="' + centerY + '" r="15" fill="blue"/>';
-	   //  const circle = '<path fill="#30f040" stroke="#30f040" d="M' + centerX + ', ' + centerY + ' m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>'
-	   //  $("#fn-canvas-container svg").append(circle);
+    //const svg = $("#fn-canvas-container svg");
+    $("circle").remove();
+
+	// const centerX = entity.data.pos.x;
+ //    const centerY = entity.data.pos.y;
+ //    const radius = 15;
+
+	// // Creating circle and appending it
+	// const circle = document.createElement('circle');
+
+	// circle.setAttribute('cx', `${centerX}`);
+	// circle.setAttribute("cy", `${centerY}`);
+	// circle.setAttribute("r", `${radius}`);
+	// circle.setAttribute("fill", "black");
+
+	// svg.append(circle);
+
+    //
+    const centerX = entity.data.pos.x;
+	const centerY = entity.data.pos.y;
+	//const radius = 15;
+	drawCircle(centerX, centerY, "black");
+	   //const circle = '<circle cx="' + centerX + '" cy="' + centerY + '" r="15" fill="black" />';
+	   //const circle = '<path fill="#30f040" stroke="#30f040" d="M' + centerX + ', ' + centerY + ' m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>'
+	   //$("#fn-canvas-container svg").text(circle);
     // });
+
+    // var circle= makeSVG('circle', {cx: centerX, cy: centerY, r: radius, stroke: 'black', 'stroke-width': 2, fill: 'black'});
+    // document.getElementsByTagName("svg")[0].appendChild(circle);
 }
+
+function SVG(tag) {
+    return document.createElementNS('http://www.w3.org/2000/svg', tag);
+}
+
+var drawCircle = function(x,y,color) {
+        var $svg = $("svg");
+        $(SVG('circle'))
+            .attr('cx', x)
+            .attr('cy', y)
+            .attr('r', 15)
+            .attr('fill', color)
+            .appendTo($svg);
+};

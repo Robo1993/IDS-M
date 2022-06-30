@@ -283,6 +283,7 @@ function startDrag(entity, world) {
 // Create a Raphael move drag handler for specified entity
 function moveDrag(entity, world) {
   return function (dx, dy, x, y, e) {
+    //drawInnerCircle(entity);
     var entity_old_x = entity.data.pos.x;
     var entity_old_y = entity.data.pos.y;
 
@@ -508,7 +509,6 @@ Entity.prototype = {
   },
   // Call this to update the display after changing the underlying data.
   updateDisplay: function () {
-    drawInnerCircles();
     if (this.data instanceof SAT.Circle) {
       this.displayAttrs.cx = this.data.pos.x;
       this.displayAttrs.cy = this.data.pos.y;
