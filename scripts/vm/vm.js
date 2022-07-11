@@ -95,7 +95,7 @@ function evaluateVM() {
 		}
 		feedbackVM();
 	}else {
-		$("#proceed-button").on("click");
+		$("#ls-button-submit").click();
 	}
 }
 
