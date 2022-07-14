@@ -1,5 +1,6 @@
 let locked = true;
 let option_selected = false;
+let clock_clone;
 
 let questionID;
 let questionCode;
@@ -247,6 +248,8 @@ function setup() {
 	audioWrong.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/button_audio/Wrong/wrong.wav");
 
 	checkOrientation();
+
+	clock_clone = $("#clock").clone(true)[0];
 
 	let test_code = getTestCodeFormal();
 	$("#sketch-book-test-code").text(test_code);

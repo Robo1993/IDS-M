@@ -172,7 +172,7 @@ function calcAnimals() {
 		let string = $("#animal-sounds").text();
 		let letters = string.split(",");
 		animals_count = letters.length;
-		$(":root").css("--duration", animals_count * 2.5 + "s");
+		$(":root").css("--duration", (animals_count * 2.5)/$(".slide").length + "s");
 	}else {
 		$(":root").css("--duration", "5s");
 	}
@@ -246,7 +246,11 @@ function TransitionSlide() {
 	let last_slide = $(".slide")[page_count - 1];
 	page_count++;
 	$(last_slide).css("display", "none");
+	$("#clock").remove();
+	$(".question-area").prepend(clock_clone);
+	$("#clock").css("display", "block"); 
 	$(slide).css("display", "block");
+	activateClock();
 	if(page_count == $(".slide").length) {
 		abortTimeout();
 	}else {
@@ -333,7 +337,7 @@ function evaluateAA() {
 
 function renderAudio() {
 	$(animalSounds).trigger("play");
-	playTime = performance.now() - 2500;
+	playTime = performance.now() - 5000;
 	animalSounds.ontimeupdate = function() {audioLoop()};
 }
 
