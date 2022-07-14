@@ -162,7 +162,9 @@ function startAA() {
 
 		//animalSounds.onloadeddata = function() {
 			renderAudio();
-			Slide();
+			if($(".slide").length > 0) {
+				Slide();
+			}
 		//};
 	}else {
 		activateClock();
@@ -254,7 +256,7 @@ function TransitionSlide() {
 	$("#clock").css("display", "block"); 
 	$(slide).css("display", "block");
 	activateClock();
-	if(page_count == $(".slide").length && page_count > 0) {
+	if(page_count == $(".slide").length) {
 		abortTimeout();
 	}else {
 		tid = setTimeout(TransitionSlide, transition_time);
