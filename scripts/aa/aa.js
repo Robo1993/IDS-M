@@ -254,7 +254,7 @@ function TransitionSlide() {
 	$("#clock").css("display", "block"); 
 	$(slide).css("display", "block");
 	activateClock();
-	if(page_count == $(".slide").length) {
+	if(page_count == $(".slide").length && page_count > 0) {
 		abortTimeout();
 	}else {
 		tid = setTimeout(TransitionSlide, transition_time);
