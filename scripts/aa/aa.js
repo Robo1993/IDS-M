@@ -29,6 +29,9 @@ function initAA() {
 		animalSounds.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/aa/animal_sounds.mp3")
 		unLock();
 		$("#media-play-button").css("display", "block");
+		if(questionCode.indexOf("D00") == -1) {
+			$("#clock").css("display", "block");
+		}
 	}else {
 		if(questionCode.indexOf("D01") != -1 || questionCode.indexOf("V01") != -1) {
 			$("#clock").css("display", "block");
@@ -102,7 +105,6 @@ function initAA() {
 
 	$("#media-play-button").on("click", function() {
 		if(questionCode.indexOf("D00") != -1) {
-			activateClock();
 			$("#proceed-button").css("display", "block");
 			animalSounds.currentTime = 10;
 			var playPromise = $(animalSounds).trigger("play");
