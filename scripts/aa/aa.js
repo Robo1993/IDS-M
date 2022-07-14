@@ -102,6 +102,7 @@ function initAA() {
 
 	$("#media-play-button").on("click", function() {
 		if(questionCode.indexOf("D00") != -1) {
+			activateClock();
 			$("#proceed-button").css("display", "block");
 			animalSounds.currentTime = 10;
 			var playPromise = $(animalSounds).trigger("play");
