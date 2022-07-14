@@ -25,19 +25,12 @@ function initAA() {
 	if(questionCode.indexOf("H") != -1) {
 		unLock();
 		$("#proceed-button").css("display", "block");
-	}else if(questionCode.indexOf("0UB") != -1) {
+	}else if(questionCode.indexOf("0UBD00") != -1) {
 		animalSounds.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/aa/animal_sounds.mp3")
 		unLock();
 		$("#media-play-button").css("display", "block");
-		if(questionCode.indexOf("D00") == -1) {
-			$("#clock").css("display", "block");
-		}
 	}else {
-		if(questionCode.indexOf("D01") != -1 || questionCode.indexOf("V01") != -1) {
-			$("#clock").css("display", "block");
-			unLock();
-			startAA();
-		}else if(questionCode.indexOf("D02") != -1 || questionCode.indexOf("V02") != -1) {
+		if(questionCode.indexOf("D02") != -1 || questionCode.indexOf("V02") != -1) {
 			$("#clock").css("display", "block");
 			$("#horse-button").css("display", "block");
 			//initSlider();
@@ -116,7 +109,7 @@ function initAA() {
 				}, 2500);
 			}
 		}else {
-			$("#time-pointer").addClass("time-pointer-animation-infinite");
+			//$("#time-pointer").addClass("time-pointer-animation-infinite");
 			$("#media-play-button").css("display", "none");
 			locked = false;
 			animal_disabler = false;
@@ -176,8 +169,9 @@ function calcAnimals() {
 	if($("#animal-sounds").length) {
 		let string = $("#animal-sounds").text();
 		let letters = string.split(",");
+		let pages = ($(".slide").length > 0) ? $(".slide").length : 1;
 		animals_count = letters.length;
-		$(":root").css("--duration", (animals_count * 2.5)/$(".slide").length + "s");
+		$(":root").css("--duration", (animals_count * 2.5)/pages + "s");
 	}else {
 		$(":root").css("--duration", "5s");
 	}
