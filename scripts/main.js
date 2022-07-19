@@ -203,6 +203,10 @@ $( document ).ready(function() {
 		$("#skip-alert-wrong-code").css("display", "none");
 	});
 
+	$("#skip-box-reason").on("input", function() {
+		$("#skip-alert-no-reason").css("display", "none");
+	});
+
 	$("#skip-cancel").on("click", function() {
 		hideSkip();
 		$("#skip-alert-wrong-code").css("display", "none");
@@ -212,25 +216,42 @@ $( document ).ready(function() {
 	$("#skip-proceed").on("click", function() {
 		let code = localStorage.getItem("idsm/code");
 		let input = $("#skip-box-input-code").val();
-		if(input == code) {
+		let reason = $("#skip-box-reason").val();
+		let code_check = (input == code) ? true : false;
+		let reason_check = (reason != "") ? true : false;
+		if(code_check && reason_check) {
 			localStorage.setItem("idsm/skip", "true");
+			localStorage.setItem("idsm/skip_reason", reason);
 			//progressTest();
 			//hideSkip();
 			skipTest();
 		}else {
-			$("#skip-alert-wrong-code").css("display", "block");
-			$("#skip-box-input-code").val("");
+			if(!code_check) {
+				$("#skip-alert-wrong-code").css("display", "block");
+				$("#skip-box-input-code").val("");
+			}
+			if(!reason_check) {
+				$("#skip-alert-no-reason").css("display", "block");
+			}
 		}
 	});
 
 	$("#skip-abort").on("click", function() {
 		let code = localStorage.getItem("idsm/code");
 		let input = $("#skip-box-input-code").val();
-		if(input == code) {
+		let reason = $("#skip-box-reason").val();
+		let code_check = (input == code) ? true : false;
+		let reason_check = (reason != "") ? true : false;
+		if(code_check && reason_check) {
 			window.location.replace(test_order[test_order.length - 1]);
 		}else {
-			$("#skip-alert-wrong-code").css("display", "block");
-			$("#skip-box-input-code").val("");
+			if(!code_check) {
+				$("#skip-alert-wrong-code").css("display", "block");
+				$("#skip-box-input-code").val("");
+			}
+			if(!reason_check) {
+				$("#skip-alert-no-reason").css("display", "block");
+			}
 		}
 	});
 
@@ -309,6 +330,7 @@ function setup() {
 		initMenu();
 		$("#answer"+ questionID + "Code").attr("value", localStorage.getItem("idsm/code"));
 		$("#answer"+ questionID + "Test").attr("value", localStorage.getItem(last_test));
+		$("#answer"+ questionID + "SkipReason").attr("value", localStorage.getItem("idsm/skip_reason"));
 		$("#background-banner").css("display", "block");
 		$("#page-load-screen").css("display", "none");
 		reLock();

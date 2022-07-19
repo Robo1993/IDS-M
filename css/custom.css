@@ -144,8 +144,8 @@ img {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 40rem;
-    height: 40rem;
+    min-width: 40rem;
+    min-height: 40rem;
     background-color: #fff;
     box-shadow: var(--theme-colour) 0px 0px 12px 2px;
     /**transform: rotate(180deg);**/
@@ -156,13 +156,19 @@ img {
     margin-top: 1rem;
 }
 
+#skip-box textarea {
+    width: 100%;
+    height: 10rem;
+    border-color: #ced4da;
+}
+
 #skip-box-buttons {
-    margin-top: 1rem;
-    width: 50%;
+    margin: 1rem;
+    width: 70%;
 }
 
 #skip-box-input {
-    width: 50%;
+    width: 70%;
 }
 
 #skip-alert-wrong-code {
@@ -170,7 +176,15 @@ img {
     color: var(--alert-wrong-color);
     width: 50%;
     font-size: 9pt;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#skip-alert-no-reason {
+    display: none;
+    color: var(--alert-wrong-color);
+    width: 50%;
+    font-size: 9pt;
+    margin-bottom: 1rem;
 }
 
 #skip-cancel{
