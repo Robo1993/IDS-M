@@ -329,7 +329,7 @@ function setup() {
 		$("#sketch-book-button").css("display", "block");
 		initMenu();
 		$("#answer"+ questionID + "Code").attr("value", localStorage.getItem("idsm/code"));
-		$("#answer"+ questionID + "Test").attr("value", localStorage.getItem(last_test));
+		$("#answer"+ questionID + "Test").attr("value", last_test);
 		$("#answer"+ questionID + "SkipReason").attr("value", localStorage.getItem("idsm/skip_reason"));
 		$("#background-banner").css("display", "block");
 		$("#page-load-screen").css("display", "none");
