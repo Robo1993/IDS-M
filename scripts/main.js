@@ -568,8 +568,9 @@ function progressTest() {
 }
 
 function expertIndication() {
-	$("#test-layout").css("box-sizing", "border-box");
-	$("#test-layout").css("border", "1rem solid #a5d7d2");
+	//$("#test-layout").css("box-sizing", "border-box");
+	//$("#test-layout").css("border", "1rem solid #a5d7d2");
+	$("body").css("background-color", "#cbfffa");
 }
 
 function captureDemographics() {
