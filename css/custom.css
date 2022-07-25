@@ -520,13 +520,13 @@ Buttons
 */
 
 .btn-unib {
-    color: #fff !important;
+    color: #000 !important;
     background-color: var(--theme-colour) !important;
     border-color: var(--theme-colour) !important;
 }
 
 .answers .btn-primary {
-    color: #fff !important;
+    color: #000 !important;
     background-color: var(--theme-colour) !important;
     border-color: var(--theme-colour) !important;
 }
@@ -600,7 +600,7 @@ button svg {
 
 #tp-response-button {
     display: none;
-    color: #fff;
+    color: #000;
     background-color: #ffc107;
     border-color: #ffc107;
 }
