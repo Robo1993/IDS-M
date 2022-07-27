@@ -222,6 +222,9 @@ function startFN() {
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
+	setTimeout(function() {
+		$("#tp-response-button").css("display", "block");
+	}, 2000);
 }
 
 function loadEntities() {
