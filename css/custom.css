@@ -1058,6 +1058,74 @@ SF content
 
 /*
 --------------------------------------------------------------------------------
+Arrow Animation for SF and AA
+--------------------------------------------------------------------------------
+*/
+
+#arrow-container {
+    width: 85rem;
+    height: 8.5rem;
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+#ids-m-arrow-svg {
+    width: 100%;
+}
+
+#arrow-head {
+    transform: translateX(-32px);
+}
+
+.cls-1,.cls-2 {
+    fill: #231f20;
+}
+
+#line1 {
+    stroke: #231f20;
+    stroke-miterlimit: 10;
+    stroke-width: 24px;
+    stroke-linecap: round;
+}
+#line2 {
+    stroke: #231f20;
+    stroke-miterlimit: 10;
+    stroke-width: 24px;
+    stroke-linecap: round;
+    stroke-dasharray: 620;
+    stroke-dashoffset: 620;
+}
+
+.path {
+    stroke-dasharray: 620;
+    stroke-dashoffset: 620;
+    animation: dash 3.5s cubic-bezier(0.7, 0, 0.5, 1);
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.arrow-move {
+    animation: arrow-move 3.5s cubic-bezier(0.7, 0, 0.5, 1);
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes arrow-move {
+    to {
+        transform: translateX(590px);
+    }
+}
+
+/*
+--------------------------------------------------------------------------------
 FW content
 --------------------------------------------------------------------------------
 */

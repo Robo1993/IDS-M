@@ -1,7 +1,13 @@
+const arrow_svg = "<svg id='ids-m-arrow-svg' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='-30 0 900 100'>"
+				+ "<path id='arrow-head' class='cls-1' d='M231.44,95.26l37.38-36.77a12.18,12.18,0,0,0,0-17L231.44,4.74c-11-10.85-28,6.11-17,17l37.38,36.78c11,10.84,28-6.12,17-17L231.44,4.74c-11-10.85-28,6.11-17,17l37.38,36.78v-17L214.47,78.29c-11,10.85,5.95,27.82,17,17Z'/>"
+				+"<line id='line1' class='cls-2' x1='0' y1='50' x2='200' y2='50'/>"
+				+"<line id='line2' class='cls-2' x1='205' y1='50' x2='825' y2='50'/></svg>";
+
 let tp_input = false;
 let pause_pressed = false;
 function initSF() {
 	$("#page-load-screen").css("display", "none");
+	$("#arrow-container").append(arrow_svg);
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#clock").css("display", "block");
 	//}
@@ -53,6 +59,12 @@ function startSF() {
 		}, 3000);
 	}
 	activateClock();
+	activateArrow();
+}
+
+function activateArrow() {
+	$("#line2").addClass("path");
+	$("#arrow-head").addClass("arrow-move");
 }
 
 function evaluateSF() {
