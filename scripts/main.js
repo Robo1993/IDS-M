@@ -563,7 +563,7 @@ function progressTest() {
 	// $("#page-load-screen").css("display", "none");
 	// reLock();
 	let testcode = getTestCode();
-	let menu_url = menu + "&lasttest=" +testcode;
+	let menu_url = menu + "&lasttest=" + testcode;
 	window.location.href = menu_url;
 }
 
