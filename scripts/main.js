@@ -421,17 +421,17 @@ function initMenu() {
 		let rg_test = getByIndex(test_battery, "rg");
 		let sf_test = getByIndex(test_battery, "sf");
 		let pre_conditions = false;
-		if(test[0] != "ppvt" && test[0] != "ish" && test[0] != "rg") {
-			if(ppvt_test[1] == "true" && ish_test[1] == "true" && rg_test[1] == "true") {
-				if(test[0] == "aa" && sf_test[1] == "true") {
-					pre_conditions = true;
-				}else if(test[0] != "aa") {
-					pre_conditions = true;
-				}
-			}
-		}else {
+		// if(test[0] != "ppvt" && test[0] != "ish" && test[0] != "rg") {
+		// 	if(ppvt_test[1] == "true" && ish_test[1] == "true" && rg_test[1] == "true") {
+		// 		if(test[0] == "aa" && sf_test[1] == "true") {
+		// 			pre_conditions = true;
+		// 		}else if(test[0] != "aa") {
+		// 			pre_conditions = true;
+		// 		}
+		// 	}
+		// }else {
 			pre_conditions = true;
-		}
+		//}
 
 		if(test[1] == "false" && pre_conditions == true) {
 			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().addClass("test-box-hover");
@@ -583,6 +583,9 @@ function captureDemographics() {
 	}else if(questionCode.indexOf("StartQ03") != -1) {
 		let input = $('input[name=' + questionID + ']:checked').val();
 		localStorage.setItem("idsm/gender", input);
+	}else if(questionCode.indexOf("StartQ04") != -1) {
+		let input = $("#answer"+ questionID).val();
+		localStorage.setItem("idsm/version", input);
 	}
 }
 
@@ -590,12 +593,14 @@ function fillInDemographics() {
 	let code = localStorage.getItem("idsm/code");
 	let birthdate = localStorage.getItem("idsm/birthdate");
 	let gender = localStorage.getItem("idsm/gender");
+	let version = localStorage.getItem("idsm/version");
 	if(gender == "") {
 		gender = "other"
 	}
 	$("#answer"+ questionID + "Code").attr("value", code);
 	$("#answer"+ questionID + "Birthdate").attr("value", birthdate);
 	$("#answer"+ questionID + "Gender").attr("value", gender);
+	$("#answer"+ questionID + "Version").attr("value", version);
 }
 
 function horizontalAlert() {
