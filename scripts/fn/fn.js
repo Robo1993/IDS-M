@@ -222,9 +222,11 @@ function startFN() {
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
-	setTimeout(function() {
-		$("#tp-response-button").css("display", "block");
-	}, 2000);
+	if(questionCode.indexOf("FND") != -1 && questionCode.indexOf("FNV") != -1) {
+		setTimeout(function() {
+			$("#tp-response-button").css("display", "block");
+		}, 2000);
+	}
 }
 
 function loadEntities() {
