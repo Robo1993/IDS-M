@@ -101,6 +101,8 @@ $( document ).ready(function() {
 				startRG();
 			}else if(questionCode.indexOf("PPVT") != -1) {
 				startPPVT();
+			}else if(questionCode.indexOf("MEAD") != -1) {
+				startMEAD();
 			}
 		}
 
@@ -138,6 +140,8 @@ $( document ).ready(function() {
 			feedbackTFZ();
 		}else if(questionCode.indexOf("RG") != -1) {
 			feedbackRG();
+		}else if(questionCode.indexOf("MEAD") != -1) {
+			feedbackMEAD();
 		}
 	});
 
@@ -483,6 +487,8 @@ function pasteAnswers() {
 		evaluateRG();
 	}else if(questionCode.indexOf("PPVT") != -1) {
 		evaluatePPVT();
+	}else if(questionCode.indexOf("MEAD") != -1) {
+		evaluateMEAD();
 	}
 }
 
@@ -518,6 +524,8 @@ function next() {
 		nextFW();
 	}else if(questionCode.indexOf("RG") != -1) {
 		nextRG();
+	}else if(questionCode.indexOf("MEAD") != -1) {
+		nextMEAD();
 	}
 }
 
@@ -526,7 +534,7 @@ function checkOrientation() {
 		horizontalAlert();
 	}else if(questionCode.indexOf("I99") != -1) {
 		horizontalAlert();
-	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
+	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("MEAD") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
 		horizontalAlert();
 	}else if(questionCode.indexOf("FA") != -1 || questionCode.indexOf("FN") != -1 || questionCode.indexOf("RG") != -1) {
 		verticalAlert();
