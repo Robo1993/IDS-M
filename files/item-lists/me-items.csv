@@ -1,0 +1,10 @@
+item, first_img, second_img, third_img, fourth_img, fifth_img
+1, 1-distractor.png, 1-correct.png, 3-distractor.png, none, none
+2, 1-correct.png, 2-distractor.png, 3-distractor.png, none, none
+3, 1-distractor.png, 2-correct.png, 3-distractor.png, none, none
+4, 1-distractor.png, 2-correct.png, 3-distractor.png, 4-distractor.png, 5-distractor.png
+5, 1-correct.png, 2-distractor.png, 3-distractor.png, 4-distractor.png, 5-distractor.png
+6, 1-distractor.png, 2-correct.png, 3-distractor.png, 4-distractor.png, 5-distractor.png
+7, 1-correct.png, 2-distractor.png, 3-distractor.png, 4-distractor.png, 5-distractor.png
+8, 1-distractor.png, 2-distractor.png, 3-correct.png, 4-distractor.png, 5-distractor.png
+9, 1-distractor.png, 2-distractor.png, 3-correct.png, 4-distractor.png, 5-distractor.png

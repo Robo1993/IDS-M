@@ -3,8 +3,8 @@ let logic_tree;
 function initME() {
 
 	$("#clock").css("display", "block");
-	//logic_tree = readCSV("me.csv");
-
+	logic_tree = new LogicTree("me.csv");
+	fillInImg();
 	startME();
 
 	// Option selection
@@ -102,7 +102,7 @@ function feedbackME() {
 
 function fillInImg() {
 	let img_counter = 1;
-	$(".ppvt-img").each(function() {
+	$(".question-text img").each(function() {
 		let src = $(this).attr("src").split("/");
 		src.splice(src.length - 3, 3);
 		let srcS = src.join("/");
@@ -174,5 +174,22 @@ function getAnswer(src) {
 	}else {
 		return "none";
 	}
+}
+
+function getFileNames(matrix) {
+	let file_names = [];
+	if() {
+
+	}else if () {
+
+	}else if () {
+		
+	}
+}
+
+function getFile(url) {
+	$.get(url, function( data ) {
+		
+	});
 }
 
