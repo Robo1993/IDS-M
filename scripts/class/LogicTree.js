@@ -1,18 +1,13 @@
-function readCSV(csv, lt) {
-	let url = serverPath + "/upload/themes/survey/IDS-M/files/getTree/" + csv;
-	$.get(url, function( data ) {
-		lt.tree = Papa.parse(data)
-	});
-}
-
-//Class LogicTree$
+//Class LogicTree
 //@params: csv file from file folder in IDS-M Theme
-function LogicTree(csv) {
-	this.csv = csv;
-	this.readCSV = readCSV;
+function LogicTree(tree, items) {
+	this.csv = tree;
 	this.getRowByRow = getRowByRow;
 	this.getRowByItem = getRowByItem;
-	readCSV(csv, this);
+	this.readLogicTreeCSV = readLogicTreeCSV;
+	this.readItemsCSV = readItemsCSV;
+	readLogicTreeCSV(tree, this);
+	readItemsCSV(items, this);
 
 	function getRowByRow(x) {
 		let treeRow;
@@ -40,10 +35,31 @@ function LogicTree(csv) {
 		});
 		return treeRow;
 	}
+
+	function getItemByRow(row) {
+		let item;
+
+	}
+
+	function getItemByItem(item) {
+		let item;
+	}
+}
+
+function readLogicTreeCSV(csv, lt) {
+	$.get(csv, function( data ) {
+		lt.tree = Papa.parse(data)
+	});
+}
+
+function readItemsCSV(csv, lt) {
+	$.get(csv, function( data ) {
+		lt.items = Papa.parse(data)
+	});
 }
 
 //Class Row
-//@params: csv file from file folder in IDS-M Theme
+//@params: csv file from logic_tree folder in IDS-M Theme
 function Row(row, item, row_when_correct, row_when_incorrect, abort_when_correct, abort_when_incorrect) {
 	this.row = row;
 	this.item = item;
@@ -51,5 +67,17 @@ function Row(row, item, row_when_correct, row_when_incorrect, abort_when_correct
 	this.row_when_incorrect = row_when_incorrect;
 	this.abort_when_correct = abort_when_correct;
 	this.abort_when_incorrect = abort_when_incorrect;
+}
 
+//Class Item
+//@params: csv file from items folder in IDS-M Theme
+function Item(row, item, matrix, img1, img2, img3, img4, img5) {
+	this.row = row;
+	this.item = item;
+	this.matrix = matrix;
+	this.img1 = img1;
+	this.img2 = img2;
+	this.img3 = img3;
+	this.img4 = img4;
+	this.img5 = img5;
 }

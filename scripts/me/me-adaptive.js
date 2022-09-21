@@ -3,7 +3,9 @@ let logic_tree;
 function initME() {
 
 	$("#clock").css("display", "block");
-	logic_tree = new LogicTree("me.csv");
+	let url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/me-tree.csv";
+	let url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/me-items.csv";
+	logic_tree = new LogicTree(url_tree, url_items);
 	fillInImg();
 	startME();
 
@@ -178,11 +180,7 @@ function getAnswer(src) {
 
 function getFileNames(matrix) {
 	let file_names = [];
-	if() {
-
-	}else if () {
-
-	}else if () {
+	for (var i = 1; i >= 0; i++) {
 		
 	}
 }
