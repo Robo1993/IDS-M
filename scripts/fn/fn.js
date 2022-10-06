@@ -222,7 +222,7 @@ function startFN() {
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
-	if(questionCode.indexOf("D") != -1 && questionCode.indexOf("V") != -1 && questionCode.indexOf("T") != -1 && questionCode.indexOf("R") != -1) {
+	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1 || questionCode.indexOf("T") != -1 || questionCode.indexOf("R") != -1) {
 		setTimeout(function() {
 			$("#tp-response-button").css("display", "block");
 		}, 2000);
