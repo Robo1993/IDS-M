@@ -194,11 +194,11 @@ function initFN() {
 			var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
 		}
 
-		if($(".pre-img[style*='display: none']").length - $(".pre-img").length == 0) {
-			setTimeout(function() {
-				$("#tp-response-button").css("display", "block");
-			}, 2000);
-		}
+		// if($(".pre-img[style*='display: none']").length - $(".pre-img").length == 0) {
+		// 	setTimeout(function() {
+		// 		$("#tp-response-button").css("display", "block");
+		// 	}, 2000);
+		// }
 		var left = ($( document ).width() - $("#first_figures").width()) / 2;
 		$("#first_figures").css("left", left + "px");
 		//$("#first_figures").css("left", "calc((100% - "+ $("#first_figures").width() +")/2)");
@@ -222,7 +222,7 @@ function startFN() {
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
-	if(questionCode.indexOf("FND") != -1 && questionCode.indexOf("FNV") != -1) {
+	if(questionCode.indexOf("D") != -1 && questionCode.indexOf("V") != -1 && questionCode.indexOf("T") != -1 && questionCode.indexOf("R") != -1) {
 		setTimeout(function() {
 			$("#tp-response-button").css("display", "block");
 		}, 2000);
