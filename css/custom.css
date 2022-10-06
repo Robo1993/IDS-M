@@ -732,6 +732,10 @@ ME content
     height: 16rem;
     margin: 2rem;
 }
+
+#me-variable-container {
+    display: none;
+}
 /*
 --------------------------------------------------------------------------------
 VM content

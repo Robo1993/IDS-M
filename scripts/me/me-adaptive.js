@@ -1,11 +1,15 @@
 let logic_tree;
+let items;
+let tree;
 
 function initME() {
 
 	$("#clock").css("display", "block");
 	let url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/me-tree.csv";
 	let url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/me-items.csv";
-	logic_tree = new LogicTree(url_tree, url_items);
+	readItemsCSV(url_items);
+	readLogicTreeCSV(url_tree);
+	logic_tree = new LogicTree(tree, items);
 	fillInImg();
 	startME();
 
@@ -24,7 +28,26 @@ function initME() {
 			}
 		}
 	});
+}
 
+function readLogicTreeCSV(csv) {
+	$.get(csv, function( data ) {
+		//this.tree = Papa.parse(data);
+		tree = Papa.parse(data);
+	}).done(function() {
+		alert( "second success" );
+	}).fail(function() {
+		alert( "error" );
+	}).always(function() {
+		alert( "finished" );
+	});
+}
+
+function readItemsCSV(csv) {
+	$.get(csv, function( data ) {
+		//this.items = Papa.parse(data);
+		items = Papa.parse(data);
+	});
 }
 
 function startME() {
@@ -103,12 +126,18 @@ function feedbackME() {
 }
 
 function fillInImg() {
-	let img_counter = 1;
+	let img_counter = 0;
+	let current_row = parseInt($("#current-row").text());
+	let item = logic_tree.getItemByRow(current_row);
+	let imgs = [item.img1, item.img2, item.img3, item.img4, item.img5];
 	$(".question-text img").each(function() {
 		let src = $(this).attr("src").split("/");
 		src.splice(src.length - 3, 3);
 		let srcS = src.join("/");
-		$(this).attr("src", srcS + "/set" + set + "/item" + (item_counter + 1) + "/" + img_counter + ".png");
+		$(this).attr("src", srcS + "/me" + item.item + "/" + imgs[img_counter]);
+		if(!imgs[img_counter]) {
+			$(this).remove();
+		}
 		img_counter++;
 	});
 	item_counter++;
@@ -116,7 +145,7 @@ function fillInImg() {
 	// Images loaded is zero because we're going to process a new set of images.
 	var imagesLoaded = 0;
 	// Total images is still the total number of <img> elements on the page.
-	var totalImages = $(".ppvt-img").length;
+	var totalImages = $(".question-text img").length;
 
 	// Step through each image in the DOM, clone it, attach an onload event
 	// listener, then set its source to the source of the original image. When

@@ -1,13 +1,12 @@
 //Class LogicTree
 //@params: csv file from file folder in IDS-M Theme
 function LogicTree(tree, items) {
-	this.csv = tree;
+	this.tree = tree;
+	this.items = items;
 	this.getRowByRow = getRowByRow;
 	this.getRowByItem = getRowByItem;
-	this.readLogicTreeCSV = readLogicTreeCSV;
-	this.readItemsCSV = readItemsCSV;
-	readLogicTreeCSV(tree, this);
-	readItemsCSV(items, this);
+	this.getItemByRow = getItemByRow;
+	this.getItemByItem = getItemByItem;
 
 	function getRowByRow(x) {
 		let treeRow;
@@ -36,26 +35,21 @@ function LogicTree(tree, items) {
 		return treeRow;
 	}
 
-	function getItemByRow(row) {
-		let item;
-
+	function getItemByRow(z) {
+		let row = this.getRowByRow(z);
+		let item = this.getItemByItem(row.item);
+		return item;
 	}
 
-	function getItemByItem(item) {
+	function getItemByItem(y) {
 		let item;
+		$.each(this.items.data, function(i, v) {
+			if (parseInt(v[0]) == y) {
+				item = new Item(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
+			}
+		});
+		return item;
 	}
-}
-
-function readLogicTreeCSV(csv, lt) {
-	$.get(csv, function( data ) {
-		lt.tree = Papa.parse(data)
-	});
-}
-
-function readItemsCSV(csv, lt) {
-	$.get(csv, function( data ) {
-		lt.items = Papa.parse(data)
-	});
 }
 
 //Class Row
@@ -71,8 +65,7 @@ function Row(row, item, row_when_correct, row_when_incorrect, abort_when_correct
 
 //Class Item
 //@params: csv file from items folder in IDS-M Theme
-function Item(row, item, matrix, img1, img2, img3, img4, img5) {
-	this.row = row;
+function Item(item, matrix, img1, img2, img3, img4, img5) {
 	this.item = item;
 	this.matrix = matrix;
 	this.img1 = img1;
