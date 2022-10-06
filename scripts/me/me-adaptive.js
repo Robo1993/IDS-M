@@ -1,17 +1,15 @@
 let logic_tree;
 let items;
 let tree;
+let url_tree;
+let url_items;
 
 function initME() {
 
 	$("#clock").css("display", "block");
-	let url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/me-tree.csv";
-	let url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/me-items.csv";
-	readItemsCSV(url_items);
-	readLogicTreeCSV(url_tree);
-	logic_tree = new LogicTree(tree, items);
-	fillInImg();
-	startME();
+	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/me-tree.csv";
+	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/me-items.csv";
+	loadLogicTree();
 
 	// Option selection
 	$(".me-thumbnail").on("click", function() {
@@ -30,23 +28,28 @@ function initME() {
 	});
 }
 
+function loadLogicTree() {
+	readItemsCSV(url_items);
+}
+
+function createTree() {
+	logic_tree = new LogicTree(tree, items);
+	fillInImg();
+}
+
 function readLogicTreeCSV(csv) {
 	$.get(csv, function( data ) {
 		//this.tree = Papa.parse(data);
 		tree = Papa.parse(data);
-	}).done(function() {
-		alert( "second success" );
-	}).fail(function() {
-		alert( "error" );
-	}).always(function() {
-		alert( "finished" );
+		createTree();
 	});
 }
 
-function readItemsCSV(csv) {
+function readItemsCSV(csv, readCSV) {
 	$.get(csv, function( data ) {
 		//this.items = Papa.parse(data);
 		items = Papa.parse(data);
+		readLogicTreeCSV(url_tree);
 	});
 }
 
@@ -130,10 +133,13 @@ function fillInImg() {
 	let current_row = parseInt($("#current-row").text());
 	let item = logic_tree.getItemByRow(current_row);
 	let imgs = [item.img1, item.img2, item.img3, item.img4, item.img5];
-	$(".question-text img").each(function() {
-		let src = $(this).attr("src").split("/");
-		src.splice(src.length - 3, 3);
-		let srcS = src.join("/");
+
+	let src = $(".me-matrix").attr("src").split("/");
+	src.splice(src.length - 2, 2);
+	let srcS = src.join("/");
+
+	$(".me-matrix").attr("src", srcS + "/me" + item.item + "/" + item.matrix);
+	$("#thumbnail-container img").each(function() {
 		$(this).attr("src", srcS + "/me" + item.item + "/" + imgs[img_counter]);
 		if(!imgs[img_counter]) {
 			$(this).remove();
@@ -166,7 +172,7 @@ function fillInImg() {
 	function allImagesLoaded() {
 		setTimeout(function() {
 			$("#page-load-screen").css("display", "none");
-			$("#play-button").css("display", "block");
+			startME();
 			one_click = false;
 		}, 500);
 	}
@@ -181,7 +187,7 @@ function evaluateME() {
 	}).attr("src");
 	var file = getAnswer(src);
 	var time = end - start;
-	if(file == "correct") {
+	if(file.indexOf("correct") != -1) {
 		$("#answer"+ questionID +"Answer").attr("value", 1);
 		answered_correctly = true;
 	}else {
