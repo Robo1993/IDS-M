@@ -3,6 +3,7 @@ let items;
 let tree;
 let url_tree;
 let url_items;
+let current_row;
 
 function initMEAD() {
 
@@ -130,7 +131,7 @@ function feedbackMEAD() {
 
 function fillInImg() {
 	let img_counter = 0;
-	let current_row = parseInt($("#me-row").text());
+	current_row = parseInt($("#me-row").text());
 	if(!current_row) {
 		current_row = 1;
 	}
@@ -190,14 +191,19 @@ function evaluateMEAD() {
 	}).attr("src");
 	var file = getAnswer(src);
 	var time = end - start;
+	let row = logic_tree.getRowByRow(current_row);
 	if(file.indexOf("correct") != -1) {
 		$("#answer"+ questionID +"Answer").attr("value", 1);
 		answered_correctly = true;
+		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_correct);
+		$("#answer"+ questionID +"NextRow").attr("value", row.abort_when_correct);
 	}else {
 		$("#answer"+ questionID +"Answer").attr("value", 0);
 		answered_correctly = false;
+		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_incorrect);
+		$("#answer"+ questionID +"NextRow").attr("value", row.abort_when_incorrect);
 	}
-	$("#answer"+ questionID +"Item").attr("value", file);
+	$("#answer"+ questionID +"Selection").attr("value", file);
 	$("#answer"+ questionID +"Time").attr("value", time);
 
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
