@@ -4,12 +4,12 @@ let tree;
 let url_tree;
 let url_items;
 
-function initME() {
+function initMEAD() {
 
 	$("#clock").css("display", "block");
 	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/me-tree.csv";
 	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/me-items.csv";
-	//loadLogicTree();
+	loadLogicTree();
 
 	// Option selection
 	$(".me-thumbnail").on("click", function() {
@@ -53,7 +53,7 @@ function readItemsCSV(csv, readCSV) {
 	});
 }
 
-function startME() {
+function startMEAD() {
 	unLock();
 	start = performance.now();
 	$("#tp-response-button").css("display", "block");
@@ -119,7 +119,7 @@ function timeLimits() {
 	}
 }
 
-function feedbackME() {
+function feedbackMEAD() {
 	if(!answered_correctly) {
 		$(".me-thumbnail").filter(function() {
 			return $(this).attr("src").indexOf("correct") != -1;
@@ -132,7 +132,7 @@ function fillInImg() {
 	let img_counter = 0;
 	let current_row = parseInt($("#me-row").text());
 	if(!current_row) {
-		current_row = 0;
+		current_row = 1;
 	}
 	let item = logic_tree.getItemByRow(current_row);
 	let imgs = [item.img1, item.img2, item.img3, item.img4, item.img5];
@@ -181,7 +181,7 @@ function fillInImg() {
 	}
 }
 
-function evaluateME() {
+function evaluateMEAD() {
 	locked = true;
 	$("#tp-response-button").css("display", "none");
 	$("#clock").css("display", "none");

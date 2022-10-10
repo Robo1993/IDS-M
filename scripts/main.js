@@ -400,6 +400,8 @@ function initialize() {
 			initISH();
 		}else if(questionCode.indexOf("MT") != -1) {
 			initMT();
+		}else if(questionCode.indexOf("MEAD") != -1) {
+			initMEAD();
 		}
 	}
 }
