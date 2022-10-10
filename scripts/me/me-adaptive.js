@@ -131,6 +131,9 @@ function feedbackME() {
 function fillInImg() {
 	let img_counter = 0;
 	let current_row = parseInt($("#me-row").text());
+	if(!current_row) {
+		current_row = 0;
+	}
 	let item = logic_tree.getItemByRow(current_row);
 	let imgs = [item.img1, item.img2, item.img3, item.img4, item.img5];
 
