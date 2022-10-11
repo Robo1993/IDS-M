@@ -17,8 +17,8 @@ function LogicTree(tree, items) {
 					item: parseInt(v[1]),
 					row_when_correct: parseInt(v[2]),
 					row_when_incorrect: parseInt(v[3]),
-					abort_when_correct: trim(v[4]) === "true",
-					abort_when_incorrect: trim(v[5]) === "false"
+					abort_when_correct: parseInt(v[4]),
+					abort_when_incorrect: parseInt(v[5])
 				}
 			}
 		});

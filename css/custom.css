@@ -491,6 +491,9 @@ General Layout for Subtests
     position: absolute;
 }
 
+#variable-container {
+    display: none;
+}
 /*
 --------------------------------------------------------------------------------
 Warnings
@@ -731,10 +734,6 @@ ME content
 .me-thumbnail {
     height: 16rem;
     margin: 2rem;
-}
-
-#me-variable-container {
-    display: none;
 }
 /*
 --------------------------------------------------------------------------------
@@ -1217,16 +1216,12 @@ PPVT content
 
 /*
 --------------------------------------------------------------------------------
-PPVT content
+ISH content
 --------------------------------------------------------------------------------
 */
 
 .ish-img {
     width: 80rem;
-}
-
-#ppvt-variable-container {
-    display: none;
 }
 
 /*

@@ -5,7 +5,7 @@ let url_tree;
 let url_items;
 let current_row;
 
-function initMEAD() {
+function initMEA() {
 
 	$("#clock").css("display", "block");
 	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/me-tree.csv";
@@ -54,7 +54,7 @@ function readItemsCSV(csv, readCSV) {
 	});
 }
 
-function startMEAD() {
+function startMEA() {
 	unLock();
 	start = performance.now();
 	$("#tp-response-button").css("display", "block");
@@ -120,7 +120,7 @@ function timeLimits() {
 	}
 }
 
-function feedbackMEAD() {
+function feedbackMEA() {
 	if(!answered_correctly) {
 		$(".me-thumbnail").filter(function() {
 			return $(this).attr("src").indexOf("correct") != -1;
@@ -176,13 +176,13 @@ function fillInImg() {
 	function allImagesLoaded() {
 		setTimeout(function() {
 			$("#page-load-screen").css("display", "none");
-			startME();
+			startMEAD();
 			one_click = false;
 		}, 500);
 	}
 }
 
-function evaluateMEAD() {
+function evaluateMEA() {
 	locked = true;
 	$("#tp-response-button").css("display", "none");
 	$("#clock").css("display", "none");
@@ -196,12 +196,12 @@ function evaluateMEAD() {
 		$("#answer"+ questionID +"Answer").attr("value", 1);
 		answered_correctly = true;
 		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_correct);
-		$("#answer"+ questionID +"NextRow").attr("value", row.abort_when_correct);
+		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_correct);
 	}else {
 		$("#answer"+ questionID +"Answer").attr("value", 0);
 		answered_correctly = false;
 		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_incorrect);
-		$("#answer"+ questionID +"NextRow").attr("value", row.abort_when_incorrect);
+		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_incorrect);
 	}
 	$("#answer"+ questionID +"Selection").attr("value", file);
 	$("#answer"+ questionID +"Time").attr("value", time);

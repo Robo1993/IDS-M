@@ -85,7 +85,7 @@ $( document ).ready(function() {
 
 			if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 				startVM();
-			}else if(questionCode.indexOf("ME") != -1) {
+			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
 				startME();
 			}else if(questionCode.indexOf("AA") != -1) {
 				startAA();
@@ -126,7 +126,7 @@ $( document ).ready(function() {
 		$("#tp-response-button").css("display", "none");
 		if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 			feedbackVM();
-		}else if(questionCode.indexOf("ME") != -1) {
+		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
 			feedbackME();
 		}else if(questionCode.indexOf("AA") != -1) {
 			feedbackAA();
@@ -378,7 +378,7 @@ function initialize() {
 		unLock();
 		$("#proceed-button").css("display", "block");
 	}else {
-		if(questionCode.indexOf("ME") != -1) {
+		if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
 			initME();
 		}else if(questionCode.indexOf("PPVT") != -1) {
 			initPPVT();
@@ -471,7 +471,7 @@ function getByIndex(d_array, str) {
 }
 
 function pasteAnswers() {
-	if(questionCode.indexOf("ME") != -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
 		evaluateME();
 	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 		evaluateVM();
@@ -510,7 +510,7 @@ function feedback() {
 }
 
 function next() {
-	if(questionCode.indexOf("ME") != -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
 		nextME();
 	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 		nextVM();
@@ -717,7 +717,7 @@ function getTestCode() {
 		return "fn";
 	}else if(questionCode.indexOf("FW") != -1) {
 		return "fw";
-	}else if(questionCode.indexOf("ME") != -1) {
+	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
 		return "me";
 	}else if(questionCode.indexOf("RG") != -1) {
 		return "rg";
@@ -733,6 +733,8 @@ function getTestCode() {
 		return "ish";
 	}else if(questionCode.indexOf("MT") != -1) {
 		return "mt";
+	}else if(questionCode.indexOf("MEAD") != -1) {
+		return "mead";
 	}
 }
 
@@ -743,8 +745,8 @@ function getTestCodeFormal() {
 		return "Figuren nachlegen";
 	}else if(questionCode.indexOf("FW") != -1) {
 		return "Figuren wiedererkennen";
-	}else if(questionCode.indexOf("ME") != -1) {
-		return "Matrizen erkennen";
+	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+		return "Matrizen ergänzen";
 	}else if(questionCode.indexOf("RG") != -1) {
 		return "Reaktiongeschwindigkeit";
 	}else if(questionCode.indexOf("SF") != -1) {
@@ -761,6 +763,8 @@ function getTestCodeFormal() {
 		return "Mitarbeit in der Testsituation";
 	}else if(questionCode.indexOf("VM_Eval") != -1) {
 		return "Visuomotorik Evaluation";
+	}else if(questionCode.indexOf("MEAD") != -1) {
+		return "Matrizen ergänzen - adaptiv";
 	}
 }
 
