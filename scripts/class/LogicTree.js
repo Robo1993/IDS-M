@@ -1,5 +1,5 @@
 //Class LogicTree
-//@params: csv file from file folder in IDS-M Theme
+//@params: url for tree csv, url for items csv
 function LogicTree(tree, items) {
 	this.tree = tree;
 	this.items = items;
@@ -73,4 +73,18 @@ function Item(item, matrix, img1, img2, img3, img4, img5) {
 	this.img3 = img3;
 	this.img4 = img4;
 	this.img5 = img5;
+}
+
+//Class FNItem
+//@params: csv file from items folder in IDS-M Theme
+function FNItem(item, target, triangle_yellow, triangle_yellow_mirrored, box_yellow, triangle_green, quarter_green, triangle_red, box_red) {
+	this.item = item;
+	this.target = target;
+	this.triangle_yellow = triangle_yellow;
+	this.triangle_yellow_mirrored = triangle_yellow_mirrored;
+	this.box_yellow = box_yellow;
+	this.triangle_green = triangle_green;
+	this.quarter_green = quarter_green;
+	this.triangle_red = triangle_red;
+	this.box_red = box_red;
 }
