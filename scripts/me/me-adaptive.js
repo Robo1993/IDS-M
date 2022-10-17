@@ -34,7 +34,7 @@ function initMEA() {
 
 	function createTree() {
 		logic_tree = new LogicTree(tree, items, "ME");
-		fillInImg();
+		loadImgs();
 	}
 
 	function readLogicTreeCSV(csv) {
@@ -129,7 +129,7 @@ function feedbackMEA() {
 	feedback();
 }
 
-function fillInImg() {
+function loadImgs() {
 	let img_counter = 0;
 	current_row = parseInt($("#me-row").text());
 	if(!current_row) {
