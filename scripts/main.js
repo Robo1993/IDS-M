@@ -2,6 +2,8 @@ let locked = true;
 let option_selected = false;
 let clock_clone;
 
+let ut = "main";
+
 let questionID;
 let questionCode;
 let serverPath;

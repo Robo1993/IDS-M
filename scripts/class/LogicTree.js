@@ -50,9 +50,9 @@ function LogicTree(tree, items, ut) {
 					item = new MEItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
 				}else if(this.ut == "FN") {
 					item = new FNItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]), trim(v[7]), trim(v[8]));
-				}else if() {
+				}else if(this.ut == "VM") {
 					item = new VMItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
-				}else if() {
+				}else if(this.ut == "FW") {
 					item = new FWItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
 				}
 			}

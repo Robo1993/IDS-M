@@ -26,6 +26,13 @@ var moves = 0;
 var icon_rows = 0;
 var row_counter = 1;
 
+let logic_tree;
+let items;
+let tree;
+let url_tree;
+let url_items;
+let current_row;
+
 // Default entity options that will just highlight entities when they overlap
 var defaultEntityOptions = {
 	solid: true,
@@ -106,10 +113,12 @@ function initFNA() {
 	if(!(questionCode.indexOf("FND") != -1 || questionCode.indexOf("FNV") != -1)) {
 		$("#clock").css("display", "block");
 	}
+	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fn-tree.csv";
+	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fn-items.csv";
 	rowCounter();
 	initializeFNCore();
-	$("#play-button").css("display", "block");
-
+	
+	loadLogicTree();
 	$("#canvas-container").on("click", function(e) {
 		var rect = canvass.canvas.getBoundingClientRect();
 		var cursorX = e.clientX - rect.left;
@@ -146,66 +155,32 @@ function initFNA() {
 		}
 	});
 
-	$(".pre-img").on("click", function() {
-		var name = $(this).attr("name");
-		$(this).css("display", "none");
-
-		//Übungsblock 1
-		var triangle_red_proto = [V(0, -103.92), V(-90, 51.96), V(90, 51.96)];
-		var box_red_proto = [V(-90, -90), V(90, -90), V(90, 90), V(-90, 90)];
-
-		//Übungsblock 2
-		// var para_proto_mirrored_blue = [V(-243.63, -63.63), V(116.37, -63.63), V(243.63, 63.63), V(-116.37, 63.63)];
-		// var para_proto_blue = [V(-116.37, -63.63), V(243.63, -63.63), V(116.37, 63.63), V(-243.63, 63.63)];
-		var para_proto_blue = [V(-26.36, -63.63), V(153.64, -63.63), V(26.36, 63.63), V(-153.64, 63.63)];
-		var para_proto_mirrored_blue = [V(-153.64, -63.63), V(26.36, -63.63), V(153.64, 63.63), V(-26.36, 63.63)];
-
-		//Übungsblock 3
-		var triangle_green_proto = [V(0, -63.64), V(127.28, 63.64), V(-127.28, 63.64)];
-
-		//Testungsblock
-		var triangle_yellow_proto = [V(-90, 51.95), V(-90, -51.95), V(90, 51.95)];
-		var triangle_yellow_proto_mirrored = [V(-90, 51.95), V(90, -51.95), V(90, 51.95)];
-		var box_yellow_proto = [V(-90,-51.95), V(90,-51.95), V(90,51.95), V(-90,51.95)];
-
-		var position = getPreIconPosition();
-
-		if(name == "triangle_yellow") {
-			var triangle = world.addEntity(P(position, triangle_yellow_proto), IDS2EntityOptions);
-		}else if(name == "triangle_yellow_mirrored") {
-			var triangle = world.addEntity(P(position, triangle_yellow_proto_mirrored), IDS2EntityOptions);
-		}else if(name == "box_yellow") {
-			var box = world.addEntity(P(position, box_yellow_proto), IDS2EntityOptions);
-		}else if(name == "triangle_green") {
-			var triangle = world.addEntity(P(position, triangle_green_proto), block3EntityOptions);
-		}else if(name == "circle_green") {
-			var circle = world.addEntity(C(position, 90), block3EntityOptions);
-		}else if(name == "quarter_green") {
-			var quarter = world.addEntity(Q(position, 90), block3EntityOptions);
-		}else if(name == "halfcircle_blue") {
-			var halfcircle = world.addEntity(H(position, 90), block2EntityOptions);
-		}else if(name == "para_blue") {
-			var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
-		}else if(name == "para_blue_mirrored") {
-			var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
-		}else if(name == "triangle_red") {
-			var triangle = world.addEntity(P(position, triangle_red_proto), block1EntityOptions);
-		}else if(name == "box_red") {
-			var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
-		}
-
-		// if($(".pre-img[style*='display: none']").length - $(".pre-img").length == 0) {
-		// 	setTimeout(function() {
-		// 		$("#tp-response-button").css("display", "block");
-		// 	}, 2000);
-		// }
-		var left = ($( document ).width() - $("#first_figures").width()) / 2;
-		$("#first_figures").css("left", left + "px");
-		//$("#first_figures").css("left", "calc((100% - "+ $("#first_figures").width() +")/2)");
-	});
-
 	$("#page-load-screen").css("display", "none");
 
+	function loadLogicTree() {
+		readItemsCSV(url_items);
+	}
+
+	function createTree() {
+		logic_tree = new LogicTree(tree, items, "FN");
+		loadEntitiesA();
+	}
+
+	function readLogicTreeCSV(csv) {
+		$.get(csv, function( data ) {
+			//this.tree = Papa.parse(data);
+			tree = Papa.parse(data);
+			createTree();
+		});
+	}
+
+	function readItemsCSV(csv, readCSV) {
+		$.get(csv, function( data ) {
+			//this.items = Papa.parse(data);
+			items = Papa.parse(data);
+			readLogicTreeCSV(url_tree);
+		});
+	}
 }
 
 function startFNA() {
@@ -218,7 +193,6 @@ function startFNA() {
 	}else {
 		$("#proceed-button").css("display", "block");
 	}
-	loadEntitiesA();
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
@@ -230,6 +204,19 @@ function startFNA() {
 }
 
 function loadEntitiesA() {
+	let item = logic_tree.getItemByRow(current_row);
+	let triangle_yellow = item.triangle_yellow;
+	let triangle_yellow_mirrored = item.triangle_yellow_mirrored;
+	let box_yellow = item.box_yellow;
+	let triangle_green = item.triangle_green;
+	let quarter_green = item.quarter_green;
+	let triangle_red = item.triangle_red;
+	let box_red = item.box_red;
+	let i = 0;
+	while(i <=) {
+
+	}
+
 	$("#fn-thumbnails").children().each(function(e) {
 		var name = $(this).attr("name");
 		$(this).css("display", "none");
@@ -277,6 +264,8 @@ function loadEntitiesA() {
 		}else if(name == "box_red") {
 			var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
 		}
+
+		$("#play-button").css("display", "block");
 	});
 }
 

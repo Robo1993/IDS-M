@@ -27,31 +27,31 @@ function initMEA() {
 			}
 		}
 	});
-}
 
-function loadLogicTree() {
-	readItemsCSV(url_items);
-}
+	function loadLogicTree() {
+		readItemsCSV(url_items);
+	}
 
-function createTree() {
-	logic_tree = new LogicTree(tree, items);
-	fillInImg();
-}
+	function createTree() {
+		logic_tree = new LogicTree(tree, items, "ME");
+		fillInImg();
+	}
 
-function readLogicTreeCSV(csv) {
-	$.get(csv, function( data ) {
-		//this.tree = Papa.parse(data);
-		tree = Papa.parse(data);
-		createTree();
-	});
-}
+	function readLogicTreeCSV(csv) {
+		$.get(csv, function( data ) {
+			//this.tree = Papa.parse(data);
+			tree = Papa.parse(data);
+			createTree();
+		});
+	}
 
-function readItemsCSV(csv, readCSV) {
-	$.get(csv, function( data ) {
-		//this.items = Papa.parse(data);
-		items = Papa.parse(data);
-		readLogicTreeCSV(url_tree);
-	});
+	function readItemsCSV(csv, readCSV) {
+		$.get(csv, function( data ) {
+			//this.items = Papa.parse(data);
+			items = Papa.parse(data);
+			readLogicTreeCSV(url_tree);
+		});
+	}
 }
 
 function startMEA() {
