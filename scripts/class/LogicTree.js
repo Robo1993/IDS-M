@@ -100,14 +100,14 @@ function FNItem(item, target, triangle_yellow, triangle_yellow_mirrored, box_yel
 
 //Class VMItem
 //@params: csv file from items folder in IDS-M Theme
-function VMItem(item, target, ) {
+function VMItem(item, target) {
 	this.item = item;
 	this.target = target;
 }
 
 //Class FWItem
 //@params: csv file from items folder in IDS-M Theme
-function FWItem(item, target, ) {
+function FWItem(item, target) {
 	this.item = item;
 	this.target = target;
 }
