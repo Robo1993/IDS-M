@@ -102,7 +102,7 @@ var lineOptions = {
 	}
 };
 
-function initFN() {
+function initFNA() {
 	if(!(questionCode.indexOf("FND") != -1 || questionCode.indexOf("FNV") != -1)) {
 		$("#clock").css("display", "block");
 	}
@@ -208,7 +208,7 @@ function initFN() {
 
 }
 
-function startFN() {
+function startFNA() {
 	if(questionCode.indexOf("UBD") != -1 || questionCode.indexOf("UBV") != -1 || questionCode.indexOf("RD") != -1 || questionCode.indexOf("RV") != -1) {
 		$(":root").css("--duration", "180s");
 	}
@@ -218,7 +218,7 @@ function startFN() {
 	}else {
 		$("#proceed-button").css("display", "block");
 	}
-	loadEntities();
+	loadEntitiesA();
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
@@ -229,7 +229,7 @@ function startFN() {
 	}
 }
 
-function loadEntities() {
+function loadEntitiesA() {
 	$("#fn-thumbnails").children().each(function(e) {
 		var name = $(this).attr("name");
 		$(this).css("display", "none");
@@ -330,7 +330,7 @@ function abort() {
 	evaluateFN();
 }
 
-function evaluateFN() {
+function evaluateFNA() {
 	end = performance.now();
 	let time = end- start;
 
@@ -374,7 +374,7 @@ function feedbackFN() {
 	feedback();
 }
 
-function setupCanvas() {
+function setupCanvasA() {
 	// Simple onCollide handler that changes colors of displayed items.
 	function displayCollision(other, response) {
 		this.displayAttrs.fill = response.aInB ? '#0F0' : '#F00';

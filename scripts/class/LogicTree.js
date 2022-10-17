@@ -1,7 +1,8 @@
 //Class LogicTree
 //@params: url for tree csv, url for items csv
-function LogicTree(tree, items) {
+function LogicTree(tree, items, ut) {
 	this.tree = tree;
+	this.ut = ut;
 	this.items = items;
 	this.getRowByRow = getRowByRow;
 	this.getRowByItem = getRowByItem;
@@ -29,7 +30,7 @@ function LogicTree(tree, items) {
 		let treeRow;
 		$.each(this.tree.data, function(i, v) {
 			if (parseInt(v[1]) == item) {
-				treeRow = new Row(parseInt(v[0]), parseInt(v[1]), parseInt(v[2]), parseInt(v[3]), trim(v[4]) === "true", trim(v[5]) === "false");
+				treeRow = new Row(parseInt(v[0]), parseInt(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]));
 			}
 		});
 		return treeRow;
@@ -45,7 +46,15 @@ function LogicTree(tree, items) {
 		let item;
 		$.each(this.items.data, function(i, v) {
 			if (parseInt(v[0]) == y) {
-				item = new Item(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
+				if(this.ut == "ME") {
+					item = new MEItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
+				}else if(this.ut == "FN") {
+					item = new FNItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]), trim(v[7]), trim(v[8]));
+				}else if() {
+					item = new VMItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
+				}else if() {
+					item = new FWItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
+				}
 			}
 		});
 		return item;
@@ -63,9 +72,9 @@ function Row(row, item, row_when_correct, row_when_incorrect, abort_when_correct
 	this.abort_when_incorrect = abort_when_incorrect;
 }
 
-//Class Item
+//Class MEItem
 //@params: csv file from items folder in IDS-M Theme
-function Item(item, matrix, img1, img2, img3, img4, img5) {
+function MEItem(item, matrix, img1, img2, img3, img4, img5) {
 	this.item = item;
 	this.matrix = matrix;
 	this.img1 = img1;
@@ -87,4 +96,18 @@ function FNItem(item, target, triangle_yellow, triangle_yellow_mirrored, box_yel
 	this.quarter_green = quarter_green;
 	this.triangle_red = triangle_red;
 	this.box_red = box_red;
+}
+
+//Class VMItem
+//@params: csv file from items folder in IDS-M Theme
+function VMItem(item, target, ) {
+	this.item = item;
+	this.target = target;
+}
+
+//Class FWItem
+//@params: csv file from items folder in IDS-M Theme
+function FWItem(item, target, ) {
+	this.item = item;
+	this.target = target;
 }
