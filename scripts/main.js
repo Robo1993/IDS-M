@@ -87,11 +87,11 @@ $( document ).ready(function() {
 
 			if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 				startVM();
-			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 				startME();
 			}else if(questionCode.indexOf("AA") != -1) {
 				startAA();
-			}else if(questionCode.indexOf("FN") != -1) {
+			}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 				startFN();
 			}else if(questionCode.indexOf("FW") != -1) {
 				startFW();
@@ -103,8 +103,10 @@ $( document ).ready(function() {
 				startRG();
 			}else if(questionCode.indexOf("PPVT") != -1) {
 				startPPVT();
-			}else if(questionCode.indexOf("MEAD") != -1) {
-				startMEAD();
+			}else if(questionCode.indexOf("MEA") != -1) {
+				startMEA();
+			}else if(questionCode.indexOf("FNA") != -1) {
+				startFNA();
 			}
 		}
 
@@ -128,11 +130,11 @@ $( document ).ready(function() {
 		$("#tp-response-button").css("display", "none");
 		if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 			feedbackVM();
-		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 			feedbackME();
 		}else if(questionCode.indexOf("AA") != -1) {
 			feedbackAA();
-		}else if(questionCode.indexOf("FN") != -1) {
+		}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 			feedbackFN();
 		}else if(questionCode.indexOf("FW") != -1) {
 			feedbackFW();
@@ -142,8 +144,10 @@ $( document ).ready(function() {
 			feedbackTFZ();
 		}else if(questionCode.indexOf("RG") != -1) {
 			feedbackRG();
-		}else if(questionCode.indexOf("MEAD") != -1) {
-			feedbackMEAD();
+		}else if(questionCode.indexOf("MEA") != -1) {
+			feedbackMEA();
+		}else if(questionCode.indexOf("FNA") != -1) {
+			feedbackFN();
 		}
 	});
 
@@ -380,13 +384,13 @@ function initialize() {
 		unLock();
 		$("#proceed-button").css("display", "block");
 	}else {
-		if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+		if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 			initME();
 		}else if(questionCode.indexOf("PPVT") != -1) {
 			initPPVT();
 		}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 			initVM();
-		}else if(questionCode.indexOf("FN") != -1) {
+		}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 			initFN();
 		}else if(questionCode.indexOf("SF") != -1) {
 			initSF();
@@ -402,8 +406,10 @@ function initialize() {
 			initISH();
 		}else if(questionCode.indexOf("MT") != -1) {
 			initMT();
-		}else if(questionCode.indexOf("MEAD") != -1) {
-			initMEAD();
+		}else if(questionCode.indexOf("MEA") != -1) {
+			initMEA();
+		}else if(questionCode.indexOf("FNA") != -1) {
+			initFNA();
 		}
 	}
 }
@@ -473,11 +479,11 @@ function getByIndex(d_array, str) {
 }
 
 function pasteAnswers() {
-	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		evaluateME();
 	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 		evaluateVM();
-	}else if(questionCode.indexOf("FN") != -1) {
+	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		evaluateFN();
 	}else if(questionCode.indexOf("SF") != -1) {
 		evaluateSF();
@@ -491,8 +497,10 @@ function pasteAnswers() {
 		evaluateRG();
 	}else if(questionCode.indexOf("PPVT") != -1) {
 		evaluatePPVT();
-	}else if(questionCode.indexOf("MEAD") != -1) {
-		evaluateMEAD();
+	}else if(questionCode.indexOf("MEA") != -1) {
+		evaluateMEA();
+	}else if(questionCode.indexOf("FNA") != -1) {
+		evaluateFNA();
 	}
 }
 
@@ -512,11 +520,11 @@ function feedback() {
 }
 
 function next() {
-	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		nextME();
 	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 		nextVM();
-	}else if(questionCode.indexOf("FN") != -1) {
+	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		nextFN();
 	}else if(questionCode.indexOf("SF") != -1) {
 		nextSF();
@@ -528,8 +536,8 @@ function next() {
 		nextFW();
 	}else if(questionCode.indexOf("RG") != -1) {
 		nextRG();
-	}else if(questionCode.indexOf("MEAD") != -1) {
-		nextMEAD();
+	}else if(questionCode.indexOf("MEA") != -1) {
+		nextMEA();
 	}
 }
 
@@ -538,7 +546,7 @@ function checkOrientation() {
 		horizontalAlert();
 	}else if(questionCode.indexOf("I99") != -1) {
 		horizontalAlert();
-	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("MEAD") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
+	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("MEA") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
 		horizontalAlert();
 	}else if(questionCode.indexOf("FA") != -1 || questionCode.indexOf("FN") != -1 || questionCode.indexOf("RG") != -1) {
 		verticalAlert();
@@ -715,11 +723,11 @@ function getURLStuff(path) {
 function getTestCode() {
 	if(questionCode.indexOf("AA") != -1) {
 		return "aa";
-	}else if(questionCode.indexOf("FN") != -1) {
+	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		return "fn";
 	}else if(questionCode.indexOf("FW") != -1) {
 		return "fw";
-	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		return "me";
 	}else if(questionCode.indexOf("RG") != -1) {
 		return "rg";
@@ -735,19 +743,19 @@ function getTestCode() {
 		return "ish";
 	}else if(questionCode.indexOf("MT") != -1) {
 		return "mt";
-	}else if(questionCode.indexOf("MEAD") != -1) {
-		return "mead";
+	}else if(questionCode.indexOf("MEA") != -1) {
+		return "mea";
 	}
 }
 
 function getTestCodeFormal() {
 	if(questionCode.indexOf("AA") != -1) {
 		return "Aufmerksamkeit aufteilen";
-	}else if(questionCode.indexOf("FN") != -1) {
+	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		return "Figuren nachlegen";
 	}else if(questionCode.indexOf("FW") != -1) {
 		return "Figuren wiedererkennen";
-	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEAD") == -1) {
+	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		return "Matrizen ergänzen";
 	}else if(questionCode.indexOf("RG") != -1) {
 		return "Reaktiongeschwindigkeit";
@@ -765,7 +773,7 @@ function getTestCodeFormal() {
 		return "Mitarbeit in der Testsituation";
 	}else if(questionCode.indexOf("VM_Eval") != -1) {
 		return "Visuomotorik Evaluation";
-	}else if(questionCode.indexOf("MEAD") != -1) {
+	}else if(questionCode.indexOf("MEA") != -1) {
 		return "Matrizen ergänzen - adaptiv";
 	}
 }

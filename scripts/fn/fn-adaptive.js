@@ -115,9 +115,12 @@ function initFNA() {
 	}
 	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fn-tree.csv";
 	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fn-items.csv";
-	rowCounter();
+	current_row = parseInt($("#current-row").text());
+	if(!current_row) {
+		current_row = 1;
+	}
 	initializeFNCore();
-	
+	setupCanvasA();
 	loadLogicTree();
 	$("#canvas-container").on("click", function(e) {
 		var rect = canvass.canvas.getBoundingClientRect();
@@ -186,10 +189,6 @@ function initFNA() {
 function startFNA() {
 	if(questionCode.indexOf("UBD") != -1 || questionCode.indexOf("UBV") != -1 || questionCode.indexOf("RD") != -1 || questionCode.indexOf("RV") != -1) {
 		$(":root").css("--duration", "180s");
-	}
-	if(questionCode.indexOf("FND05") == -1) {
-		setupCanvas();
-		checkForEntitiesOnStartup();
 	}else {
 		$("#proceed-button").css("display", "block");
 	}
@@ -204,6 +203,25 @@ function startFNA() {
 }
 
 function loadEntitiesA() {
+
+	//Übungsblock 1
+	var triangle_red_proto = [V(0, -103.92), V(-90, 51.96), V(90, 51.96)];
+	var box_red_proto = [V(-90, -90), V(90, -90), V(90, 90), V(-90, 90)];
+
+	//Übungsblock 2
+	// var para_proto_mirrored_blue = [V(-243.63, -63.63), V(116.37, -63.63), V(243.63, 63.63), V(-116.37, 63.63)];
+	// var para_proto_blue = [V(-116.37, -63.63), V(243.63, -63.63), V(116.37, 63.63), V(-243.63, 63.63)];
+	var para_proto_blue = [V(-26.36, -63.63), V(153.64, -63.63), V(26.36, 63.63), V(-153.64, 63.63)];
+	var para_proto_mirrored_blue = [V(-153.64, -63.63), V(26.36, -63.63), V(153.64, 63.63), V(-26.36, 63.63)];
+
+	//Übungsblock 3
+	var triangle_green_proto = [V(0, -63.64), V(127.28, 63.64), V(-127.28, 63.64)];
+
+	//Testungsblock
+	var triangle_yellow_proto = [V(-90, 51.95), V(-90, -51.95), V(90, 51.95)];
+	var triangle_yellow_proto_mirrored = [V(-90, 51.95), V(90, -51.95), V(90, 51.95)];
+	var box_yellow_proto = [V(-90,-51.95), V(90,-51.95), V(90,51.95), V(-90,51.95)];
+
 	let item = logic_tree.getItemByRow(current_row);
 	let triangle_yellow = item.triangle_yellow;
 	let triangle_yellow_mirrored = item.triangle_yellow_mirrored;
@@ -212,61 +230,51 @@ function loadEntitiesA() {
 	let quarter_green = item.quarter_green;
 	let triangle_red = item.triangle_red;
 	let box_red = item.box_red;
-	let i = 0;
-	while(i <=) {
+	let thumbnails = [["triangle_yellow", triangle_yellow], ["triangle_yellow_mirrored", triangle_yellow_mirrored], ["box_yellow", box_yellow], ["triangle_green", triangle_green], ["quarter_green", quarter_green], ["triangle_red", triangle_red], ["box_red", box_red]];
+	let total_entities = triangle_yellow + triangle_yellow_mirrored + box_yellow + triangle_green + triangle_green + quarter_green + triangle_red + box_red;
+	let entities_left = total_entities;
+	rowCounterA(total_entities);
+	let src = $(".fnImg").attr("src").split("/");
+	src.splice(src.length - 2, 2);
+	let srcS = src.join("/");
 
+	$(".fnImg").attr("src", srcS + "/fn"+ item.item + "/" + item.target);
+
+	for (var i = thumbnails.length - 1; i >= 0; i--) {
+		let name = thumbnails[i][0];
+		let amount = thumbnails[i][1];
+		let position = getEntityPosition(total_entities, entities_left);
+		//let position = V(500, 500);
+		while(amount > 0) {
+			if(name == "triangle_yellow") {
+				var triangle = world.addEntity(P(position, triangle_yellow_proto), IDS2EntityOptions);
+			}else if(name == "triangle_yellow_mirrored") {
+				var triangle = world.addEntity(P(position, triangle_yellow_proto_mirrored), IDS2EntityOptions);
+			}else if(name == "box_yellow") {
+				var box = world.addEntity(P(position, box_yellow_proto), IDS2EntityOptions);
+			}else if(name == "triangle_green") {
+				var triangle = world.addEntity(P(position, triangle_green_proto), block3EntityOptions);
+			}else if(name == "circle_green") {
+				var circle = world.addEntity(C(position, 90), block3EntityOptions);
+			}else if(name == "quarter_green") {
+				var quarter = world.addEntity(Q(position, 90), block3EntityOptions);
+			}else if(name == "halfcircle_blue") {
+				var halfcircle = world.addEntity(H(position, 90), block2EntityOptions);
+			}else if(name == "para_blue") {
+				var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
+			}else if(name == "para_blue_mirrored") {
+				var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
+			}else if(name == "triangle_red") {
+				var triangle = world.addEntity(P(position, triangle_red_proto), block1EntityOptions);
+			}else if(name == "box_red") {
+				var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
+			}
+			amount--;
+			entities_left--;
+		}
 	}
 
-	$("#fn-thumbnails").children().each(function(e) {
-		var name = $(this).attr("name");
-		$(this).css("display", "none");
-
-		//Übungsblock 1
-		var triangle_red_proto = [V(0, -103.92), V(-90, 51.96), V(90, 51.96)];
-		var box_red_proto = [V(-90, -90), V(90, -90), V(90, 90), V(-90, 90)];
-
-		//Übungsblock 2
-		// var para_proto_mirrored_blue = [V(-243.63, -63.63), V(116.37, -63.63), V(243.63, 63.63), V(-116.37, 63.63)];
-		// var para_proto_blue = [V(-116.37, -63.63), V(243.63, -63.63), V(116.37, 63.63), V(-243.63, 63.63)];
-		var para_proto_blue = [V(-26.36, -63.63), V(153.64, -63.63), V(26.36, 63.63), V(-153.64, 63.63)];
-		var para_proto_mirrored_blue = [V(-153.64, -63.63), V(26.36, -63.63), V(153.64, 63.63), V(-26.36, 63.63)];
-
-		//Übungsblock 3
-		var triangle_green_proto = [V(0, -63.64), V(127.28, 63.64), V(-127.28, 63.64)];
-
-		//Testungsblock
-		var triangle_yellow_proto = [V(-90, 51.95), V(-90, -51.95), V(90, 51.95)];
-		var triangle_yellow_proto_mirrored = [V(-90, 51.95), V(90, -51.95), V(90, 51.95)];
-		var box_yellow_proto = [V(-90,-51.95), V(90,-51.95), V(90,51.95), V(-90,51.95)];
-
-		var position = getPreIconPosition();
-
-		if(name == "triangle_yellow") {
-			var triangle = world.addEntity(P(position, triangle_yellow_proto), IDS2EntityOptions);
-		}else if(name == "triangle_yellow_mirrored") {
-			var triangle = world.addEntity(P(position, triangle_yellow_proto_mirrored), IDS2EntityOptions);
-		}else if(name == "box_yellow") {
-			var box = world.addEntity(P(position, box_yellow_proto), IDS2EntityOptions);
-		}else if(name == "triangle_green") {
-			var triangle = world.addEntity(P(position, triangle_green_proto), block3EntityOptions);
-		}else if(name == "circle_green") {
-			var circle = world.addEntity(C(position, 90), block3EntityOptions);
-		}else if(name == "quarter_green") {
-			var quarter = world.addEntity(Q(position, 90), block3EntityOptions);
-		}else if(name == "halfcircle_blue") {
-			var halfcircle = world.addEntity(H(position, 90), block2EntityOptions);
-		}else if(name == "para_blue") {
-			var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
-		}else if(name == "para_blue_mirrored") {
-			var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
-		}else if(name == "triangle_red") {
-			var triangle = world.addEntity(P(position, triangle_red_proto), block1EntityOptions);
-		}else if(name == "box_red") {
-			var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
-		}
-
-		$("#play-button").css("display", "block");
-	});
+	$("#play-button").css("display", "block");
 }
 
 function TimeRestrictions() {
@@ -383,14 +391,12 @@ function setupCanvasA() {
 	}());
 }
 
-function getPreIconPosition() {
-	var total_icons = $(".pre-img").length;
+function getEntityPosition(total_icons, icons_left) {
 	var min_height = 180;
 	var min_width = 180;
-	var icons_left = iconsCounter();
 	var position = V(0, 0);
 
-	position.y = min_height/2 + min_height*(total_icons - iconsCounter() -1);
+	position.y = min_height + min_height*(total_icons - icons_left);
 	if(position.y > 2160) {
 	position.y = position.y - 2160;
 	}else if(position.y > 1440) {
@@ -430,8 +436,7 @@ function iconsCounter() {
 	return total_icons - hidden_icons;
 }
 
-function rowCounter() {
-	var icons = iconsCounter();
+function rowCounterA(icons) {
 	if(icons <= 4) {
 		icon_rows = 1;
 	}else if(icons <= 8) {

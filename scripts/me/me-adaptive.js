@@ -176,7 +176,7 @@ function loadImgs() {
 	function allImagesLoaded() {
 		setTimeout(function() {
 			$("#page-load-screen").css("display", "none");
-			startMEAD();
+			startMEA();
 			one_click = false;
 		}, 500);
 	}
