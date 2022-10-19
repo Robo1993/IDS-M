@@ -24,7 +24,7 @@ var start_time;
 var time_used;
 var moves = 0;
 var icon_rows = 0;
-var row_counter = 1;
+var row_counter = 0;
 
 let logic_tree;
 let items;
@@ -195,11 +195,9 @@ function startFNA() {
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
-	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1 || questionCode.indexOf("T") != -1 || questionCode.indexOf("R") != -1) {
-		setTimeout(function() {
-			$("#tp-response-button").css("display", "block");
-		}, 2000);
-	}
+	setTimeout(function() {
+		$("#tp-response-button").css("display", "block");
+	}, 2000);
 }
 
 function loadEntitiesA() {
@@ -243,9 +241,9 @@ function loadEntitiesA() {
 	for (var i = thumbnails.length - 1; i >= 0; i--) {
 		let name = thumbnails[i][0];
 		let amount = thumbnails[i][1];
-		let position = getEntityPosition(total_entities, entities_left);
 		//let position = V(500, 500);
 		while(amount > 0) {
+			let position = getEntityPosition(total_entities, entities_left);
 			if(name == "triangle_yellow") {
 				var triangle = world.addEntity(P(position, triangle_yellow_proto), IDS2EntityOptions);
 			}else if(name == "triangle_yellow_mirrored") {
@@ -329,28 +327,10 @@ function abort() {
 
 function evaluateFNA() {
 	end = performance.now();
-	let time = end- start;
+	let time = end - start;
 
-	let eval_points = [];
-	let item = parseInt(questionCode.substr(questionCode.length - 2));
-	if(questionCode.indexOf("UB") != -1) {
-		if(questionCode.indexOf("V") != -1) {
-			eval_points = training_block[0];
-		}else {
-			eval_points = training_block[item];
-		}
-	}else if(questionCode.indexOf("R") != -1) {
-		if(questionCode.indexOf("V") != -1) {
-			eval_points = routing_block[0];
-		}else if(questionCode.indexOf("D") != -1) {
-			eval_points = routing_block[item];
-		}else {
-			eval_points = routing_block[item + 3];
-		}
-	}else if(questionCode.indexOf("T") != -1) {
-		eval_points = test_block[item - 1];
-	}
-	var correct = evaluateCalcPoints(world.entities, eval_points)
+	let eval_points = routing_block[logic_tree.getItemByRow(current_row).item];
+	var correct = evaluateCalcPoints(world.entities, eval_points);
 
 	$("#answer"+ questionID +"Shape").attr("value", correct);
 	$("#answer"+ questionID +"Angle").attr("value", angle_of_shape);
@@ -396,37 +376,18 @@ function getEntityPosition(total_icons, icons_left) {
 	var min_width = 180;
 	var position = V(0, 0);
 
-	position.y = min_height + min_height*(total_icons - icons_left);
-	if(position.y > 2160) {
-	position.y = position.y - 2160;
-	}else if(position.y > 1440) {
-	position.y = position.y - 1440;
-	}else if(position.y > 720) {
-	position.y = position.y - 720;
-	}
+	position.y = 90 + (min_height*(total_icons - icons_left));
 
-	if($(".pre-img[style*='display: none']").length == 5 || $(".pre-img[style*='display: none']").length == 9) {
-	row_counter++;
-	}
-
-	if(icon_rows == 3) {
-		if(row_counter == 1) {
-			position.x = min_width/2;
-		}else if(row_counter == 2) {
-			position.x = 900 - min_width/2;
-		}else if(row_counter == 3) {
-			position.x = min_width*1.5;
+	if(position.y > 720) {
+		let offset = Math.abs(720 - position.y);
+		row_counter = 2;
+		if(position.y > 1440) {
+			offset = Math.abs(1440 - position.y);
+			row_counter = 3;
 		}
-	}else if(icon_rows == 2) {
-		if(row_counter == 1) {
-			position.x = min_width/2;
-		}else if(row_counter == 2) {
-			position.x = 900 - min_width/2;
-		}
-	}else if(icon_rows == 1) {
-		position.x = min_width/2;
+		position.y = offset
 	}
-
+	position.x = 90 + (row_counter * min_width);
 	return position;
 }
 
