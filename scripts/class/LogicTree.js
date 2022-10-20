@@ -54,7 +54,7 @@ function LogicTree(tree, items, ut) {
 				}else if(tree.ut == "VM") {
 					item = new VMItem(parseInt(v[0]), trim(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]));
 				}else if(tree.ut == "FW") {
-					item = new FWItem(parseInt(v[0]), trim(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]));
+					item = new FWItem(parseInt(v[0]), v[1], v[2]);
 				}
 			}
 		});
@@ -108,7 +108,8 @@ function VMItem(item, target) {
 
 //Class FWItem
 //@params: csv file from items folder in IDS-M Theme
-function FWItem(item, target) {
+function FWItem(item, targets, options) {
 	this.item = item;
-	this.target = target;
+	this.targets = targets;
+	this.options = options;
 }
