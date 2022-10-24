@@ -48,13 +48,13 @@ function LogicTree(tree, items, ut) {
 		$.each(this.items.data, function(i, v) {
 			if (parseInt(v[0]) == y) {
 				if(tree.ut == "ME") {
-					item = new MEItem(parseInt(v[0]), trim(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]));
+					item = new MEItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]), trim(v[7]));
 				}else if(tree.ut == "FN") {
-					item = new FNItem(parseInt(v[0]), trim(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]), parseInt(v[8]));
+					item = new FNItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]), parseInt(v[8]), parseInt(v[9]));
 				}else if(tree.ut == "VM") {
-					item = new VMItem(parseInt(v[0]), trim(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]));
+					item = new VMItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]));
 				}else if(tree.ut == "FW") {
-					item = new FWItem(parseInt(v[0]), v[1], v[2]);
+					item = new FWItem(parseInt(v[0]), parseInt(v[1]), v[2], v[3]);
 				}
 			}
 		});
@@ -75,8 +75,9 @@ function Row(row, item, row_when_correct, row_when_incorrect, abort_when_correct
 
 //Class MEItem
 //@params: csv file from items folder in IDS-M Theme
-function MEItem(item, matrix, img1, img2, img3, img4, img5) {
+function MEItem(item, time, matrix, img1, img2, img3, img4, img5) {
 	this.item = item;
+	this.time = time;
 	this.matrix = matrix;
 	this.img1 = img1;
 	this.img2 = img2;
@@ -87,8 +88,9 @@ function MEItem(item, matrix, img1, img2, img3, img4, img5) {
 
 //Class FNItem
 //@params: csv file from items folder in IDS-M Theme
-function FNItem(item, target, triangle_yellow, triangle_yellow_mirrored, box_yellow, triangle_green, quarter_green, triangle_red, box_red) {
+function FNItem(item, time, target, triangle_yellow, triangle_yellow_mirrored, box_yellow, triangle_green, quarter_green, triangle_red, box_red) {
 	this.item = item;
+	this.time = time;
 	this.target = target;
 	this.triangle_yellow = triangle_yellow;
 	this.triangle_yellow_mirrored = triangle_yellow_mirrored;
@@ -101,15 +103,17 @@ function FNItem(item, target, triangle_yellow, triangle_yellow_mirrored, box_yel
 
 //Class VMItem
 //@params: csv file from items folder in IDS-M Theme
-function VMItem(item, target) {
+function VMItem(item, time, target) {
 	this.item = item;
+	this.time = time;
 	this.target = target;
 }
 
 //Class FWItem
 //@params: csv file from items folder in IDS-M Theme
-function FWItem(item, targets, options) {
+function FWItem(item, time, targets, options) {
 	this.item = item;
+	this.time = time;
 	this.targets = targets;
 	this.options = options;
 }
