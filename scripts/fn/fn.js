@@ -222,7 +222,7 @@ function startFN() {
 	start = performance.now();
 	TimeRestrictions();
 	activateClock();
-	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1 || questionCode.indexOf("T") != -1 || questionCode.indexOf("R") != -1) {
+	if(questionCode.indexOf("UB") != -1 || questionCode.indexOf("T") != -1 || questionCode.indexOf("R") != -1) {
 		setTimeout(function() {
 			$("#tp-response-button").css("display", "block");
 		}, 2000);
@@ -361,12 +361,12 @@ function evaluateFN() {
 	$("#answer"+ questionID +"Moves").attr("value", moves);
 	$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
 	
-	// if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-	// 	$("#feedback-button").css("display", "block");
-	// }else {
-	// 	$("#proceed-button").css("display", "block");
-	// }
-	feedbackFN();
+	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
+		$("#feedback-button").css("display", "block");
+	}else {
+		$("#proceed-button").css("display", "block");
+	}
+	//feedbackFN();
 	$("#proceed-button").css("display", "block");
 }
 

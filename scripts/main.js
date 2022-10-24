@@ -93,7 +93,7 @@ $( document ).ready(function() {
 				startAA();
 			}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 				startFN();
-			}else if(questionCode.indexOf("FW") != -1) {
+			}else if(questionCode.indexOf("FW") != -1 && questionCode.indexOf("FWA") == -1) {
 				startFW();
 			}else if(questionCode.indexOf("SF") != -1) {
 				startSF();
@@ -107,6 +107,8 @@ $( document ).ready(function() {
 				startMEA();
 			}else if(questionCode.indexOf("FNA") != -1) {
 				startFNA();
+			}else if(questionCode.indexOf("FWA") != -1) {
+				startFWA();
 			}
 		}
 
@@ -136,7 +138,7 @@ $( document ).ready(function() {
 			feedbackAA();
 		}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 			feedbackFN();
-		}else if(questionCode.indexOf("FW") != -1) {
+		}else if(questionCode.indexOf("FW") != -1 && questionCode.indexOf("FWA") == -1) {
 			feedbackFW();
 		}else if(questionCode.indexOf("SF") != -1) {
 			feedbackSF();
@@ -148,6 +150,8 @@ $( document ).ready(function() {
 			feedbackMEA();
 		}else if(questionCode.indexOf("FNA") != -1) {
 			feedbackFN();
+		}else if(questionCode.indexOf("FWA") != -1) {
+			feedbackFWA();
 		}
 	});
 
@@ -398,7 +402,7 @@ function initialize() {
 			initAA();
 		}else if(questionCode.indexOf("TFZ") != -1) {
 			initTFZ();
-		}else if(questionCode.indexOf("FW") != -1) {
+		}else if(questionCode.indexOf("FW") != -1 && questionCode.indexOf("FWA") == -1) {
 			initFW();
 		}else if(questionCode.indexOf("RG") != -1) {
 			initRG();
@@ -410,6 +414,8 @@ function initialize() {
 			initMEA();
 		}else if(questionCode.indexOf("FNA") != -1) {
 			initFNA();
+		}else if(questionCode.indexOf("FWA") != -1) {
+			initFWA();
 		}
 	}
 }
@@ -491,7 +497,7 @@ function pasteAnswers() {
 		evaluateAA();
 	}else if(questionCode.indexOf("TFZ") != -1) {
 		evaluateTFZ();
-	}else if(questionCode.indexOf("FW") != -1) {
+	}else if(questionCode.indexOf("FW") != -1 && questionCode.indexOf("FWA") == -1) {
 		evaluateFW();
 	}else if(questionCode.indexOf("RG") != -1) {
 		evaluateRG();
@@ -501,6 +507,8 @@ function pasteAnswers() {
 		evaluateMEA();
 	}else if(questionCode.indexOf("FNA") != -1) {
 		evaluateFNA();
+	}else if(questionCode.indexOf("FWA") != -1) {
+		evaluateFWA();
 	}
 }
 
@@ -532,12 +540,14 @@ function next() {
 		nextAA();
 	}else if(questionCode.indexOf("TFZ") != -1) {
 		nextTFZ();
-	}else if(questionCode.indexOf("FW") != -1) {
+	}else if(questionCode.indexOf("FW") != -1 && questionCode.indexOf("FWA") == -1) {
 		nextFW();
 	}else if(questionCode.indexOf("RG") != -1) {
 		nextRG();
 	}else if(questionCode.indexOf("MEA") != -1) {
 		nextMEA();
+	}else if(questionCode.indexOf("FWA") != -1) {
+		nextFWA();
 	}
 }
 
@@ -546,7 +556,7 @@ function checkOrientation() {
 		horizontalAlert();
 	}else if(questionCode.indexOf("I99") != -1) {
 		horizontalAlert();
-	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("MEA") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
+	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("MEA") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("FWA") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) {
 		horizontalAlert();
 	}else if(questionCode.indexOf("FA") != -1 || questionCode.indexOf("FN") != -1 || questionCode.indexOf("RG") != -1) {
 		verticalAlert();
@@ -725,7 +735,7 @@ function getTestCode() {
 		return "aa";
 	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		return "fn";
-	}else if(questionCode.indexOf("FW") != -1) {
+	}else if(questionCode.indexOf("FW") != -1 && questionCode.indexOf("FWA") == -1) {
 		return "fw";
 	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		return "me";
@@ -745,6 +755,8 @@ function getTestCode() {
 		return "mt";
 	}else if(questionCode.indexOf("MEA") != -1) {
 		return "mea";
+	}else if(questionCode.indexOf("FWA") != -1) {
+		return "fwa";
 	}
 }
 
@@ -753,7 +765,7 @@ function getTestCodeFormal() {
 		return "Aufmerksamkeit aufteilen";
 	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		return "Figuren nachlegen";
-	}else if(questionCode.indexOf("FW") != -1) {
+	}else if(questionCode.indexOf("FW") != -1 && questionCode.indexOf("FWA") == -1) {
 		return "Figuren wiedererkennen";
 	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		return "Matrizen ergänzen";
