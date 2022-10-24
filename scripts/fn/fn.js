@@ -367,10 +367,11 @@ function evaluateFN() {
 		$("#proceed-button").css("display", "block");
 	}
 	//feedbackFN();
-	$("#proceed-button").css("display", "block");
+	
 }
 
 function feedbackFN() {
+	$("#proceed-button").css("display", "block");
 	feedback();
 }
 
