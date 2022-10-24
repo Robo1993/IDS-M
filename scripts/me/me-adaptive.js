@@ -58,66 +58,19 @@ function startMEA() {
 	unLock();
 	start = performance.now();
 	$("#tp-response-button").css("display", "block");
-	timeLimits();
+	timeLimitsMEA();
 	activateClock();
 }
 
-function timeLimits() {
-	$(":root").css("--duration", "180s");
-	if(questionCode.indexOf("T") != -1) {
-		if(questionCode.indexOf("1T") != -1) {
-			$(":root").css("--duration", "30s");
-			setTimeout(function() {
-				if(!locked) {
-					end = performance.now();
-					evaluateME();
-				}
-			}, 30000);
-		}else if(questionCode.indexOf("2T") != -1) {
-			$(":root").css("--duration", "45s");
-			setTimeout(function() {
-				if(!locked) {
-					end = performance.now();
-					evaluateME();
-				}
-			}, 45000);
-		}else if(questionCode.indexOf("3T") != -1) {
-			$(":root").css("--duration", "60s");
-			setTimeout(function() {
-				if(!locked) {
-					end = performance.now();
-					evaluateME();
-				}
-			}, 60000);
+function timeLimitsMEA() {
+	let item = logic_tree.getItemByRow(current_row);
+	$(":root").css("--duration", item.time +"ms");
+	setTimeout(function() {
+		if(!locked) {
+			end = performance.now();
+			evaluateMEA();
 		}
-	}else if(questionCode.indexOf("R") != -1) {
-		let question_number = parseInt(questionCode.slice(questionCode.length - 2));
-		if(question_number < 11) {
-			$(":root").css("--duration", "60s");
-			setTimeout(function() {
-				if(!locked) {
-					end = performance.now();
-					evaluateME();
-				}
-			}, 60000);
-		}else if(question_number > 10 && question_number < 21) {
-			$(":root").css("--duration", "90s");
-			setTimeout(function() {
-				if(!locked) {
-					end = performance.now();
-					evaluateME();
-				}
-			}, 90000);
-		}else if(question_number > 20) {
-			$(":root").css("--duration", "120s");
-			setTimeout(function() {
-				if(!locked) {
-					end = performance.now();
-					evaluateME();
-				}
-			}, 120000);
-		}
-	}
+	}, item.time);
 }
 
 function feedbackMEA() {

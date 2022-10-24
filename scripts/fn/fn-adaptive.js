@@ -193,7 +193,7 @@ function startFNA() {
 		$("#proceed-button").css("display", "block");
 	}
 	start = performance.now();
-	TimeRestrictions();
+	TimeRestrictionsFNA();
 	activateClock();
 	setTimeout(function() {
 		$("#tp-response-button").css("display", "block");
@@ -275,26 +275,10 @@ function loadEntitiesA() {
 	$("#play-button").css("display", "block");
 }
 
-function TimeRestrictions() {
-	let number = parseInt(questionCode.slice(-2));
-	if(questionCode.indexOf("FNR") != -1) {
-		$(":root").css("--duration", "180s");
-		setTimeout(abort, 180000);
-	}else if(questionCode.indexOf("FN1T") != -1 || questionCode.indexOf("FN2T") != -1 || questionCode.indexOf("FN3T") != -1) {
-		if(number < 12) {
-			$(":root").css("--duration", "30s");
-			setTimeout(abort, 30000);
-		}else if(number > 11 && number < 14) {
-			$(":root").css("--duration", "60s");
-			setTimeout(abort, 60000);
-		}else if(number > 13 && number < 16) {
-			$(":root").css("--duration", "90s");
-			setTimeout(abort, 90000);
-		}else if(number > 15) {
-			$(":root").css("--duration", "120s");
-			setTimeout(abort, 120000);
-		}
-	}
+function TimeRestrictionsFNA() {
+	let item = logic_tree.getItemByRow(current_row);
+	$(":root").css("--duration", item.time +"ms");
+	setTimeout(abort, item.time);
 }
 
 function checkForEntitiesOnStartup() {
@@ -322,7 +306,7 @@ function abort() {
 	locked = true;
 	$("#tp-response-button").css("display", "none");
 	$("#fn-thumbnails").css("display", "none");
-	evaluateFN();
+	evaluateFNA();
 }
 
 function evaluateFNA() {
@@ -347,7 +331,7 @@ function evaluateFNA() {
 	$("#proceed-button").css("display", "block");
 }
 
-function feedbackFN() {
+function feedbackFNA() {
 	feedback();
 }
 
