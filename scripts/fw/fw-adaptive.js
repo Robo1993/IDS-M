@@ -1,12 +1,20 @@
 var fw_transition_time;
-var target_figures = [];
+var target_figures;
+var current_row;
+let url_tree;
+let url_items;
 
 function initFWA() {
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#clock").css("display", "block");
 	//}
-	calcTargetsA();
-	fw_transition_time = estimateTimeA();
+	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fw-tree.csv";
+	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fw-items.csv";
+	current_row = parseInt($("#current-row").text());
+	if(!current_row) {
+		current_row = 1;
+	}
+	loadLogicTree();
 
 	$(".img-box").click(function(){
 		if(!locked) {
@@ -33,7 +41,8 @@ function initFWA() {
 
 	function createTree() {
 		logic_tree = new LogicTree(tree, items, "FW");
-		loadImgs();
+		fw_transition_time = estimateTimeA();
+		//loadImagesFWA();
 	}
 
 	function readLogicTreeCSV(csv) {
@@ -44,7 +53,7 @@ function initFWA() {
 		});
 	}
 
-	function readItemsCSV(csv, readCSV) {
+	function readItemsCSV(csv) {
 		$.get(csv, function( data ) {
 			//this.items = Papa.parse(data);
 			items = Papa.parse(data);
@@ -70,18 +79,12 @@ function startFWA() {
 	}
 }
 
-function calcTargetsA() {
-	$(".fwFigures").each(function(){
-		target_figures.push($(this).attr("src").symbol());
-	});
-}
-
-String.prototype.symbol=function(extension) {
-	var s= this.replace(/\\/g, '/');
-	s= s.substring(s.lastIndexOf('/')+ 1);
-	let filename = extension? s.replace(/[?#].+$/, ''): s.split('.')[0];
-	return filename.split("-")[0];
-}
+// String.prototype.symbol=function(extension) {
+// 	var s= this.replace(/\\/g, '/');
+// 	s= s.substring(s.lastIndexOf('/')+ 1);
+// 	let filename = extension? s.replace(/[?#].+$/, ''): s.split('.')[0];
+// 	return filename.split("-")[0];
+// }
 
 function feedbackFWA() {
 	var anythingWrong = false;
@@ -118,26 +121,21 @@ function nextFWA() {
 }
 
 function estimateTimeA() {
-let item = logic_tree.getItemByRow(current_row);
+	let item = logic_tree.getItemByRow(current_row);
 	$(":root").css("--duration", item.time +"ms");
 	return item.time;
 }
 
 function loadImagesFWA() {
 	let img_counter = 0;
-	current_row = parseInt($("#current-row").text());
-	if(!current_row) {
-		current_row = 1;
-	}
 	let item = logic_tree.getItemByRow(current_row);
-	let imgs = [item.img1, item.img2, item.img3, item.img4, item.img5];
 
-	let src = $(".me-matrix").attr("src").split("/");
-	src.splice(src.length - 2, 2);
-	let srcS = src.join("/");
+	// let src = $(".me-matrix").attr("src").split("/");
+	// src.splice(src.length - 2, 2);
+	// let srcS = src.join("/");
 
-	$(".me-matrix").attr("src", srcS + "/me" + item.item + "/" + item.matrix);
-	$("#thumbnail-container img").each(function() {
+	//$(".me-matrix").attr("src", srcS + "/me" + item.item + "/" + item.matrix);
+	$(".fwFigures").each(function() {
 		$(this).attr("src", srcS + "/me" + item.item + "/" + imgs[img_counter]);
 		if(!imgs[img_counter]) {
 			$(this).remove();
@@ -155,13 +153,13 @@ function loadImagesFWA() {
 	// listener, then set its source to the source of the original image. When
 	// that new image has loaded, fire the imageLoaded() callback.
 	$("img").each(function (idx, img) {
-		$("<img>").on("load", imageLoaded).attr("src", $(img).attr("src"))
+		$("<img>").on("load", imageLoaded).attr("src", $(img).attr("src"));
 	});
 
 	// Do exactly as we had before -- increment the loaded count and if all are
 	// loaded, call the allImagesLoaded() function.
 	function imageLoaded() {
-		imagesLoaded++
+		imagesLoaded++;
 		if (imagesLoaded == totalImages) {
 			allImagesLoaded();
 		}

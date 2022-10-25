@@ -1163,6 +1163,13 @@ FW content
     padding: 7px;
     max-height: 160px;
  }
+
+ /*adaptive stuff*/
+ #fw-options {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+ }
  
 /*
 --------------------------------------------------------------------------------
