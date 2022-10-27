@@ -1138,6 +1138,8 @@ FW content
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    max-width: 600px;
+    flex-flow: wrap;
 }
 
 .img-box {
