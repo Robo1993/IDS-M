@@ -3,6 +3,8 @@ var target_figures;
 var current_row;
 let url_tree;
 let url_items;
+let tree;
+let items;
 
 function initFWA() {
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
@@ -35,7 +37,7 @@ function initFWA() {
 		}
 	});
 
-		function loadLogicTree() {
+	function loadLogicTree() {
 		readItemsCSV(url_items);
 	}
 
