@@ -1,10 +1,6 @@
 var fw_transition_time;
 var target_figures;
-var current_row;
-let url_tree;
-let url_items;
-let tree;
-let items;
+
 
 function initFWA() {
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
@@ -44,7 +40,7 @@ function initFWA() {
 	function createTree() {
 		logic_tree = new LogicTree(tree, items, "FW");
 		fw_transition_time = estimateTimeA();
-		//loadImagesFWA();
+		loadImagesFWA();
 	}
 
 	function readLogicTreeCSV(csv) {
