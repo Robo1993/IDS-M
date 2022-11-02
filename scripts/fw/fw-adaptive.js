@@ -1,6 +1,6 @@
 var fw_transition_time;
-var target_figures;
-
+let targets;
+let options; 
 
 function initFWA() {
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
@@ -12,9 +12,8 @@ function initFWA() {
 	if(!current_row) {
 		current_row = 1;
 	}
-	loadLogicTree();
 
-	$(".img-box").click(function(){
+	$(".img-box").on("click", function(){
 		if(!locked) {
 			if($(this).css("background-color") == "rgba(0, 0, 0, 0)" || $(this).css("background-color") == "rgb(255, 255, 255)") {
 				$(this).css("background-color", "rgb(204, 204, 204)");
@@ -32,6 +31,8 @@ function initFWA() {
 			}
 		}
 	});
+
+	loadLogicTree();
 
 	function loadLogicTree() {
 		readItemsCSV(url_items);
@@ -71,8 +72,8 @@ function startFWA() {
 		setTimeout(function() {
 			$("#clock").css("display", "none");
 			$("#tp-response-button").css("display", "block");
-			$("#fw-target").css("display", "none");
-			$("#fw-answer-block").css("display", "flex");
+			$("#fw-targets").css("display", "none");
+			$("#fw-options").css("display", "flex");
 		}, fw_transition_time);
 	}
 }
@@ -88,12 +89,12 @@ function feedbackFWA() {
 	var anythingWrong = false;
 	$("#clock").css("display", "none");
 
-	$(".figuren_img").each(function() {
+	$(".fwFigures").each(function() {
 		let symbol = $(this).attr("src").symbol();
 		let match = false;
 		let e = $(this);
 		e.parent().toggleClass("td_transition");
-		target_figures.forEach(function(t) {
+		targets.forEach(function(t) {
 			if(symbol == t) {
 				if(e.parent().css("background-color") == "rgb(204, 204, 204)") {
 					e.parent().css({"background-color":"#cfc"}, 1000);
@@ -120,27 +121,28 @@ function nextFWA() {
 
 function estimateTimeA() {
 	let item = logic_tree.getItemByRow(current_row);
-	$(":root").css("--duration", item.time +"ms");
-	return item.time;
+	$(":root").css("--duration", item.time_barrier +"ms");
+	return item.time_barrier;
 }
 
 function loadImagesFWA() {
-	let img_counter = 0;
 	let item = logic_tree.getItemByRow(current_row);
+	targets = item.targets.split("; ");
+	options = item.options.split("; ");
+	let template_img_src = $(".fwFigures").first().attr("src");
+	let src = template_img_src.split("/");
+	src.splice(src.length - 1, 1);
+	let srcS = src.join("/");
 
-	// let src = $(".me-matrix").attr("src").split("/");
-	// src.splice(src.length - 2, 2);
-	// let srcS = src.join("/");
+	$(".fwFigures").remove();
 
-	//$(".me-matrix").attr("src", srcS + "/me" + item.item + "/" + item.matrix);
-	$(".fwFigures").each(function() {
-		$(this).attr("src", srcS + "/me" + item.item + "/" + imgs[img_counter]);
-		if(!imgs[img_counter]) {
-			$(this).remove();
-		}
-		img_counter++;
+	targets.forEach(function(t) {
+	    $("#fw-targets").append("<img class='fwFigures' src='" + srcS + "/" + t + "' />");
 	});
-	item_counter++;
+
+	options.forEach(function(o) {
+	    $("#fw-options").append("<div class='img-box'><img class='fwFigures' src='" + srcS + "/" + o + "' /></div>");
+	});
 
 	// Images loaded is zero because we're going to process a new set of images.
 	var imagesLoaded = 0;
@@ -179,7 +181,7 @@ function evaluateFWA() {
 	var wrong_figures = 0;
 	var false_left_out = 0;
 
-	var selected_figures = $(".figuren_img").filter(function(){
+	var selected_figures = $(".fwFigures").filter(function(){
 		var color = $(this).parent().css("background-color");
 		return color === "rgb(204, 204, 204)";
 	});
@@ -187,7 +189,7 @@ function evaluateFWA() {
 	selected_figures.each(function() {
 		let symbol = $(this).attr("src").symbol();
 		let match = false;
-		target_figures.forEach(function(t) {
+		targets.forEach(function(t) {
 			if(symbol == t) {
 				correct_figures++;
 				match = true;
@@ -198,7 +200,7 @@ function evaluateFWA() {
 		}
 	});
 
-	false_left_out = target_figures.length - correct_figures;
+	false_left_out = targets.length - correct_figures;
 
 	$("#answer"+ questionID +"Time").attr("value", time);
 	$("#answer"+ questionID +"Missed").attr("value", false_left_out);

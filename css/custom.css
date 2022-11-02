@@ -1167,10 +1167,19 @@ FW content
  }
 
  /*adaptive stuff*/
- #fw-options {
+ #fw-targets {
     display: flex;
     justify-content: center; 
     align-items: center; 
+ }
+
+ #fw-options {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    flex-flow: wrap;
  }
  
 /*

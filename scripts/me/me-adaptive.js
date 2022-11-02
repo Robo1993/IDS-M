@@ -1,9 +1,10 @@
-let logic_tree;
-let items;
-let tree;
-let url_tree;
-let url_items;
-let current_row;
+
+var logic_tree;
+var items;
+var tree;
+var url_tree;
+var url_items;
+var current_row;
 
 function initMEA() {
 

@@ -47,7 +47,7 @@ function LogicTree(tree, items, ut) {
 				}else if(tree.ut == "VM") {
 					item = new VMItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]));
 				}else if(tree.ut == "FW") {
-					item = new FWItem(parseInt(v[0]), parseInt(v[1]), v[2], v[3]);
+					item = new FWItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), trim(v[3]));
 				}
 			}
 		});
