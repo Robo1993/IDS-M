@@ -48,37 +48,10 @@
             <add>css/base.css</add>
             <add>css/theme.css</add>
             <add>css/custom.css</add>
-            <add>css/clock.css</add>
         </css>
         <js>
             <add>scripts/theme.js</add>
             <add>scripts/custom.js</add>
-            <add>scripts/main.js</add>
-            <!--  Aufmerksamkeit aufteilen -->
-            <add>scripts/aa/aa.js</add>
-            <!--  Figuren nachlegend -->
-            <add>scripts/fn/fn.js</add>
-            <add>scripts/fn/example.js</add>
-            <add>scripts/fn/data.js</add>
-            <add>scripts/fn/raphael-min.js</add>
-            <add>scripts/fn/SAT.js</add>
-            <add>scripts/fn/underscore-min.js</add>
-            <!--  Figuren wiedererkennen -->
-            <add>scripts/fw/fw.js</add>
-            <!--  Matrizen erkennen -->
-            <add>scripts/me/me.js</add>
-            <!--  Symbole finden -->
-            <add>scripts/sf/sf.js</add>
-            <!--  Tierfarben zuordnen -->
-            <add>scripts/tfz/tfz.js</add>
-            <!--  Visuomotorik -->
-            <add>scripts/vm/vm.js</add>
-            <!--  Mitarbeit -->
-            <add>scripts/mt/mt.js</add>
-            <!--  PPVT -->
-            <add>scripts/ppvt/ppvt.js</add>
-            <!--  Ishihara -->
-            <add>scripts/ish/ish.js</add>
         </js>
         <print_css>
             <add>css/print_theme.css</add>
