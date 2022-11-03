@@ -12,26 +12,6 @@ function initFWA() {
 	if(!current_row) {
 		current_row = 1;
 	}
-
-	$(".img-box").on("click", function(){
-		if(!locked) {
-			if($(this).css("background-color") == "rgba(0, 0, 0, 0)" || $(this).css("background-color") == "rgb(255, 255, 255)") {
-				$(this).css("background-color", "rgb(204, 204, 204)");
-			}else if($(this).css("background-color") == "rgb(204, 204, 204)") {
-				$(this).css("background-color", "rgba(0, 0, 0, 0)");
-			}
-
-			var selections = $(".img-box").filter(function(){
-				return $(this).css('background-color') === "rgb(204, 204, 204)";
-			}).length;
-			if(selections == 0) {
-				option_selected = false;
-			}else {
-				option_selected = true;
-			}
-		}
-	});
-
 	loadLogicTree();
 
 	function loadLogicTree() {
@@ -62,6 +42,24 @@ function initFWA() {
 }
 
 function startFWA() {
+	$(".img-box").on("click", function(){
+		if(!locked) {
+			if($(this).css("background-color") == "rgba(0, 0, 0, 0)" || $(this).css("background-color") == "rgb(255, 255, 255)") {
+				$(this).css("background-color", "rgb(204, 204, 204)");
+			}else if($(this).css("background-color") == "rgb(204, 204, 204)") {
+				$(this).css("background-color", "rgba(0, 0, 0, 0)");
+			}
+
+			var selections = $(".img-box").filter(function(){
+				return $(this).css('background-color') === "rgb(204, 204, 204)";
+			}).length;
+			if(selections == 0) {
+				option_selected = false;
+			}else {
+				option_selected = true;
+			}
+		}
+	});
 	unLock();
 	$("#fw-target").css("display", "block");
 	start = performance.now();
