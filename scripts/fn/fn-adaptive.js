@@ -26,13 +26,6 @@ var moves = 0;
 var icon_rows = 0;
 var row_counter = 0;
 
-let logic_tree;
-let items;
-let tree;
-let url_tree;
-let url_items;
-let current_row;
-
 // Default entity options that will just highlight entities when they overlap
 var defaultEntityOptions = {
 	solid: true,
@@ -277,8 +270,8 @@ function loadEntitiesA() {
 
 function TimeRestrictionsFNA() {
 	let item = logic_tree.getItemByRow(current_row);
-	$(":root").css("--duration", item.time +"ms");
-	setTimeout(abort, item.time);
+	$(":root").css("--duration", item.time_barrier +"ms");
+	setTimeout(abort, item.time_barrier);
 }
 
 function checkForEntitiesOnStartup() {
