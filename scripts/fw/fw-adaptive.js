@@ -3,9 +3,7 @@ let targets;
 let options; 
 
 function initFWA() {
-	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-		$("#clock").css("display", "block");
-	//}
+	$("#clock").css("display", "block");
 	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fw-tree.csv";
 	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fw-items.csv";
 	current_row = parseInt($("#current-row").text());
@@ -42,6 +40,7 @@ function initFWA() {
 }
 
 function startFWA() {
+
 	$(".img-box").on("click", function(){
 		if(!locked) {
 			if($(this).css("background-color") == "rgba(0, 0, 0, 0)" || $(this).css("background-color") == "rgb(255, 255, 255)") {
@@ -60,9 +59,9 @@ function startFWA() {
 			}
 		}
 	});
+	
 	unLock();
 	$("#fw-target").css("display", "block");
-	start = performance.now();
 	activateClock();
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#next-button").css("display", "block");
@@ -72,16 +71,17 @@ function startFWA() {
 			$("#tp-response-button").css("display", "block");
 			$("#fw-targets").css("display", "none");
 			$("#fw-options").css("display", "flex");
+			start = performance.now();
 		}, fw_transition_time);
 	}
 }
 
-// String.prototype.symbol=function(extension) {
-// 	var s= this.replace(/\\/g, '/');
-// 	s= s.substring(s.lastIndexOf('/')+ 1);
-// 	let filename = extension? s.replace(/[?#].+$/, ''): s.split('.')[0];
-// 	return filename.split("-")[0];
-// }
+String.prototype.symbol=function(extension) {
+	var s= this.replace(/\\/g, '/');
+	s= s.substring(s.lastIndexOf('/')+ 1);
+	let filename = extension? s.replace(/[?#].+$/, ''): s.split('.')[0];
+	return filename.split("-")[0];
+}
 
 function feedbackFWA() {
 	var anythingWrong = false;
@@ -135,7 +135,7 @@ function loadImagesFWA() {
 	$(".fwFigures").remove();
 
 	targets.forEach(function(t) {
-	    $("#fw-targets").append("<img class='fwFigures' src='" + srcS + "/" + t + "' />");
+	    $("#fw-targets").append("<img class='fwFigures fwTargets' src='" + srcS + "/" + t + "' />");
 	});
 
 	options.forEach(function(o) {
@@ -188,7 +188,8 @@ function evaluateFWA() {
 		let symbol = $(this).attr("src").symbol();
 		let match = false;
 		targets.forEach(function(t) {
-			if(symbol == t) {
+			let target = t.split("-")[0];
+			if(symbol == target) {
 				correct_figures++;
 				match = true;
 			}
@@ -205,10 +206,17 @@ function evaluateFWA() {
 	$("#answer"+ questionID +"Correct").attr("value", correct_figures);
 	$("#answer"+ questionID +"Wrong").attr("value", wrong_figures);
 
+	let row = logic_tree.getRowByRow(current_row);
+	//at the moment we use the logic tree as follows: when total points are > 0, we will jump to the next row that is in row_when_correct. We need to define a better solution for this.
+	//Maybe we could define a threshhold for what counts as correct and put it in fw-tree.csv
 	if((correct_figures - wrong_figures) < 0) {
 		$("#answer"+ questionID +"Total").attr("value", 0);
+		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_incorrect);
+		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_incorrect);
 	}else {
 		$("#answer"+ questionID +"Total").attr("value", correct_figures - wrong_figures);
+		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_correct);
+		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_correct);
 	}
 
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {

@@ -1145,10 +1145,11 @@ FW content
 .img-box {
     padding:1rem;
     border-radius: 2rem;
+    margin: .5rem;
 }
 
 .figuren_img {
-    height:130px;
+    height: 130px;
     margin: auto;
  }
  
@@ -1158,11 +1159,9 @@ FW content
  
 .fwFigures {
     height: 13rem;
-    margin: 2rem;
  }
  
 .fn_answers td {
-    padding: 7px;
     max-height: 160px;
  }
 
@@ -1180,6 +1179,10 @@ FW content
     justify-content: center;
     max-width: 600px;
     flex-flow: wrap;
+ }
+
+ .fwTargets {
+    margin: 2rem;
  }
  
 /*
