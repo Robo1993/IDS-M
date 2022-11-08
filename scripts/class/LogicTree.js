@@ -44,8 +44,14 @@ function LogicTree(tree, items, ut) {
 					item = new MEItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), trim(v[3]), trim(v[4]), trim(v[5]), trim(v[6]), trim(v[7]));
 				}else if(tree.ut == "FN") {
 					item = new FNItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]), parseInt(v[8]), parseInt(v[9]));
-				}else if(tree.ut == "VM") {
-					item = new VMItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]));
+				}else if(tree.ut.indexOf("VM") != -1) {
+					if(tree.ut.indexOf("EZLE") != -1) {
+						item = new EZLEItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]));
+					}else if(tree.ut.indexOf("FA") != -1) {
+						item = new FAItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]));
+					}else if(tree.ut.indexOf("FS") != -1) {
+						item = new FSItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]), parseInt(v[6]), parseInt(v[7]));
+					}
 				}else if(tree.ut == "FW") {
 					item = new FWItem(parseInt(v[0]), parseInt(v[1]), trim(v[2]), trim(v[3]));
 				}
@@ -94,14 +100,6 @@ function FNItem(item, time_barrier, target, triangle_yellow, triangle_yellow_mir
 	this.box_red = box_red;
 }
 
-//Class VMItem
-//@params: csv file from items folder in IDS-M Theme
-function VMItem(item, time_barrier, target) {
-	this.item = item;
-	this.time_barrier = time_barrier;
-	this.target = target;
-}
-
 //Class FWItem
 //@params: csv file from items folder in IDS-M Theme
 function FWItem(item, time_barrier, targets, options) {
@@ -109,4 +107,28 @@ function FWItem(item, time_barrier, targets, options) {
 	this.time_barrier = time_barrier;
 	this.targets = targets;
 	this.options = options;
+}
+
+//Class VMItem
+//@params: csv file from items folder in IDS-M Theme
+function EZLEItem(item, time_barrier, target) {
+	this.item = item;
+	this.time_barrier = time_barrier;
+	this.target = target;
+}
+
+//Class VMItem
+//@params: csv file from items folder in IDS-M Theme
+function FAItem(item, time_barrier, target) {
+	this.item = item;
+	this.time_barrier = time_barrier;
+	this.target = target;
+}
+
+//Class VMItem
+//@params: csv file from items folder in IDS-M Theme
+function FSItem(item, time_barrier, target) {
+	this.item = item;
+	this.time_barrier = time_barrier;
+	this.target = target;
 }
