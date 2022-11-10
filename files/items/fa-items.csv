@@ -1,9 +1,14 @@
 # the comma is used for seperating cells, the semi comma is used for seperating items in a single cell (pls always use a space after ;)
 # time is in milliseconds
-item, time, target_imgs, img_options
-1, 10000, angle-red.png; arrow-blue.png, angle-yellow.png; circle-blue.png; arrow-green.png
-2, 10000, angle-red.png; arrow-blue.png, angle-yellow.png; circle-blue.png; arrow-green.png
-3, 10000, angle-red.png; arrow-blue.png, angle-yellow.png; circle-blue.png; arrow-green.png
-4, 10000, angle-red.png; arrow-blue.png, angle-yellow.png; circle-blue.png; arrow-green.png
-5, 10000, angle-red.png; arrow-blue.png, angle-yellow.png; circle-blue.png; arrow-green.png
-6, 10000, angle-red.png; arrow-blue.png, angle-yellow.png; circle-blue.png; arrow-green.png
+item, time, maze_img, evaluation_template
+1, 10000, maze.png, eval_template.png
+2, 10000, maze.png, eval_template.png
+3, 10000, maze.png, eval_template.png
+4, 10000, maze.png, eval_template.png
+5, 10000, maze.png, eval_template.png
+6, 10000, maze.png, eval_template.png
+7, 10000, maze.png, eval_template.png
+8, 10000, maze.png, eval_template.png
+9, 10000, maze.png, eval_template.png
+10, 10000, maze.png, eval_template.png
+11, 10000, maze.png, eval_template.png

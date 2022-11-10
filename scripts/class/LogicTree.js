@@ -111,24 +111,27 @@ function FWItem(item, time_barrier, targets, options) {
 
 //Class VMItem
 //@params: csv file from items folder in IDS-M Theme
-function EZLEItem(item, time_barrier, target) {
+function EZLEItem(item, time_barrier, maze, eval_template) {
 	this.item = item;
 	this.time_barrier = time_barrier;
-	this.target = target;
+	this.maze = maze;
+	this.eval_template = eval_template;
 }
 
 //Class VMItem
 //@params: csv file from items folder in IDS-M Theme
-function FAItem(item, time_barrier, target) {
+function FAItem(item, time_barrier, maze, eval_template) {
 	this.item = item;
 	this.time_barrier = time_barrier;
-	this.target = target;
+	this.maze = maze;
+	this.eval_template = eval_template;
 }
 
 //Class VMItem
 //@params: csv file from items folder in IDS-M Theme
-function FSItem(item, time_barrier, target) {
+function FSItem(item, time_barrier, maze, eval_template) {
 	this.item = item;
 	this.time_barrier = time_barrier;
-	this.target = target;
+	this.maze = maze;
+	this.eval_template = eval_template;
 }
