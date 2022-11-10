@@ -85,8 +85,10 @@ $( document ).ready(function() {
 			$(this).css("display", "none");
 			unLock();
 
-			if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
+			if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 				startVM();
+			}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
+				StartVMA();
 			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 				startME();
 			}else if(questionCode.indexOf("AA") != -1) {
@@ -130,8 +132,10 @@ $( document ).ready(function() {
 		$(this).css("display", "none");
 		$("#proceed-button").css("display", "block");
 		$("#tp-response-button").css("display", "none");
-		if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
+		if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 			feedbackVM();
+		}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
+			feedbackVMA();
 		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 			feedbackME();
 		}else if(questionCode.indexOf("AA") != -1) {
@@ -392,8 +396,10 @@ function initialize() {
 			initME();
 		}else if(questionCode.indexOf("PPVT") != -1) {
 			initPPVT();
-		}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
+		}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 			initVM();
+		}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
+			initVMA();
 		}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 			initFN();
 		}else if(questionCode.indexOf("SF") != -1) {
@@ -487,8 +493,10 @@ function getByIndex(d_array, str) {
 function pasteAnswers() {
 	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		evaluateME();
-	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
+	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 		evaluateVM();
+	}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
+		evaluateVMA();
 	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		evaluateFN();
 	}else if(questionCode.indexOf("SF") != -1) {
@@ -530,8 +538,10 @@ function feedback() {
 function next() {
 	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		nextME();
-	}else if(questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
+	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 		nextVM();
+	}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
+		nextVMA();
 	}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
 		nextFN();
 	}else if(questionCode.indexOf("SF") != -1) {

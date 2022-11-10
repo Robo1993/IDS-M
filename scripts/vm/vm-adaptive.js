@@ -1,4 +1,4 @@
-let time_drawing;
+
 
 function initVMA() {
 	if(questionCode.indexOf("EZLEA") != -1) {
@@ -88,8 +88,11 @@ function startVMA() {
 
 function loadAssetsVMA() {
 	let item = logic_tree.getItemByRow(current_row);
-	$("#ezle-img").attr("src");
+	let img_src = $("#ezle-img").attr("src");
 	$("#eval-img").attr("src");
+	let src = img_src.split("/");
+	src.splice(src.length - 1, 1);
+	let srcS = src.join("/");
 
 	// Images loaded is zero because we're going to process a new set of images.
 	var imagesLoaded = 0;
@@ -121,7 +124,7 @@ function loadAssetsVMA() {
 	}
 }
 
-function feedbackVM() {
+function feedbackVMA() {
 	$("#clock").css("display", "none");
 	$("#speed").css("display", "none");
 	if(questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
