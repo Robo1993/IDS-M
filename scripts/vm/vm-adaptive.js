@@ -88,11 +88,20 @@ function startVMA() {
 
 function loadAssetsVMA() {
 	let item = logic_tree.getItemByRow(current_row);
-	let img_src = $("#ezle-img").attr("src");
+	let img_src = "";
+	let srcS = "";
+	if(questionCode.indexOf("EZLEA") != -1) {
+		img_src = $("#ezle-img").attr("src");
+		let src = img_src.split("/");
+		src.splice(src.length - 1, 1);
+		srcS = src.join("/");
+		$("#ezle-img").attr("src", srcS + "/ezlea" + current_row);
+	}else {
+		img_src = $("#ezle-img").attr("src");
+	}
 	$("#eval-img").attr("src");
-	let src = img_src.split("/");
-	src.splice(src.length - 1, 1);
-	let srcS = src.join("/");
+	
+	srcS = src.join("/");
 
 	// Images loaded is zero because we're going to process a new set of images.
 	var imagesLoaded = 0;
