@@ -1,13 +1,16 @@
-
+let vm_subtest;
 
 function initVMA() {
 	if(questionCode.indexOf("EZLEA") != -1) {
+		vm_subtest = "EZLE"
 		url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/ezle-tree.csv";
 		url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/ezle-items.csv";
 	}else if(questionCode.indexOf("FSA") != -1) {
+		vm_subtest = "FS"
 		url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fs-tree.csv";
 		url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fs-items.csv";
 	}else if(questionCode.indexOf("FAA") != -1) {
+		vm_subtest = "FA"
 		url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fa-tree.csv";
 		url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fa-items.csv";
 	}
@@ -22,8 +25,7 @@ function initVMA() {
 	}
 
 	function createTree() {
-		logic_tree = new LogicTree(tree, items, "FW");
-		fw_transition_time = estimateTimeA();
+		logic_tree = new LogicTree(tree, items, vm_subtest);
 		loadAssetsVMA();
 	}
 
@@ -79,8 +81,8 @@ function initVMA() {
 
 function startVMA() {
 	//start = new Date();
-	start = performance.now();
 	init();
+	start = performance.now();
 	activateSpeed();
 	$("#tp-response-button").css("display", "block");
 	//$("#time-bar-fluid").addClass("bar-load-10s-once");
@@ -93,16 +95,14 @@ function loadAssetsVMA() {
 	if(questionCode.indexOf("EZLEA") != -1) {
 		img_src = $("#ezle-img").attr("src");
 		let src = img_src.split("/");
-		src.splice(src.length - 1, 1);
+		src.splice(src.length - 2, 2);
 		srcS = src.join("/");
-		$("#ezle-img").attr("src", srcS + "/ezlea" + current_row);
+		$("#ezle-img").attr("src", srcS + "/ezlea" + item.item + "/" + item.maze);
+		$("#eval-img").attr("src", srcS + "/ezlea" + item.item + "/" + item.eval_template);
 	}else {
 		img_src = $("#ezle-img").attr("src");
 	}
-	$("#eval-img").attr("src");
 	
-	srcS = src.join("/");
-
 	// Images loaded is zero because we're going to process a new set of images.
 	var imagesLoaded = 0;
 	// Total images is still the total number of <img> elements on the page.
@@ -127,7 +127,6 @@ function loadAssetsVMA() {
 	function allImagesLoaded() {
 		setTimeout(function() {
 			$("#page-load-screen").css("display", "none");
-			startVMA();
 			one_click = false;
 		}, 500);
 	}

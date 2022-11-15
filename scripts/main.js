@@ -88,7 +88,7 @@ $( document ).ready(function() {
 			if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 				startVM();
 			}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
-				StartVMA();
+				startVMA();
 			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 				startME();
 			}else if(questionCode.indexOf("AA") != -1) {
