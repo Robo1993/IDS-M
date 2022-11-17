@@ -1,14 +1,13 @@
 # the comma is used for seperating cells, the semi comma is used for seperating items in a single cell (pls always use a space after ;)
 # time is in milliseconds
-item, time, maze_img, evaluation_template
-1, 10000, maze.png, eval_template.png
-2, 10000, maze.png, eval_template.png
-3, 10000, maze.png, eval_template.png
-4, 10000, maze.png, eval_template.png
-5, 10000, maze.png, eval_template.png
-6, 10000, maze.png, eval_template.png
-7, 10000, maze.png, eval_template.png
-8, 10000, maze.png, eval_template.png
-9, 10000, maze.png, eval_template.png
-10, 10000, maze.png, eval_template.png
-11, 10000, maze.png, eval_template.png
+item, time_barrier, target, overlay, schablone, eval_template
+1, 10000, target.png, overlay.png, schablone.png, eval_template.png
+2, 10000, target.png, overlay.png, schablone.png, eval_template.png
+3, 10000, target.png, overlay.png, schablone.png, eval_template.png
+4, 10000, target.png, overlay.png, schablone.png, eval_template.png
+5, 10000, target.png, overlay.png, schablone.png, eval_template.png
+6, 10000, target.png, overlay.png, schablone.png, eval_template.png
+7, 10000, target.png, overlay.png, schablone.png, eval_template.png
+8, 10000, target.png, overlay.png, schablone.png, eval_template.png
+9, 10000, target.png, overlay.png, schablone.png, eval_template.png
+10, 10000, target.png, overlay.png, schablone.png, eval_template.png
