@@ -90,7 +90,7 @@ function startVMA() {
 
 function loadAssetsVMA() {
 	let item = logic_tree.getItemByRow(current_row);
-	let img_src = $("#ezle-img").attr("src");
+	let img_src = $(".ezle-img").attr("src");
 	let src = img_src.split("/");
 	src.splice(src.length - 2, 2);
 	let srcS = src.join("/");
@@ -99,14 +99,13 @@ function loadAssetsVMA() {
 		$("#eval-img").attr("src", srcS + "/ezlea" + item.item + "/" + item.eval_template);
 	}else if(questionCode.indexOf("FS") != -1){
 		$("#fs-target").attr("src", srcS + "/fsa" + item.item + "/" + item.target);
-		$("#fs-overlay").attr("src", srcS + "/fsa" + item.item + "/" + item.overlay);
-		$("#fs-schablone").attr("src", srcS + "/fsa" + item.item + "/" + item.schablone);
-		$("#fs-eval").attr("src", srcS + "/fsa" + item.item + "/" + item.eval_template);
+		$("#fs-schablone").attr("src", srcS + "/fsa" + item.item + "/" + item.template);
+		$("#eval-img").attr("src", srcS + "/fsa" + item.item + "/" + item.eval_template);
 	}else if(questionCode.indexOf("FA") != -1) {
 		$("#fa-target").attr("src", srcS + "/faa" + item.item + "/" + item.target);
 		$("#fa-overlay").attr("src", srcS + "/faa" + item.item + "/" + item.overlay);
-		$("#fa-schablone").attr("src", srcS + "/faa" + item.item + "/" + item.schablone);
-		$("#fa-eval").attr("src", srcS + "/faa" + item.item + "/" + item.eval_template);
+		$("#fa-schablone").attr("src", srcS + "/faa" + item.item + "/" + item.template);
+		$("#eval-img").attr("src", srcS + "/faa" + item.item + "/" + item.eval_template);
 	}
 	
 	// Images loaded is zero because we're going to process a new set of images.

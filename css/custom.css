@@ -837,7 +837,13 @@ FA content
     flex-direction: column;
 }
 
+.canvas-fs {
+    display: flex;
+    flex-direction: row;
+}
+
  .vmImg-overlay-fa {
+    display: none;
      -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
