@@ -843,7 +843,6 @@ FA content
 }
 
  .vmImg-overlay-fa {
-    display: none;
      -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -859,6 +858,10 @@ FA content
  
  #schablone {
      display: none;
+ }
+
+ #fa-schablone {
+    display: none;
  }
  
  /*
