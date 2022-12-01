@@ -196,7 +196,7 @@ function evaluateEZLEA() {
 	checkPercentage();
 	var time = end - start;
 	let item = logic_tree.getItemByRow(current_row);
-	let rows = logic_tree.getRowsByitem(item.item);
+	let rows = logic_tree.getRowsByItem(item.item);
 	let row;
 	for (var i = rows.length - 1; i >= 0; i--) {
 		r = rows[i];
@@ -226,7 +226,7 @@ function evaluateFSA() {
 	localStorage.setItem("idsm/" + questionCode + "Eval", canvas.toDataURL("image/png"));
 	var time = end - start;
 	let item = logic_tree.getItemByRow(current_row);
-	let rows = logic_tree.getRowsByitem(item.item);
+	let rows = logic_tree.getRowsByItem(item.item);
 	let row;
 	for (var i = rows.length - 1; i >= 0; i--) {
 		r = rows[i];
@@ -253,7 +253,7 @@ function evaluateFAA() {
 	localStorage.setItem("idsm/" + questionCode + "Eval", canvas.toDataURL("image/png"));
 	var time = end - start;
 	let item = logic_tree.getItemByRow(current_row);
-	let rows = logic_tree.getRowsByitem(item.item);
+	let rows = logic_tree.getRowsByItem(item.item);
 	let row;
 	for (var i = rows.length - 1; i >= 0; i--) {
 		r = rows[i];

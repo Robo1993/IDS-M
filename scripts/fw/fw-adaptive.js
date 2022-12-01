@@ -202,7 +202,7 @@ function evaluateFWA() {
 	false_left_out = targets.length - correct_figures;
 
 	let item = logic_tree.getItemByRow(current_row);
-	let rows = logic_tree.getRowsByitem(item.item);
+	let rows = logic_tree.getRowsByItem(item.item);
 	let row;
 	for (var i = rows.length - 1; i >= 0; i--) {
 		r = rows[i];
@@ -216,7 +216,6 @@ function evaluateFWA() {
 	$("#answer"+ questionID +"Correct").attr("value", correct_figures);
 	$("#answer"+ questionID +"Wrong").attr("value", wrong_figures);
 
-	let row = logic_tree.getRowByRow(current_row);
 	//at the moment we use the logic tree as follows: when total points are > 0, we will jump to the next row that is in row_when_correct. We need to define a better solution for this.
 	//Maybe we could define a threshhold for what counts as correct and put it in fw-tree.csv
 	if((correct_figures - wrong_figures) < 0) {

@@ -25,7 +25,7 @@ function LogicTree(tree, items, ut) {
 		$.each(this.tree.data, function(i, v) {
 			if (parseInt(v[1]) == item) {
 				let treeRow = new Row(parseInt(v[0]), parseInt(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]));
-				rows.append(treeRow);
+				rows.push(treeRow);
 			}
 		});
 		return rows;
