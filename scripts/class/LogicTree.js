@@ -5,28 +5,30 @@ function LogicTree(tree, items, ut) {
 	this.ut = ut;
 	this.items = items;
 	this.getRowByRow = getRowByRow;
-	this.getRowByItem = getRowByItem;
+	this.getRowsByItem = getRowsByItem;
 	this.getItemByRow = getItemByRow;
 	this.getItemByItem = getItemByItem;
+	this.getRowByItemAndScore = getRowByItemAndScore;
 
 	function getRowByRow(x) {
 		let treeRow;
 		$.each(this.tree.data, function(i, v) {
 			if (parseInt(v[0]) == x) {
-				treeRow = new Row(parseInt(v[0]), parseInt(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]));
+				treeRow = new Row(parseInt(v[0]), parseInt(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]));
 			}
 		});
 		return treeRow;
 	}
 
-	function getRowByItem(item) {
-		let treeRow;
+	function getRowsByItem(item) {
+		let rows = [];
 		$.each(this.tree.data, function(i, v) {
 			if (parseInt(v[1]) == item) {
-				treeRow = new Row(parseInt(v[0]), parseInt(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]), parseInt(v[5]));
+				let treeRow = new Row(parseInt(v[0]), parseInt(v[1]), parseInt(v[2]), parseInt(v[3]), parseInt(v[4]));
+				rows.append(treeRow);
 			}
 		});
-		return treeRow;
+		return rows;
 	}
 
 	function getItemByRow(z) {
@@ -57,18 +59,32 @@ function LogicTree(tree, items, ut) {
 		});
 		return item;
 	}
+
+	function getRowByItemAndScore(item, score) {
+		return false;
+	}
 }
 
 //Class Row
 //@params: csv file from logic_tree folder in IDS-M Theme
-function Row(row, item, row_when_correct, row_when_incorrect, abort_when_correct, abort_when_incorrect) {
+function Row(row, item, score, next_row, abort) {
 	this.row = row;
 	this.item = item;
-	this.row_when_correct = row_when_correct;
-	this.row_when_incorrect = row_when_incorrect;
-	this.abort_when_correct = abort_when_correct;
-	this.abort_when_incorrect = abort_when_incorrect;
+	this.score = score;
+	this.next_row = next_row;
+	this.abort = abort;
 }
+
+// //Class Row
+// //@params: csv file from logic_tree folder in IDS-M Theme
+// function Row(row, item, row_when_correct, row_when_incorrect, abort_when_correct, abort_when_incorrect) {
+// 	this.row = row;
+// 	this.item = item;
+// 	this.row_when_correct = row_when_correct;
+// 	this.row_when_incorrect = row_when_incorrect;
+// 	this.abort_when_correct = abort_when_correct;
+// 	this.abort_when_incorrect = abort_when_incorrect;
+// }
 
 //Class MEItem
 //@params: csv file from items folder in IDS-M Theme

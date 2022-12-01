@@ -195,6 +195,17 @@ function evaluateVMA() {
 function evaluateEZLEA() {
 	checkPercentage();
 	var time = end - start;
+	let item = logic_tree.getItemByRow(current_row);
+	let rows = logic_tree.getRowsByitem(item.item);
+	let row;
+	for (var i = rows.length - 1; i >= 0; i--) {
+		r = rows[i];
+		if (crossing == 0 && r.score == 0) {
+			row = r;
+		}else if(crossing > 0 && r.score == 1) {
+			row = r;
+		}
+	}
 	localStorage.setItem("idsm/" + questionCode + "Eval", canvas.toDataURL("image/png"));
 	$("#answer"+ questionID + "Time").attr("value", time_drawing);
 	$("#answer"+ questionID + "Crossed").attr("value", crossing);
@@ -202,6 +213,8 @@ function evaluateEZLEA() {
 	$("#answer"+ questionID + "Target").attr("value", target);
 	$("#answer"+ questionID + "Pickups").attr("value", pickups);
 	$("#answer"+ questionID + "UserDrawing").attr("value", localStorage.getItem("idsm/" + questionCode + "Eval"));
+	$("#answer"+ questionID + "NextRow").attr("value", row.next_row);
+	$("#answer"+ questionID + "Abort").attr("value", row.abort);
 	if(100 - percentage == 0 && target) {
 		answered_correctly = true;
 	}
@@ -212,11 +225,22 @@ function evaluateFSA() {
 	checkFields();
 	localStorage.setItem("idsm/" + questionCode + "Eval", canvas.toDataURL("image/png"));
 	var time = end - start;
+	let item = logic_tree.getItemByRow(current_row);
+	let rows = logic_tree.getRowsByitem(item.item);
+	let row;
+	for (var i = rows.length - 1; i >= 0; i--) {
+		r = rows[i];
+		if (crossed_fields == r.score) {
+			row = r;
+		}
+	}
 	$("#answer"+ questionID + "Time").attr("value", time_drawing);
 	$("#answer"+ questionID + "Percent").attr("value", 100 - percentage +"%");
 	$("#answer"+ questionID + "FieldsCrossed").attr("value", crossed_fields);
 	$("#answer"+ questionID + "FieldsMissed").attr("value", missed_fields);
 	$("#answer"+ questionID + "Pickups").attr("value", pickups);
+	$("#answer"+ questionID + "NextRow").attr("value", row.next_row);
+	$("#answer"+ questionID + "Abort").attr("value", row.abort);
 	$("#answer"+ questionID + "UserDrawing").attr("value", localStorage.getItem("idsm/" + questionCode + "Eval"));
 	if(100 - percentage == 0 && missed_fields == 0) {
 		answered_correctly = true;
@@ -228,11 +252,22 @@ function evaluateFAA() {
 	checkFields();
 	localStorage.setItem("idsm/" + questionCode + "Eval", canvas.toDataURL("image/png"));
 	var time = end - start;
+	let item = logic_tree.getItemByRow(current_row);
+	let rows = logic_tree.getRowsByitem(item.item);
+	let row;
+	for (var i = rows.length - 1; i >= 0; i--) {
+		r = rows[i];
+		if (crossed_fields == r.score) {
+			row = r;
+		}
+	}
 	$("#answer"+ questionID + "Time").attr("value", time_drawing);
 	$("#answer"+ questionID + "Percent").attr("value", 100 - percentage +"%");
 	$("#answer"+ questionID + "FieldsCrossed").attr("value", crossed_fields);
 	$("#answer"+ questionID + "FieldsMissed").attr("value", missed_fields);
 	$("#answer"+ questionID + "Pickups").attr("value", pickups);
+	$("#answer"+ questionID + "NextRow").attr("value", row.next_row);
+	$("#answer"+ questionID + "Abort").attr("value", row.abort);
 	$("#answer"+ questionID + "UserDrawing").attr("value", localStorage.getItem("idsm/" + questionCode + "Eval"));
 	if(100 - percentage == 0 && missed_fields == 0) {
 		answered_correctly = true;

@@ -309,11 +309,24 @@ function evaluateFNA() {
 	let eval_points = routing_block[logic_tree.getItemByRow(current_row).item];
 	var correct = evaluateCalcPoints(world.entities, eval_points);
 
+	let item = logic_tree.getItemByRow(current_row);
+	let rows = logic_tree.getRowsByitem(item.item);
+	let row;
+	for (var i = rows.length - 1; i >= 0; i--) {
+		r = rows[i];
+		if (correct && r.score == 1) {
+			row = r;
+		}else if(!correct && r.score == 0) {
+			row = r;
+		}
+	}
 	$("#answer"+ questionID +"Shape").attr("value", correct);
 	$("#answer"+ questionID +"Angle").attr("value", angle_of_shape);
 	$("#answer"+ questionID +"Time").attr("value", time);
 	$("#answer"+ questionID +"Moves").attr("value", moves);
 	$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
+	$("#answer"+ questionID +"NextRow").attr("value", row.next_row);
+	$("#answer"+ questionID +"Abort").attr("value", row.abort);
 	
 	// if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 	// 	$("#feedback-button").css("display", "block");

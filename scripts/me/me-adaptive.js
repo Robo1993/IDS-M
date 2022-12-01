@@ -147,18 +147,30 @@ function evaluateMEA() {
 	}).attr("src");
 	var file = getAnswer(src);
 	var time = end - start;
-	let row = logic_tree.getRowByRow(current_row);
+	let item = logic_tree.getItemByRow(current_row);
+	let rows = logic_tree.getRowsByitem(item.item);
+	let row;
+	for (var i = rows.length - 1; i >= 0; i--) {
+		r = rows[i];
+		if (file.indexOf("correct") != -1) {
+			if(r.score == 1) {
+				row = r;
+			}
+		}else {
+			if(r.score == 0) {
+				row = r;
+			}
+		}
+	}
 	if(file.indexOf("correct") != -1) {
 		$("#answer"+ questionID +"Answer").attr("value", 1);
 		answered_correctly = true;
-		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_correct);
-		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_correct);
 	}else {
 		$("#answer"+ questionID +"Answer").attr("value", 0);
 		answered_correctly = false;
-		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_incorrect);
-		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_incorrect);
 	}
+	$("#answer"+ questionID +"NextRow").attr("value", row.next_row);
+	$("#answer"+ questionID +"Abort").attr("value", row.abort);
 	$("#answer"+ questionID +"Selection").attr("value", file);
 	$("#answer"+ questionID +"Time").attr("value", time);
 

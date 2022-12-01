@@ -201,6 +201,16 @@ function evaluateFWA() {
 
 	false_left_out = targets.length - correct_figures;
 
+	let item = logic_tree.getItemByRow(current_row);
+	let rows = logic_tree.getRowsByitem(item.item);
+	let row;
+	for (var i = rows.length - 1; i >= 0; i--) {
+		r = rows[i];
+		if ((correct_figures - wrong_figures) == r.score) {
+			row = r;
+		}
+	}
+
 	$("#answer"+ questionID +"Time").attr("value", time);
 	$("#answer"+ questionID +"Missed").attr("value", false_left_out);
 	$("#answer"+ questionID +"Correct").attr("value", correct_figures);
@@ -211,13 +221,12 @@ function evaluateFWA() {
 	//Maybe we could define a threshhold for what counts as correct and put it in fw-tree.csv
 	if((correct_figures - wrong_figures) < 0) {
 		$("#answer"+ questionID +"Total").attr("value", 0);
-		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_incorrect);
-		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_incorrect);
 	}else {
 		$("#answer"+ questionID +"Total").attr("value", correct_figures - wrong_figures);
-		$("#answer"+ questionID +"NextRow").attr("value", row.row_when_correct);
-		$("#answer"+ questionID +"Abort").attr("value", row.abort_when_correct);
 	}
+
+	$("#answer"+ questionID +"NextRow").attr("value", row.next_row);
+	$("#answer"+ questionID +"Abort").attr("value", row.abort);
 
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#feedback-button").css("display", "block");
