@@ -558,6 +558,10 @@ button svg {
     height: 20px;
 }
 
+#external-button {
+    display: none;
+}
+
 #skip-button {
     color: #777;
     background-color: #ddd;
