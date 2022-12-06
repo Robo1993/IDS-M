@@ -341,6 +341,7 @@ function setup() {
 		let last_test = getUrlParameter("lasttest");
 		localStorage.setItem("idsm/" + last_test, "true");
 		$("#buttons-top-middle .btn").css("display", "none")
+		$("#external-button").css("display", "block");
 		let test_code = getTestCode();
 		localStorage.setItem("idsm/" + test_code, "true");
 		$("#ids-m-menu-box").css("display", "flex");
