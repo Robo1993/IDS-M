@@ -69,7 +69,7 @@ function startFWA() {
 		setTimeout(function() {
 			$("#clock").css("display", "none");
 			$("#tp-response-button").css("display", "block");
-			$("#fw-targets").css("display", "none");
+			$("#fw-target").css("display", "none");
 			$("#fw-options").css("display", "flex");
 			start = performance.now();
 		}, fw_transition_time);
