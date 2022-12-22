@@ -1,3 +1,4 @@
+let evaluation_undergoing = false;
 
 var minutes = 0;
 var seconds = 0;
@@ -296,14 +297,17 @@ function checkForEntitiesOnStartup() {
 
 function abort() {
 	//end = new Date();
-	locked = true;
-	$("#tp-response-button").css("display", "none");
-	$("#fn-thumbnails").css("display", "none");
-	evaluateFNA();
+	if(!evaluation_undergoing) {
+		locked = true;
+		$("#tp-response-button").css("display", "none");
+		$("#fn-thumbnails").css("display", "none");
+		evaluateFNA();
+	}
 }
 
 function evaluateFNA() {
 	end = performance.now();
+	evaluation_undergoing = true;
 	let time = end - start;
 
 	//all existing evaluation point lists are contained in data.js in the same folder
