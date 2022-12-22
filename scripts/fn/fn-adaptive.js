@@ -306,7 +306,8 @@ function evaluateFNA() {
 	end = performance.now();
 	let time = end - start;
 
-	let eval_points = routing_block[logic_tree.getItemByRow(current_row).item];
+	//all existing evaluation point lists are contained in data.js in the same folder
+	let eval_points = test_block[logic_tree.getItemByRow(current_row).item];
 	var correct = evaluateCalcPoints(world.entities, eval_points);
 
 	let item = logic_tree.getItemByRow(current_row);
