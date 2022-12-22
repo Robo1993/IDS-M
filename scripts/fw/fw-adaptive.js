@@ -135,7 +135,7 @@ function loadImagesFWA() {
 	$(".fwFigures").remove();
 
 	targets.forEach(function(t) {
-	    $("#fw-targets").append("<img class='fwFigures fwTargets' src='" + srcS + "/" + t + "' />");
+	    $("#fw-target").append("<img class='fwFigures fwTargets' src='" + srcS + "/" + t + "' />");
 	});
 
 	options.forEach(function(o) {
