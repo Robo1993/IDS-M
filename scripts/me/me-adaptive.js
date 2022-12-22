@@ -101,7 +101,7 @@ function loadImgs() {
 	$(".me-matrix").attr("src", srcS + "/me" + item.item + "/" + item.matrix);
 	$("#thumbnail-container img").each(function() {
 		$(this).attr("src", srcS + "/me" + item.item + "/" + imgs[img_counter]);
-		if(!imgs[img_counter]) {
+		if(imgs[img_counter] == "none" || imgs[img_counter] == "" || !imgs[img_counter]) {
 			$(this).remove();
 		}
 		img_counter++;
@@ -130,6 +130,7 @@ function loadImgs() {
 	}
 
 	function allImagesLoaded() {
+
 		setTimeout(function() {
 			$("#page-load-screen").css("display", "none");
 			startMEA();
