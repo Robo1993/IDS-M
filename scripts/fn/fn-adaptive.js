@@ -106,7 +106,7 @@ function initFNA() {
 	if(!(questionCode.indexOf("FND") != -1 || questionCode.indexOf("FNV") != -1)) {
 		$("#clock").css("display", "block");
 	}
-	url_tree = url_adaptive + "tree/fn-tree.csv";
+	url_tree = url_adaptive + "trees/fn-tree.csv";
 	url_items = url_adaptive + "items/fn-items.csv";
 	current_row = parseInt($("#current-row").text());
 	if(!current_row) {

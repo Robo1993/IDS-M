@@ -3,15 +3,15 @@ let vm_subtest;
 function initVMA() {
 	if(questionCode.indexOf("EZLEA") != -1) {
 		vm_subtest = "EZLE"
-		url_tree = url_adaptive + "tree/ezle-tree.csv";
+		url_tree = url_adaptive + "trees/ezle-tree.csv";
 		url_items = url_adaptive + "items/ezle-items.csv";
 	}else if(questionCode.indexOf("FSA") != -1) {
 		vm_subtest = "FS"
-		url_tree = url_adaptive + "tree/fs-tree.csv";
+		url_tree = url_adaptive + "trees/fs-tree.csv";
 		url_items = url_adaptive + "items/fs-items.csv";
 	}else if(questionCode.indexOf("FAA") != -1) {
 		vm_subtest = "FA"
-		url_tree = url_adaptive + "tree/fa-tree.csv";
+		url_tree = url_adaptive + "trees/fa-tree.csv";
 		url_items = url_adaptive + "items/fa-items.csv";
 	}
 	current_row = parseInt($("#current-row").text());

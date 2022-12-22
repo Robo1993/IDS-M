@@ -4,7 +4,7 @@ let options;
 
 function initFWA() {
 	$("#clock").css("display", "block");
-	url_tree = url_adaptive + "tree/fw-tree.csv";
+	url_tree = url_adaptive + "trees/fw-tree.csv";
 	url_items = url_adaptive + "items/fw-items.csv";
 	current_row = parseInt($("#current-row").text());
 	if(!current_row) {
