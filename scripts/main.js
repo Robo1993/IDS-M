@@ -22,6 +22,8 @@ let prevent = false;
 
 let feedback_mode = false;
 
+const url_adaptive = "https://raw.githubusercontent.com/Robo1993/IDS-M_adaptive_testing/main/";
+
 const menu = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
 
 const ppvt = "https://survey-1.psychologie.unibas.ch/roman/index.php/243727?lang=de";

@@ -8,8 +8,8 @@ let current_row;
 function initMEA() {
 
 	$("#clock").css("display", "block");
-	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/me-tree.csv";
-	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/me-items.csv";
+	url_tree = url_adaptive + "tree/me-tree.csv";
+	url_items = url_adaptive + "items/me-items.csv";
 	if(!current_row) {
 		current_row = 1;
 	}

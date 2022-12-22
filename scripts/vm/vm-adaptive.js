@@ -3,16 +3,16 @@ let vm_subtest;
 function initVMA() {
 	if(questionCode.indexOf("EZLEA") != -1) {
 		vm_subtest = "EZLE"
-		url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/ezle-tree.csv";
-		url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/ezle-items.csv";
+		url_tree = url_adaptive + "tree/ezle-tree.csv";
+		url_items = url_adaptive + "items/ezle-items.csv";
 	}else if(questionCode.indexOf("FSA") != -1) {
 		vm_subtest = "FS"
-		url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fs-tree.csv";
-		url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fs-items.csv";
+		url_tree = url_adaptive + "tree/fs-tree.csv";
+		url_items = url_adaptive + "items/fs-items.csv";
 	}else if(questionCode.indexOf("FAA") != -1) {
 		vm_subtest = "FA"
-		url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fa-tree.csv";
-		url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fa-items.csv";
+		url_tree = url_adaptive + "tree/fa-tree.csv";
+		url_items = url_adaptive + "items/fa-items.csv";
 	}
 	current_row = parseInt($("#current-row").text());
 	if(!current_row) {

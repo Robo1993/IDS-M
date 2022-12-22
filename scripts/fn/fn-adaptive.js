@@ -106,8 +106,8 @@ function initFNA() {
 	if(!(questionCode.indexOf("FND") != -1 || questionCode.indexOf("FNV") != -1)) {
 		$("#clock").css("display", "block");
 	}
-	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fn-tree.csv";
-	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fn-items.csv";
+	url_tree = url_adaptive + "tree/fn-tree.csv";
+	url_items = url_adaptive + "items/fn-items.csv";
 	current_row = parseInt($("#current-row").text());
 	if(!current_row) {
 		current_row = 1;

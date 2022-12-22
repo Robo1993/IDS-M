@@ -4,8 +4,8 @@ let options;
 
 function initFWA() {
 	$("#clock").css("display", "block");
-	url_tree = serverPath + "/upload/themes/survey/IDS-M/files/getTree/fw-tree.csv";
-	url_items = serverPath + "/upload/themes/survey/IDS-M/files/items/fw-items.csv";
+	url_tree = url_adaptive + "tree/fw-tree.csv";
+	url_items = url_adaptive + "items/fw-items.csv";
 	current_row = parseInt($("#current-row").text());
 	if(!current_row) {
 		current_row = 1;
