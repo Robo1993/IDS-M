@@ -49,6 +49,7 @@ function feedbackVM() {
 	$("#speed").css("display", "none");
 	if(questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
 		$("#schablone").css("display", "block");
+		$("#schablone").css("margin-left", "auto");
 		//feedback();
 		$("#feedback-button-correct").removeClass("feedback-button");
 		$("#feedback-button-false").removeClass("feedback-button");
