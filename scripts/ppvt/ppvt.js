@@ -107,6 +107,7 @@ function initPPVT() {
 	});
 
 	$("#media-play-button").on("click", function() {
+		audioPPVT.load();
 		audioPPVT.play();
 	});
 
@@ -123,6 +124,7 @@ function setupPPVT() {
 function startPPVT() {
 	audioPPVT.setAttribute("src", serverPath + "/upload/themes/survey/IDS-M/files/audio/ppvt/set" + set + "/" + item_counter + ".mp3");
 	$("#ppvt-table").css("display", "block");
+	audioPPVT.load();
 	audioPPVT.play();
 
 	audioPPVT.addEventListener("ended", function() {
