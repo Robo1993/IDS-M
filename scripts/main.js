@@ -39,8 +39,10 @@ const vm = "https://survey-1.psychologie.unibas.ch/roman/index.php/891837?lang=d
 const mt = "https://survey-1.psychologie.unibas.ch/roman/index.php/352793?lang=de";
 const vm_eval = "https://survey-1.psychologie.unibas.ch/roman/index.php/925914?lang=de"
 const end_test = "https://survey-1.psychologie.unibas.ch/roman/index.php/856746?lang=de";
-const test_order = [ppvt, ish, rg, fn, sf, fw, me, aa, tfz, vm, mt, vm_eval, end_test];
-const test_test_order = [["ppvt", ppvt], ["ish", ish], ["rg", rg], ["fn", fn], ["sf", sf], ["fw", fw], ["me", me], ["aa", aa], ["tfz", tfz], ["vm", vm], ["mt", mt], ["vm_Eval", vm_eval], ["end_test", end_test]];
+const da = "https://survey-1.psychologie.unibas.ch/roman/index.php/258512?lang=de";
+
+const test_order = [da, ppvt, ish, rg, fn, sf, fw, me, aa, tfz, vm, mt, vm_eval, end_test];
+const test_test_order = [["da", da], ["ppvt", ppvt], ["ish", ish], ["rg", rg], ["fn", fn], ["sf", sf], ["fw", fw], ["me", me], ["aa", aa], ["tfz", tfz], ["vm", vm], ["mt", mt], ["vm_Eval", vm_eval], ["end_test", end_test]];
 let order_counter = localStorage.getItem("idsm/order_counter");
 
 $( document ).ready(function() {
@@ -442,7 +444,8 @@ function initMenu() {
 	let ppvt_menu = localStorage.getItem("idsm/ppvt");
 	let ish_menu = localStorage.getItem("idsm/ish");
 	let mt_menu = localStorage.getItem("idsm/mt");
-	let test_battery = [["aa", aa_menu], ["fn", fn_menu], ["fw", fw_menu], ["me", me_menu], ["rg", rg_menu], ["sf", sf_menu], ["tfz", tfz_menu], ["vm", vm_menu], ["vm_Eval", vm_Eval_menu],["ppvt", ppvt_menu], ["ish", ish_menu], ["mt", mt_menu]];
+	let da_menu = localStorage.getItem("idsm/da");
+	let test_battery = [["aa", aa_menu], ["fn", fn_menu], ["fw", fw_menu], ["me", me_menu], ["rg", rg_menu], ["sf", sf_menu], ["tfz", tfz_menu], ["vm", vm_menu], ["vm_Eval", vm_Eval_menu],["ppvt", ppvt_menu], ["ish", ish_menu], ["mt", mt_menu], ["da", da_menu]];
 
 	test_battery.forEach(function (test, index) {
 		let ppvt_test = getByIndex(test_battery, "ppvt");
