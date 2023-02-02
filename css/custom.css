@@ -250,9 +250,9 @@ CSS for the Test-Menu
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 18rem;
-    height: 18rem;
-    margin: 3rem;
+    width: 15rem;
+    height: 15rem;
+    margin: 2rem;
     padding: .2rem;
     border: 1px solid #ccc;
     border-radius: 1rem;
