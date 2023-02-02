@@ -331,6 +331,7 @@ function setup() {
 		localStorage.setItem("idsm/ppvt", "false");
 		localStorage.setItem("idsm/ish", "false");
 		localStorage.setItem("idsm/mt", "false");
+		localStorage.setItem("idsm/da", "false");
 	}
 
 	if(questionCode.indexOf("I99") != -1) {
