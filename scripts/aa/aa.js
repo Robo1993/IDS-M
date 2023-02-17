@@ -23,6 +23,7 @@ let audioCtx;
 function initAA() {
 
 	if(questionCode.indexOf("H") != -1) {
+		$("#item-area").css("transform", "rotate(180deg)");
 		unLock();
 		$("#proceed-button").css("display", "block");
 	}else if(questionCode.indexOf("0UBD00") != -1) {
