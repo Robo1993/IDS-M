@@ -762,6 +762,8 @@ function getTestCode() {
 		return "sf";
 	}else if(questionCode.indexOf("TFZ") != -1) {
 		return "tfz";
+	}else if (questionCode.indexOf("VE") != -1) {
+		return "vm_Eval";
 	}else if(questionCode.indexOf("VM") != -1) {
 		return "vm";
 	}else if(questionCode.indexOf("PPVT") != -1) {
