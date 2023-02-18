@@ -244,17 +244,17 @@ function startDrag(entity, world) {
           var last_point = V((entity.data.calcPoints[entity.data.calcPoints.length - 1]).x + entity.data.pos.x, (entity.data.calcPoints[entity.data.calcPoints.length - 1]).y + entity.data.pos.y);
           //important for quarter-circles
           var second_point = V((entity.data.calcPoints[1]).x + entity.data.pos.x, (entity.data.calcPoints[1]).y + entity.data.pos.y);
-          if(Math.abs(cursor.x - first_point.x) <= 45 && Math.abs(cursor.y - first_point.y) <= 45) {
+          if(Math.abs(cursor.x - first_point.x) <= 25 && Math.abs(cursor.y - first_point.y) <= 25) {
             drag_rotation = true;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
             original_angle = entity.data.angle;
-          }else if(Math.abs(cursor.x - second_point.x) <= 45 && Math.abs(cursor.y - second_point.y) <= 45) {
+          }else if(Math.abs(cursor.x - second_point.x) <= 25 && Math.abs(cursor.y - second_point.y) <= 25) {
             drag_rotation = true;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
             original_angle = entity.data.angle;
-          }else if(Math.abs(cursor.x - last_point.x) <= 45 && Math.abs(cursor.y - last_point.y) <= 45) {
+          }else if(Math.abs(cursor.x - last_point.x) <= 25 && Math.abs(cursor.y - last_point.y) <= 25) {
             drag_rotation = true;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
