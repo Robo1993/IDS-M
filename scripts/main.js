@@ -466,6 +466,15 @@ function initMenu() {
 			pre_conditions = true;
 		//}
 
+		if (test[0] == "vm_Eval") {
+			if (localStorage.getItem("idsm/vm") == "false") {
+				pre_conditions = false;
+			}
+			else {
+				pre_conditions = true;
+			}
+		}
+
 		if(test[1] == "false" && pre_conditions == true) {
 			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().addClass("test-box-hover");
 			$("#" + test[0] + " .bi-x-circle-fill").css("display", "block");
