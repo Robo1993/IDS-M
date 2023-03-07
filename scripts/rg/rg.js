@@ -29,6 +29,7 @@ function initRG() {
 		counter = delay.length;
 
 		$("#play-button").css("display", "block");
+		$("#play-button").click();
 		$("#page-load-screen").css("display", "none");
 
 		$("#sun-img").on("click", function() {
@@ -58,6 +59,7 @@ function initRG() {
 				false_positives = 0;
 				reLock();
 				$("#play-button").css("display", "block");
+				$("#play-button").click();
 				$("#center-area").css("display", "block");
 				$("#warning-restart").css("display", "block");
 			}else {

@@ -466,6 +466,15 @@ function initMenu() {
 			pre_conditions = true;
 		//}
 
+		if (test[0] != "ish") {
+			if (localStorage.getItem("idsm/ish") == "false") {
+				pre_conditions = false;
+			}
+			else {
+				pre_conditions = true;
+			}
+		}
+
 		if (test[0] == "vm_Eval") {
 			if (localStorage.getItem("idsm/vm") == "false") {
 				pre_conditions = false;

@@ -109,6 +109,7 @@ function initFN() {
 	rowCounter();
 	initializeFNCore();
 	$("#play-button").css("display", "block");
+	$("#play-button").click();
 
 	$("#canvas-container").on("click", function(e) {
 		var rect = canvass.canvas.getBoundingClientRect();
@@ -363,8 +364,10 @@ function evaluateFN() {
 	
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#feedback-button").css("display", "block");
+		$("#feedback-button").click();
 	}else {
-		$("#proceed-button").css("display", "block");
+		//$("#proceed-button").css("display", "block");
+		$("#proceed-button").click();
 	}
 	//feedbackFN();
 	

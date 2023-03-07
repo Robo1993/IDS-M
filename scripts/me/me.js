@@ -120,6 +120,7 @@ function evaluateME() {
 
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#feedback-button").css("display", "block");
+		$("#feedback-button").click();
 	}else {
 		$("#proceed-button").click();
 	}

@@ -34,6 +34,7 @@ let mistakes = 0;
 let bottom_set = 0;
 let top_set = 0;
 let point_of_return = 0;
+let show_button = true;
 
 function initPPVT() {
 	$("#ppvt-table").css("display", "none");
@@ -210,7 +211,13 @@ function fillInImg() {
 	function allImagesLoaded() {
 		setTimeout(function() {
 			$("#page-load-screen").css("display", "none");
-			$("#play-button").css("display", "block");
+			if (show_button) {
+				$("#play-button").css("display", "block");
+				show_button = false;
+			} else { 
+				$("#play-button").css("display", "none");
+				startPPVT();
+			}
 			one_click = false;
 		}, 500);
 	}
