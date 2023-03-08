@@ -33,6 +33,11 @@ function initVM() {
 		$("#answer"+ questionID + "points").attr("value", correct);
 	});
 
+	$("#zero_points").on("click", function() {
+		$("#points_span").text(0);
+		$("#answer"+ questionID + "points").attr("value", 0);
+	});
+
 	$("#page-load-screen").css("display", "none");
 }
 
