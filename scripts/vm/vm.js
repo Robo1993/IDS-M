@@ -13,7 +13,7 @@ function initVM() {
 		$("#play-button").css("display", "block");
 		$("#play-button").click();
 		if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-			$("#speed").css("display", "block");
+			$("#speed").css("display", "none");
 		}
 	}
 

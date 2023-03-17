@@ -484,6 +484,21 @@ function initMenu() {
 			}
 		}
 
+		if (test[0] == "da") {
+			pre_conditions = true;
+		}
+
+		if (test[0] == "mt") {
+			pre_conditions = true;
+			for (let i = 0; i < test_battery.length; i++) {
+				if (test_battery[i][0] != "da" && test_battery[i][0] != "mt" && test_battery[i][1] == "false") {
+					console.log(test_battery[i][0]);
+					pre_conditions = false;
+					break;
+				}
+			}
+		}
+
 		if(test[1] == "false" && pre_conditions == true) {
 			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().addClass("test-box-hover");
 			$("#" + test[0] + " .bi-x-circle-fill").css("display", "block");
