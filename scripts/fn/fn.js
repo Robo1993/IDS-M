@@ -278,6 +278,7 @@ function loadEntities() {
 		}else if(name == "box_red") {
 			var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
 		}
+		world.simulate();
 	});
 }
 
@@ -404,6 +405,7 @@ function getPreIconPosition() {
 	var min_width = 180;
 	var icons_left = iconsCounter();
 	var position = V(0, 0);
+	row_counter = 1;
 
 	position.y = min_height/2 + min_height*(total_icons - iconsCounter() -1);
 	if(position.y > 2160) {
@@ -413,9 +415,13 @@ function getPreIconPosition() {
 	}else if(position.y > 720) {
 	position.y = position.y - 720;
 	}
+	var icons = $(".pre-img").length
+	if (icons>4) {
+		icon_rows = 2;
+	}
 
-	if($(".pre-img[style*='display: none']").length == 5 || $(".pre-img[style*='display: none']").length == 9) {
-	row_counter++;
+	if($(".pre-img[style*='display: none']").length < 5|| $(".pre-img[style*='display: none']").length == 9) {
+	row_counter = 2;
 	}
 
 	if(icon_rows == 3) {
