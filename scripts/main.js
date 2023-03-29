@@ -172,6 +172,17 @@ $( document ).ready(function() {
 		checkOrientation();
 	});
 
+	$("#formular-book-button").on("click", function() {
+		$("#formular-book").css("display", "flex");
+		$("#formular-book").fadeIn();
+		$(this).css("display", "none");
+	});
+
+	$("#formular-book-cancel").on("click", function() {
+		$("#formular-book").fadeOut();
+		$("#formular-book-button").css("display", "block");
+	});
+
 	$("#sketch-book-button").on("click", function() {
 		let comment = $("#answer"+ questionID +"Comment").val();
 		let motivation = $("#answer"+ questionID +"Motivation").val();
@@ -347,6 +358,7 @@ function setup() {
 		localStorage.setItem("idsm/" + last_test, "true");
 		$("#buttons-top-middle .btn").css("display", "none")
 		$("#external-button").css("display", "block");
+		$("#formular-book-button").css("display", "block");
 		let test_code = getTestCode();
 		localStorage.setItem("idsm/" + test_code, "true");
 		$("#ids-m-menu-box").css("display", "flex");
