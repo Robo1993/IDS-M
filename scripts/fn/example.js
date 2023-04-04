@@ -30,6 +30,8 @@ var B;
 var H;
 var C;
 
+let drag_mode;
+
 function initializeFNCore() {
   // Alias a few things in SAT.js to make the code shorter
   V = function (x, y) { return new SAT.Vector(x, y); };
@@ -239,23 +241,32 @@ function startDrag(entity, world) {
     if(!locked) {
       time_mouse_down = performance.now();
       if(SAT.pointInPolygon(cursor, entity.data)) {
-        if(entity.data.calcPoints.length >= 20) {
+        if (event.touches.length == 2) {
+          hand1 = event.touches[0];
+          hand2 = event.touches[1];
+          drag_rotation = true;
+          drag_mode = 2;
+        }
+        else if(entity.data.calcPoints.length >= 20) {
           var first_point = V((entity.data.calcPoints[0]).x + entity.data.pos.x, (entity.data.calcPoints[0]).y + entity.data.pos.y);
           var last_point = V((entity.data.calcPoints[entity.data.calcPoints.length - 1]).x + entity.data.pos.x, (entity.data.calcPoints[entity.data.calcPoints.length - 1]).y + entity.data.pos.y);
           //important for quarter-circles
           var second_point = V((entity.data.calcPoints[1]).x + entity.data.pos.x, (entity.data.calcPoints[1]).y + entity.data.pos.y);
           if(Math.abs(cursor.x - first_point.x) <= 25 && Math.abs(cursor.y - first_point.y) <= 25) {
             drag_rotation = true;
+            drag_mode = 1;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
             original_angle = entity.data.angle;
           }else if(Math.abs(cursor.x - second_point.x) <= 25 && Math.abs(cursor.y - second_point.y) <= 25) {
             drag_rotation = true;
+            drag_mode = 1;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
             original_angle = entity.data.angle;
           }else if(Math.abs(cursor.x - last_point.x) <= 25 && Math.abs(cursor.y - last_point.y) <= 25) {
             drag_rotation = true;
+            drag_mode = 1;
             rotation_point.x = cursor.x; rotation_point.y = cursor.y;
             old_cursor.x = cursor.x; old_cursor.y = cursor.y;
             original_angle = entity.data.angle;
@@ -266,13 +277,15 @@ function startDrag(entity, world) {
             var p_absolute = V(p.x + entity.data.pos.x, p.y + entity.data.pos.y);
             if(Math.abs(cursor.x - p_absolute.x) <= 40 && Math.abs(cursor.y - p_absolute.y) <= 40) {
               drag_rotation = true;
+              drag_mode = 1;
               rotation_point.x = cursor.x; rotation_point.y = cursor.y;
               old_cursor.x = cursor.x; old_cursor.y = cursor.y;
               original_angle = entity.data.angle;
             }
           });
-        }
+        
       }
+    }
       this.ox = entity.data.pos.x;
       this.oy = entity.data.pos.y;
       draggedEntity = entity;
@@ -296,39 +309,60 @@ function moveDrag(entity, world) {
     // var cursorX = e.clientX - rect.left;
     // var cursorY = e.clientY - rect.top;
     // var cursor = V(cursorX, cursorY);
+    
+    // Use the calculated angle to rotate the square figure by the same amount
     var cursor = V(rotation_point.x + dx, rotation_point.y + dy);
     if(!locked) {
-      if(drag_rotation === true) {
-        //var dAngle = getRotationAngle(entity, cursor);
-        var dAngle = getAngle(entity.data.pos, old_cursor, cursor);
-        // log_e.push(entity.id);
-        // log_a.push(dAngle * 180 / Math.PI);
-        // log_c.push(cursor);
-        // log_d.push(dx + ":" + dy);
-        // log_oc.push(old_cursor);
-        var old_angle = entity.data.angle;
-        //log_total.push(old_angle + dAngle);
-        total_angle += dAngle;
-        entity.data.setAngle(old_angle + dAngle);
-        // if(total_angle >= 0.261799) {
-        //   entity.data.setAngle(old_angle + 0.261799);
-        //   total_angle = 0;
-        // }else if(total_angle <= -0.261799) {
-        //   entity.data.setAngle(old_angle - 0.261799);
-        //   total_angle = 0;
-        // }
+      if (drag_rotation === true) {
+        if (drag_mode == 1) {
+          var dAngle = getAngle(entity.data.pos, old_cursor, cursor);
+          // log_e.push(entity.id);
+          // log_a.push(dAngle * 180 / Math.PI);
+          // log_c.push(cursor);
+          // log_d.push(dx + ":" + dy);
+          // log_oc.push(old_cursor);
+          var old_angle = entity.data.angle;
+          //log_total.push(old_angle + dAngle);
+          total_angle += dAngle;
+          entity.data.setAngle(old_angle + dAngle);
+          // if(total_angle >= 0.261799) {
+          //   entity.data.setAngle(old_angle + 0.261799);
+          //   total_angle = 0;
+          // }else if(total_angle <= -0.261799) {
+          //   entity.data.setAngle(old_angle - 0.261799);
+          //   total_angle = 0;
+          // }
+          
+          //entity.data.setAngle(roundToNearest(total_angle, 0.261799));
+          old_cursor.x = cursor.x; old_cursor.y = cursor.y;
+        }
+        else if (drag_mode == 2) {
+          hand1 = event.touches[0];
+          hand2 = event.touches[1];
         
-        //entity.data.setAngle(roundToNearest(total_angle, 0.261799));
-        old_cursor.x = cursor.x; old_cursor.y = cursor.y;
-      }else {
+          // Calculate the angle between the hands as they move
+          dx = hand2.pageX - hand1.pageX;
+          dy = hand2.pageY - hand1.pageY;
+          var dangle = Math.atan2(dy, dx);
+          let currentDistance = Math.sqrt(dx*dx + dy*dy);
+        
+          var old_angle = entity.data.angle;
+          var diff_angle = dangle + old_angle;
+          var rotationAngle = diff_angle % 180;
+        
+          // Apply a fraction of the difference to the entity's angle on each frame
+          var fraction = 0.5; // adjust this value to control the smoothness of the rotation
+          entity.data.setAngle(rotationAngle * fraction);
+        }
+      } else {
         entity.data.pos.x = this.ox + dx;
         entity.data.pos.y = this.oy + dy;
       }
-
-      if(entity.data.angle >= 6.2 || entity.data.angle <= -6.2) {
-        entity.data.angle = 0;
+      
+      if (entity.data.angle >= 6.2 || entity.data.angle <= -6.2) {
+        entity.data.angle = old_angle;
       }
-
+      
       var b_pos = checkBoundaries(entity);
       entity.data.pos.x = entity.data.pos.x - b_pos.x;
       entity.data.pos.y = entity.data.pos.y - b_pos.y;
