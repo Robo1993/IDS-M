@@ -359,9 +359,9 @@ function moveDrag(entity, world) {
         entity.data.pos.y = this.oy + dy;
       }
       
-      if (entity.data.angle >= 6.2 || entity.data.angle <= -6.2) {
+      /*if (entity.data.angle >= 6.2 || entity.data.angle <= -6.2) {
         entity.data.angle = old_angle;
-      }
+      }*/
       
       var b_pos = checkBoundaries(entity);
       entity.data.pos.x = entity.data.pos.x - b_pos.x;
@@ -868,8 +868,4 @@ World.prototype = {
       correct = evaluateCalcPoints(entities, R14_2);
     }
     return correct;
-  }
-
-  function getRotationAngle() {
-
   }
