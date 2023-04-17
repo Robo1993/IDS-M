@@ -1262,7 +1262,9 @@ RE content
 */
 
 #sun-img {
-    position: relative;
+    position: absolute;
+    top: calc((100% - 5rem)/2);
+    left: calc((100% - 5rem)/2);
     z-index: 1;
 }
 
