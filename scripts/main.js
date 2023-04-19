@@ -496,6 +496,15 @@ function initMenu() {
 			}
 		}
 
+		if (test[0] == "aa") {
+			if (localStorage.getItem("idsm/sf") == "false") {
+				pre_conditions = false;
+			}
+			else {
+				pre_conditions = true;
+			}
+		}
+
 		if (test[0] == "da") {
 			pre_conditions = true;
 		}

@@ -51,7 +51,7 @@ function startSF() {
 			locked = true;
 			$("#pause-button").css("display", "none");
 			evaluateAA();
-			if(tp_input && !pause_pressed) {
+			if(!pause_pressed) {
 				$("#proceed-button").click();
 			}else {
 				$("#proceed-button").css("display", "block");
