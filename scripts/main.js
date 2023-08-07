@@ -110,17 +110,22 @@ $( document ).ready(function() {
 			}else if(questionCode.indexOf("PPVT") != -1) {
 				startPPVT();
 			}else if(questionCode.indexOf("MEA") != -1) {
-				startMEA();
+				initMEA();
 			}else if(questionCode.indexOf("FNA") != -1) {
 				startFNA();
 			}else if(questionCode.indexOf("FWA") != -1) {
 				startFWA();
+			} else if(questionCode.indexOf("testAdaptive") != -1) {
+				initTestDynamic();
 			}
 		}
 
 	});
 
 	$("#tp-response-button").on("click", function() {
+		if (questionCode.indexOf("testAdaptive") != -1) { 
+			evaluateTest();
+		}
 		if(option_selected) {
 			//end = new Date();
 			end = performance.now();
@@ -172,6 +177,7 @@ $( document ).ready(function() {
 		checkOrientation();
 	});
 
+
 	$("#formular-book-button").on("click", function() {
 		$("#formular-book").css("display", "flex");
 		$("#formular-book").fadeIn();
@@ -182,6 +188,7 @@ $( document ).ready(function() {
 		$("#formular-book").fadeOut();
 		$("#formular-book-button").css("display", "block");
 	});
+
 
 	$("#sketch-book-button").on("click", function() {
 		let comment = $("#answer"+ questionID +"Comment").val();
@@ -198,6 +205,7 @@ $( document ).ready(function() {
 		$("#sketch-book").fadeIn();
 		$(this).css("display", "none");
 	});
+
 
 	$("#sketch-book-cancel").on("click", function() {
 		$("#sketch-book").fadeOut();
@@ -291,7 +299,7 @@ $( document ).ready(function() {
 });
 
 function setup() {
-
+	
 	document.addEventListener("touchstart", function() {},false);
 	
 	questionID = $("input[name='lastanswer']").attr("value");
@@ -342,7 +350,11 @@ function setup() {
 		localStorage.setItem("idsm/ppvt", "false");
 		localStorage.setItem("idsm/ish", "false");
 		localStorage.setItem("idsm/mt", "false");
-		localStorage.setItem("idsm/da", "false");
+		localStorage.setItem("idsm/da", "false")
+	}
+
+	if(questionCode.indexOf("I98") != -1) {
+		displayISHNumber();
 	}
 
 	if(questionCode.indexOf("I99") != -1) {
@@ -398,7 +410,10 @@ function initialize() {
 			$(".question-text").css("opacity", "1");
 			$("#page-load-screen").css("display", "none");
 			fillInDemographics();
-		}else {
+		} else if(questionCode.indexOf("testAdaptive") != -1) {
+			initTestDynamic();
+		}
+		else {
 			unLock();
 			$("#proceed-button").css("display", "block");
 		}
@@ -440,7 +455,7 @@ function initialize() {
 			initFNA();
 		}else if(questionCode.indexOf("FWA") != -1) {
 			initFWA();
-		}
+		} 
 	}
 }
 
@@ -519,6 +534,7 @@ function initMenu() {
 				}
 			}
 		}
+
 
 		if(test[1] == "false" && pre_conditions == true) {
 			$("#" + test[0] + " .bi-x-circle-fill").parent().parent().addClass("test-box-hover");
@@ -619,6 +635,9 @@ function next() {
 		nextMEA();
 	}else if(questionCode.indexOf("FWA") != -1) {
 		nextFWA();
+	} else if (questionCode.indexOf("testAdaptive") != -1) {
+		evaluateTest(); 
+		$("#proceed-button").css("display", "block");
 	}
 }
 
@@ -889,6 +908,13 @@ function getQuestionType() {
 	}else {
 		return "F";
 	}
+}
+
+function displayISHNumber() {
+	var paragraph = document.getElementById("ISH_Number");
+	var number = localStorage.getItem("idsm/ISHCounter");
+	paragraph.textContent += number;
+	paragraph.textContent += "/11";
 }
 
 var getUrlParameter = function getUrlParameter(sParam) {

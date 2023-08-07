@@ -1,21 +1,11 @@
-let logic_tree;
-let items;
-let tree;
-let url_tree;
-let url_items;
-let current_row;
+test_url_adaptive = "https://raw.githubusercontent.com/adgohar/IDS-M-adaptive/main/";
+test_items = [];
 
 function initMEA() {
+    url_items = test_url_adaptive + "me.csv";
+    loadLogicTree();
 
-	$("#clock").css("display", "block");
-	url_tree = url_adaptive + "trees/me-tree.csv";
-	url_items = url_adaptive + "items/me-items.csv";
-	if(!current_row) {
-		current_row = 1;
-	}
-	loadLogicTree();
-
-	// Option selection
+    // Option selection
 	$(".me-thumbnail").on("click", function() {
 		if(!locked) {
 			if($(this).css("background-color") == "rgba(0, 0, 0, 0)") {
@@ -31,49 +21,80 @@ function initMEA() {
 		}
 	});
 
-	function loadLogicTree() {
-		readItemsCSV(url_items);
-	}
+    if (!localStorage.getItem('me-adaptive/nextItem')) {
+        var next_item = 1;
+        var current_item = 1;
+        localStorage.setItem('me-adaptive/currentItem', current_item);
+    }
+    else {
+        var next_item = parseInt(localStorage.getItem('me-adaptive/nextItem'));
+        var current_item = parseInt(localStorage.getItem('me-adaptive/nextItem'));
+        localStorage.setItem('me-adaptive/currentItem', current_item);
+    }
+    console.log("current_item: " + current_item);
 
-	function createTree() {
-		logic_tree = new LogicTree(tree, items, "ME");
-		loadImgs();
-	}
-
-	function readLogicTreeCSV(csv) {
-		$.get(csv, function( data ) {
-			//this.tree = Papa.parse(data);
-			tree = Papa.parse(data);
-			createTree();
-		});
-	}
-
-	function readItemsCSV(csv, readCSV) {
-		$.get(csv, function( data ) {
-			//this.items = Papa.parse(data);
-			items = Papa.parse(data);
-			readLogicTreeCSV(url_tree);
-		});
-	}
+    function loadLogicTree() {
+		readItemsCSV(url_items)
+        .then(itemDict => {
+            test_items = itemDict;
+            loadQuestion(current_item);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });    
+    }
+    function readItemsCSV(csv) {
+        return fetch(csv)
+        .then(response => response.text())
+        .then(csvText => {
+            const lines = csvText.split("\n");
+            const headers = lines[0].split(",").map(header => header.trim());
+            const itemDict = {};
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(",").map(value => value.trim());
+                const itemNumber = parseInt(values[0]);
+                const time = parseInt(values[1]);
+                const matrixUrl = values[2];
+                const first_img = values[3];
+                const second_img = values[4];
+                const third_img = values[5];
+                const fourth_img = values[6];
+                const fifth_img = values[7];
+                itemDict[itemNumber] = {
+                    matrixUrl,
+                    time,
+                    first_img,
+                    second_img,
+                    third_img,
+                    fourth_img,
+                    fifth_img,
+                };
+            }
+            return itemDict;
+        });
+    }
 }
 
 function startMEA() {
 	unLock();
 	start = performance.now();
 	$("#tp-response-button").css("display", "block");
+    $("#clock").css("display", "block");
 	timeLimitsMEA();
-	activateClock();
+    activateClock();
 }
 
 function timeLimitsMEA() {
-	let item = logic_tree.getItemByRow(current_row);
-	$(":root").css("--duration", item.time_barrier +"ms");
+    let current_item = parseInt(localStorage.getItem('me-adaptive/currentItem'));
+    var itemObject = test_items[current_item];
+    var time = itemObject.time;
+	$(":root").css("--duration", time +"ms");
 	setTimeout(function() {
 		if(!locked) {
 			end = performance.now();
 			evaluateMEA();
 		}
-	}, item.time_barrier);
+	}, time);
 }
 
 function feedbackMEA() {
@@ -85,44 +106,32 @@ function feedbackMEA() {
 	feedback();
 }
 
-function loadImgs() {
+function loadQuestion(questionNumber) {
 	let img_counter = 0;
-	current_row = parseInt($("#me-row").text());
-	if(!current_row) {
-		current_row = 1;
-	}
-	let item = logic_tree.getItemByRow(current_row);
-	let imgs = [item.img1, item.img2, item.img3, item.img4, item.img5];
-
+    const itemNumber = parseInt(questionNumber);
+    var itemObject = test_items[itemNumber];
+    var picture = itemObject.matrixUrl;
+    let imgs = [itemObject.first_img, itemObject.second_img, itemObject.third_img, itemObject.fourth_img, itemObject.fifth_img];
 	let src = $(".me-matrix").attr("src").split("/");
 	src.splice(src.length - 2, 2);
 	let srcS = src.join("/");
-
-	$(".me-matrix").attr("src", srcS + "/me" + item.item + "/" + item.matrix);
-	$("#thumbnail-container img").each(function() {
-		$(this).attr("src", srcS + "/me" + item.item + "/" + imgs[img_counter]);
+	$(".me-matrix").attr("src", srcS + "/images/me" + itemNumber + "/" + picture);
+    $("#thumbnail-container img").each(function() {
 		if(imgs[img_counter] == "none" || imgs[img_counter] == "" || !imgs[img_counter]) {
 			$(this).remove();
+            img_counter++;
 		}
-		img_counter++;
+        else {
+            $(this).attr("src", srcS + "/images/me" + itemNumber + "/" + imgs[img_counter]);
+		    img_counter++;
+        }
 	});
-	item_counter++;
-
-	// Images loaded is zero because we're going to process a new set of images.
-	var imagesLoaded = 0;
-	// Total images is still the total number of <img> elements on the page.
-	var totalImages = $(".question-text img").length;
-
-	// Step through each image in the DOM, clone it, attach an onload event
-	// listener, then set its source to the source of the original image. When
-	// that new image has loaded, fire the imageLoaded() callback.
-	$("img").each(function (idx, img) {
+    $("img").each(function (idx, img) {
 		$("<img>").on("load", imageLoaded).attr("src", $(img).attr("src"))
 	});
-
-	// Do exactly as we had before -- increment the loaded count and if all are
-	// loaded, call the allImagesLoaded() function.
-	function imageLoaded() {
+    var totalImages = $(".question-text img").length;
+    var imagesLoaded = 0;
+    function imageLoaded() {
 		imagesLoaded++
 		if (imagesLoaded == totalImages) {
 			allImagesLoaded();
@@ -130,17 +139,20 @@ function loadImgs() {
 	}
 
 	function allImagesLoaded() {
-
 		setTimeout(function() {
 			$("#page-load-screen").css("display", "none");
-			startMEA();
-			one_click = false;
+            $("#tp-area").css("display", "flex");
+            $("#center-area").css("display", "none");
+            $(".question-text").css("opacity", "1");
+            $(".question-text").css("display", "block");
+            $("#tp-response-button").css("display", "block");
 		}, 500);
+        startMEA();
 	}
 }
 
 function evaluateMEA() {
-	locked = true;
+    locked = true;
 	$("#tp-response-button").css("display", "none");
 	$("#clock").css("display", "none");
 	var src = $(".me-thumbnail").filter(function() {
@@ -148,21 +160,44 @@ function evaluateMEA() {
 	}).attr("src");
 	var file = getAnswer(src);
 	var time = end - start;
-	let item = logic_tree.getItemByRow(current_row);
-	let rows = logic_tree.getRowsByItem(item.item);
-	let row;
-	for (var i = rows.length - 1; i >= 0; i--) {
-		r = rows[i];
-		if (file.indexOf("correct") != -1) {
-			if(r.score == 1) {
-				row = r;
-			}
-		}else {
-			if(r.score == 0) {
-				row = r;
-			}
-		}
-	}
+
+    current_item = parseInt(localStorage.getItem('me-adaptive/currentItem'));
+    if (!localStorage.getItem('me-adaptive/solvedArray') || !Array.isArray(JSON.parse(localStorage.getItem('me-adaptive/solvedArray')))) {
+        var initialArray = [];
+        localStorage.setItem('me-adaptive/solvedArray', JSON.stringify(initialArray));
+    }
+    var solvedArrayString = localStorage.getItem('me-adaptive/solvedArray');
+
+    var solvedArrayString = localStorage.getItem('me-adaptive/solvedArray');
+    var solvedArray = solvedArrayString ? JSON.parse(solvedArrayString) : [];
+    solvedArray.push(current_item); // Wir fügen die Frage zur Liste der beantworteten Fragen hinzu
+    var updateSolvedArrayString = JSON.stringify(solvedArray);
+    localStorage.setItem('me-adaptive/solvedArray', updateSolvedArrayString); // Wir speichern die Liste der beantworteten Fragen
+
+    if (!localStorage.getItem('me-adaptive/lastCorrect')) { // Wir prüfen, ob die letzte korrekt beantwortete Frage gespeichert ist
+        var last_correct = 0; // Wenn nicht, setzen wir sie auf 0
+    }
+    else { // Wenn ja, holen wir sie uns
+        var last_correct = parseInt(localStorage.getItem('me-adaptive/lastCorrect'));
+    }
+
+    if (file.indexOf("correct") != -1) {
+        if (current_item > last_correct) { // Wir prüfen, ob die aktuelle Frage höher ist als die letzte korrekt beantwortete Frage
+            last_correct = current_item; // Wenn ja, setzen wir die letzte korrekt beantwortete Frage auf die aktuelle Frage
+        }
+        localStorage.setItem("me-adaptive/lastCorrect", last_correct); // Wir speichern die letzte korrekt beantwortete Frage
+        next_item = last_correct + 3; // Wir springen 3 Fragen weiter
+        while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
+            next_item++; // Falls ja, springen wir eine Frage weiter
+        }
+        localStorage.setItem("me-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+    }else {
+        next_item = last_correct + 1; // Wir setzen die nächste frage auf die letzte korrekt beantwortete Frage + 1
+        while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
+            next_item++; // Falls ja, springen wir eine Frage weiter
+        }
+        localStorage.setItem("me-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+    }
 	if(file.indexOf("correct") != -1) {
 		$("#answer"+ questionID +"Answer").attr("value", 1);
 		answered_correctly = true;
@@ -170,17 +205,28 @@ function evaluateMEA() {
 		$("#answer"+ questionID +"Answer").attr("value", 0);
 		answered_correctly = false;
 	}
-	$("#answer"+ questionID +"NextRow").attr("value", row.next_row);
-	$("#answer"+ questionID +"Abort").attr("value", row.abort);
 	$("#answer"+ questionID +"Selection").attr("value", file);
 	$("#answer"+ questionID +"Time").attr("value", time);
+    $("#answer"+ questionID +"ID").attr("value", current_item);
 
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#feedback-button").css("display", "block");
 	}else {
 		$("#proceed-button").click();
 	}
+
+    $("#proceed-button").click();
+    if (next_item > 66) { // Wir prüfen, ob die nächste Frage größer als 30 ist
+        if (current_item != 66) { // Wir prüfen, ob die aktuelle Frage nicht 30 ist
+            next_item = 66; // Wenn dies der Fall ist, setzen wir die nächste Frage auf 30
+            localStorage.setItem("me-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+        }
+        else {
+            progressTest(); // Sonst beenden wir den Test
+        }
+    }
 }
+
 
 function getAnswer(src) {
 	if(src) {
@@ -203,4 +249,3 @@ function getFile(url) {
 		
 	});
 }
-
