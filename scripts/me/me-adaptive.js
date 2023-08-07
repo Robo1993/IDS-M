@@ -166,6 +166,9 @@ function evaluateMEA() {
         var initialArray = [];
         localStorage.setItem('me-adaptive/solvedArray', JSON.stringify(initialArray));
     }
+    if (!localStorage.getItem('me-adaptive/accumulatedWrong')) {
+        localStorage.setItem('me-adaptive/accumulatedWrong', 0);
+    }
     var solvedArrayString = localStorage.getItem('me-adaptive/solvedArray');
 
     var solvedArrayString = localStorage.getItem('me-adaptive/solvedArray');
@@ -192,7 +195,12 @@ function evaluateMEA() {
         }
         localStorage.setItem("me-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
     }else {
-        next_item = last_correct + 1; // Wir setzen die nächste frage auf die letzte korrekt beantwortete Frage + 1
+        next_item = current_item - 2;
+        if (next_item <1) {
+            next_item = 1;
+        }
+
+         // Wir setzen die nächste frage auf die letzte korrekt beantwortete Frage + 1
         while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
             next_item++; // Falls ja, springen wir eine Frage weiter
         }
@@ -201,10 +209,18 @@ function evaluateMEA() {
 	if(file.indexOf("correct") != -1) {
 		$("#answer"+ questionID +"Answer").attr("value", 1);
 		answered_correctly = true;
+        localStorage.setItem('me-adaptive/accumulatedWrong', 0);
+        console.log(0);
 	}else {
 		$("#answer"+ questionID +"Answer").attr("value", 0);
 		answered_correctly = false;
-	}
+        //set accumulated wrong to 1 + its current value
+        var accumulatedWrong = parseInt(localStorage.getItem('me-adaptive/accumulatedWrong'));
+        accumulatedWrong++;
+        localStorage.setItem('me-adaptive/accumulatedWrong', accumulatedWrong);
+        //check if accumulatedWrong is 3 or more
+        console.log(accumulatedWrong);
+    }
 	$("#answer"+ questionID +"Selection").attr("value", file);
 	$("#answer"+ questionID +"Time").attr("value", time);
     $("#answer"+ questionID +"ID").attr("value", current_item);
@@ -216,12 +232,19 @@ function evaluateMEA() {
 	}
 
     $("#proceed-button").click();
+
+    if (accumulatedWrong >= 3) {
+        $("#answer"+ questionID +"Abort").attr("value", 1);
+        window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
+    }
+
     if (next_item > 66) { // Wir prüfen, ob die nächste Frage größer als 30 ist
         if (current_item != 66) { // Wir prüfen, ob die aktuelle Frage nicht 30 ist
             next_item = 66; // Wenn dies der Fall ist, setzen wir die nächste Frage auf 30
             localStorage.setItem("me-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
         }
         else {
+            window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
             progressTest(); // Sonst beenden wir den Test
         }
     }
