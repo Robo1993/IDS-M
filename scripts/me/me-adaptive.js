@@ -235,6 +235,9 @@ function evaluateMEA() {
 
     if (accumulatedWrong >= 3) {
         $("#answer"+ questionID +"Abort").attr("value", 1);
+        //clear next item and solvedarray
+        localStorage.removeItem('me-adaptive/nextItem');
+        localStorage.removeItem('me-adaptive/solvedArray');
         window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
     }
 
@@ -244,6 +247,9 @@ function evaluateMEA() {
             localStorage.setItem("me-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
         }
         else {
+            //clear next item and solvedarray
+            localStorage.removeItem('me-adaptive/nextItem');
+            localStorage.removeItem('me-adaptive/solvedArray');
             window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
             progressTest(); // Sonst beenden wir den Test
         }
