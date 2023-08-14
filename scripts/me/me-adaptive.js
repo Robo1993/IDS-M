@@ -238,6 +238,7 @@ function evaluateMEA() {
         //clear next item and solvedarray
         localStorage.removeItem('me-adaptive/nextItem');
         localStorage.removeItem('me-adaptive/solvedArray');
+        localStorage.removeItem('me-adaptive/accumulatedWrong');
         window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
     }
 
@@ -250,6 +251,7 @@ function evaluateMEA() {
             //clear next item and solvedarray
             localStorage.removeItem('me-adaptive/nextItem');
             localStorage.removeItem('me-adaptive/solvedArray');
+            localStorage.removeItem('me-adaptive/accumulatedWrong');
             window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
             progressTest(); // Sonst beenden wir den Test
         }
