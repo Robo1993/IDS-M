@@ -22,8 +22,9 @@ function initMEA() {
 	});
 
     if (!localStorage.getItem('me-adaptive/nextItem')) {
-        var next_item = 1;
-        var current_item = 1;
+        var random_item = Math.floor(Math.random() * 3) + 1;
+        var next_item = random_item;
+        var current_item = random_item;
         localStorage.setItem('me-adaptive/currentItem', current_item);
     }
     else {
