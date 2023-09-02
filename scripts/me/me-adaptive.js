@@ -282,9 +282,7 @@ function evaluateMEA() {
     }
 
     if (file.indexOf("correct") != -1) {
-        if (current_item > last_correct) { // Wir prüfen, ob die aktuelle Frage höher ist als die letzte korrekt beantwortete Frage
-            last_correct = current_item; // Wenn ja, setzen wir die letzte korrekt beantwortete Frage auf die aktuelle Frage
-        }
+        last_correct = current_item; // Wenn ja, setzen wir die letzte korrekt beantwortete Frage auf die aktuelle Frage
         localStorage.setItem("me-adaptive/lastCorrect", last_correct); // Wir speichern die letzte korrekt beantwortete Frage
         next_item = last_correct + 3; // Wir springen 3 Fragen weiter
         while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
@@ -298,8 +296,14 @@ function evaluateMEA() {
         }
 
          // Wir setzen die nächste frage auf die letzte korrekt beantwortete Frage + 1
-        while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
-            next_item++; // Falls ja, springen wir eine Frage weiter
+         while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
+            next_item--; // Falls ja, springen wir eine Frage weiter
+        }
+        if (next_item <1) {
+            next_item = 1;
+        }
+        while (solvedArray.includes(next_item)) {
+            next_item++;
         }
         localStorage.setItem("me-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
     }
