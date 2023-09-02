@@ -193,6 +193,7 @@ function loadQuestion(questionNumber) {
     }
 
     else if (localStorage.getItem('me-adaptive/endTest')) {
+        localStorage.removeItem('me-adaptive/endTest');
         const matrix_container = document.getElementById("matrix-container");
         const thumbnail_container = document.getElementById("thumbnail-container");
 
