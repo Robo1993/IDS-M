@@ -108,48 +108,143 @@ function feedbackMEA() {
 }
 
 function loadQuestion(questionNumber) {
-	let img_counter = 0;
-    const itemNumber = parseInt(questionNumber);
-    var itemObject = test_items[itemNumber];
-    var picture = itemObject.matrixUrl;
-    let imgs = [itemObject.first_img, itemObject.second_img, itemObject.third_img, itemObject.fourth_img, itemObject.fifth_img];
-	let src = $(".me-matrix").attr("src").split("/");
-	src.splice(src.length - 2, 2);
-	let srcS = src.join("/");
-	$(".me-matrix").attr("src", srcS + "/images/me" + itemNumber + "/" + picture);
-    $("#thumbnail-container img").each(function() {
-		if(imgs[img_counter] == "none" || imgs[img_counter] == "" || !imgs[img_counter]) {
-			$(this).remove();
-            img_counter++;
-		}
-        else {
-            $(this).attr("src", srcS + "/images/me" + itemNumber + "/" + imgs[img_counter]);
-		    img_counter++;
-        }
-	});
-    $("img").each(function (idx, img) {
-		$("<img>").on("load", imageLoaded).attr("src", $(img).attr("src"))
-	});
-    var totalImages = $(".question-text img").length;
-    var imagesLoaded = 0;
-    function imageLoaded() {
-		imagesLoaded++
-		if (imagesLoaded == totalImages) {
-			allImagesLoaded();
-		}
-	}
+	if (localStorage.getItem('me-adaptive/louScreen1')) {
+        localStorage.removeItem('me-adaptive/louScreen1');
+        const matrix_container = document.getElementById("matrix-container");
+        const thumbnail_container = document.getElementById("thumbnail-container");
 
-	function allImagesLoaded() {
-		setTimeout(function() {
-			$("#page-load-screen").css("display", "none");
-            $("#tp-area").css("display", "flex");
-            $("#center-area").css("display", "none");
-            $(".question-text").css("opacity", "1");
-            $(".question-text").css("display", "block");
-            $("#tp-response-button").css("display", "block");
-		}, 500);
-        startMEA();
-	}
+        matrix_container.remove();
+        thumbnail_container.remove();
+
+        //add new img element with 500px width and height
+        const img = document.createElement("img");
+        const srcS = localStorage.getItem('me-adaptive/source');
+        img.setAttribute("src", srcS + "/images/4.jpg");
+        img.setAttribute("width", "500px");
+        img.setAttribute("height", "500px");
+        
+
+        img.style.display = "block"; // Set the image as a block-level element
+        img.style.margin = "auto"; // Center horizontally using auto margins
+        img.style.position = "absolute"; // Positioning for vertical centering
+        img.style.top = "50%"; // Align vertically to the middle
+        img.style.left = "50%"; // Align horizontally to the middle
+        img.style.transform = "translate(-50%, -50%)"; // Center both horizontally and vertically
+
+        document.body.appendChild(img);
+
+        $("#page-load-screen").css("display", "none");
+        $("#proceed-button").css("display", "block");
+        $("#tp-response-button").css("display", "none");
+
+        localStorage.setItem('me-adaptive/louScreen2', 1);
+    }
+    else if (localStorage.getItem('me-adaptive/louScreen2')) {
+        localStorage.setItem('me-adaptive/endTest', 1);
+        localStorage.removeItem('me-adaptive/louScreen2');
+
+        const matrix_container = document.getElementById("matrix-container");
+        const thumbnail_container = document.getElementById("thumbnail-container");
+
+        matrix_container.remove();
+        thumbnail_container.remove();
+
+        // Define srcS or retrieve it from localStorage as needed
+        const srcS = localStorage.getItem('me-adaptive/source');
+
+        // Check if srcS is defined and not null
+        if (srcS) {
+        const imageUrls = [
+            `${srcS}/images/5_bearbeitet_ms.jpeg`,
+            `${srcS}/images/7.jpg`,
+            `${srcS}/images/8_bearbeitet_ms.jpg`,
+            `${srcS}/images/3_bearbeitet_ms.jpg`
+        ];
+
+        // Create a container div to center the images
+        const container = document.createElement("div");
+        container.style.display = "flex";
+        container.style.alignItems = "center";
+        container.style.justifyContent = "center";
+        container.style.height = "90vh"; // Center vertically within the viewport
+
+        // Loop through the image URLs and create img elements for each
+        imageUrls.forEach(url => {
+            const img = document.createElement("img");
+            img.className = "lou-img";
+            img.src = url;
+            img.style.width = "250px";
+            img.style.height = "248px"; // Adjust the height as needed
+
+            // Append the img element to the container
+            container.appendChild(img);
+        });
+
+        // Append the container to the document body or another container
+        document.body.appendChild(container); // You can change the parent container here
+
+        // Additional code
+        $("#page-load-screen").css("display", "none");
+        $("#proceed-button").css("display", "block");
+        $("#tp-response-button").css("display", "none");
+        } else {
+        console.error('srcS is not defined or is null.');
+        }
+    }
+
+    else if (localStorage.getItem('me-adaptive/endTest')) {
+        const matrix_container = document.getElementById("matrix-container");
+        const thumbnail_container = document.getElementById("thumbnail-container");
+
+        matrix_container.remove();
+        thumbnail_container.remove();
+        progressTest();
+    }
+    else {
+        let img_counter = 0;
+        const itemNumber = parseInt(questionNumber);
+        var itemObject = test_items[itemNumber];
+        var picture = itemObject.matrixUrl;
+        let imgs = [itemObject.first_img, itemObject.second_img, itemObject.third_img, itemObject.fourth_img, itemObject.fifth_img];
+        let src = $(".me-matrix").attr("src").split("/");
+        src.splice(src.length - 2, 2);
+        let srcS = src.join("/");
+        localStorage.setItem('me-adaptive/source', srcS);
+        $(".me-matrix").attr("src", srcS + "/images/me" + itemNumber + "/" + picture);
+        $("#thumbnail-container img").each(function() {
+            if(imgs[img_counter] == "none" || imgs[img_counter] == "" || !imgs[img_counter]) {
+                $(this).remove();
+                img_counter++;
+            }
+            else {
+                $(this).attr("src", srcS + "/images/me" + itemNumber + "/" + imgs[img_counter]);
+                img_counter++;
+            }
+        });
+        $("img").each(function (idx, img) {
+            $("<img>").on("load", imageLoaded).attr("src", $(img).attr("src"))
+        });
+        var totalImages = $(".question-text img").length;
+        var imagesLoaded = 0;
+        function imageLoaded() {
+            imagesLoaded++
+            if (imagesLoaded == totalImages) {
+                allImagesLoaded();
+            }
+        }
+
+        function allImagesLoaded() {
+            setTimeout(function() {
+                $("#page-load-screen").css("display", "none");
+                $("#tp-area").css("display", "flex");
+                $("#center-area").css("display", "none");
+                $(".question-text").css("opacity", "1");
+                $(".question-text").css("display", "block");
+                $("#tp-response-button").css("display", "block");
+            }, 500);
+            startMEA();
+        }
+    }
 }
 
 function evaluateMEA() {
@@ -232,15 +327,13 @@ function evaluateMEA() {
 		$("#proceed-button").click();
 	}
 
-    $("#proceed-button").click();
-
     if (accumulatedWrong >= 3) {
         $("#answer"+ questionID +"Abort").attr("value", 1);
         //clear next item and solvedarray
         localStorage.removeItem('me-adaptive/nextItem');
         localStorage.removeItem('me-adaptive/solvedArray');
         localStorage.removeItem('me-adaptive/accumulatedWrong');
-        window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
+        localStorage.setItem("me-adaptive/louScreen1", 1);      
     }
 
     if (next_item > 66) { // Wir prüfen, ob die nächste Frage größer als 30 ist
@@ -253,8 +346,7 @@ function evaluateMEA() {
             localStorage.removeItem('me-adaptive/nextItem');
             localStorage.removeItem('me-adaptive/solvedArray');
             localStorage.removeItem('me-adaptive/accumulatedWrong');
-            window.location.href = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
-            progressTest(); // Sonst beenden wir den Test
+            localStorage.setItem("me-adaptive/louScreen1", 1);      
         }
     }
 }
