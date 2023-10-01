@@ -780,6 +780,63 @@ function showSkip() {
 	$("#skip-alert").css("display", "flex");
 	$("#skip-alert").hide();
 	$("#skip-alert").fadeIn(400);
+	const unfinished_tests = []
+	let unfinished = false;
+	if (localStorage.getItem("idsm/aa") == "false") {
+		unfinished_tests.push("Aufmerksamkeit Aufteilen");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/fn") == "false") {
+		unfinished_tests.push("Figuren Nachlegen");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/fw") == "false") {
+		unfinished_tests.push("Figuren Wiedererkennen");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/me") == "false") {
+		unfinished_tests.push("Matrizen Ergänzen");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/rg") == "false") {
+		unfinished_tests.push("Reaktionsgeschwindigkeit");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/sf") == "false") {
+		unfinished_tests.push("Symbole Finden");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/tfz") == "false") {
+		unfinished_tests.push("Tierfarben Zuordnen");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/vm") == "false") {
+		unfinished_tests.push("Visuomotorik");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/vm_Eval") == "false") {
+		unfinished_tests.push("Visuomotorik Evaluation");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/ppvt") == "false") {
+		unfinished_tests.push("PPVT");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/ish") == "false") {
+		unfinished_tests.push("Ishihara");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/mt") == "false") {
+		unfinished_tests.push("Mitarbeit in der Testsituation");
+		unfinished = true;
+	}
+	if (localStorage.getItem("idsm/da") == "false") {
+		unfinished_tests.push("Demographische Angaben");
+		unfinished = true;
+	}
+	if (unfinished) {
+		document.getElementById("unfinished-tests").innerText = "Sie haben folgende Tests noch nicht bearbeitet: \n" + unfinished_tests.join(", ");
+	}
 }
 
 function hideSkip() {
