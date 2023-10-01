@@ -834,7 +834,7 @@ function showSkip() {
 		unfinished_tests.push("Demographische Angaben");
 		unfinished = true;
 	}
-	if (unfinished) {
+	if (unfinished && getTestCode() === undefined) {
 		document.getElementById("unfinished-tests").innerText = "Sie haben folgende Tests noch nicht bearbeitet: \n" + unfinished_tests.join(", ");
 	}
 }
