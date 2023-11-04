@@ -11,6 +11,7 @@ let restart = false;
 let tap_counter = 0;
 let false_positives = 0;
 let reaction_times = new Array();
+let reaction_times_touch = new Array();
 let sun_start;
 
 function initRG() {
@@ -34,6 +35,16 @@ function initRG() {
 		$("#play-button").css("display", "block");
 		$("#play-button").click();
 		$("#page-load-screen").css("display", "none");
+
+		$("#sun-img").on("touchstart", function() {
+			console.log(item);
+			console.log($("#sun-img").css("left"));
+			console.log($("#sun-img").css("top"));
+			sun_end = performance.now();
+			let reaction_time = sun_end - sun_start;
+			reaction_times_touch[item] = reaction_time;
+			console.log(reaction_time);
+		});
 
 		$("#sun-img").on("click", function() {
 			let sun_end = performance.now();
@@ -89,6 +100,7 @@ function feedbackRG() {
 function evaluateRG() {
 	for (i = 0; i < counter; i++) {
 		$("#answer"+ questionID + (i + 1)).attr("value", reaction_times[i]);
+		$("#answer"+ questionID + (i + 1) + "Touch").attr("value", reaction_times_touch[i]);
 	}
 	$("#answer"+ questionID + "falseClicks").attr("value", false_positives);
 	$("#proceed-button").css("display", "block");

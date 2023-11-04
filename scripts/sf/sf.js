@@ -40,7 +40,7 @@ function startSF() {
 	easeItUp();	
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#feedback-button").css("display", "block");
-		$(":root").css("--duration", "10s");
+		$(":root").css("--duration", "3s");
 	}else {
 		//Clearing Timeout for pausing or stopping auto-proceed
 		//var id = setTimeout(function(){alert('hi');}, 3000);
