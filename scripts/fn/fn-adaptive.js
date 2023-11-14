@@ -26,6 +26,9 @@ var time_used;
 var moves = 0;
 var icon_rows = 0;
 var row_counter = 0;
+var src;
+var srcS;
+var itemObject;
 
 // Default entity options that will just highlight entities when they overlap
 var defaultEntityOptions = {
@@ -103,16 +106,15 @@ var lineOptions = {
 	}
 };
 
+test_url_adaptive = "https://raw.githubusercontent.com/adgohar/IDS-M-adaptive/main/";
+test_items = [];
+
+
 function initFNA() {
 	if(!(questionCode.indexOf("FND") != -1 || questionCode.indexOf("FNV") != -1)) {
 		$("#clock").css("display", "block");
 	}
-	url_tree = url_adaptive + "trees/fn-tree.csv";
-	url_items = url_adaptive + "items/fn-items.csv";
-	current_row = parseInt($("#current-row").text());
-	if(!current_row) {
-		current_row = 1;
-	}
+	url_items = test_url_adaptive + "fn.csv";
 	initializeFNCore();
 	setupCanvasA();
 	loadLogicTree();
@@ -154,37 +156,72 @@ function initFNA() {
 
 	$("#page-load-screen").css("display", "none");
 
+    if (!localStorage.getItem('fn-adaptive/nextItem')) {
+        var random_item = Math.floor(Math.random() * 3) + 1;
+        var next_item = random_item;
+        var current_item = random_item;
+        localStorage.setItem('fn-adaptive/currentItem', current_item);
+    }
+    else {
+        var next_item = parseInt(localStorage.getItem('fn-adaptive/nextItem'));
+        var current_item = parseInt(localStorage.getItem('fn-adaptive/nextItem'));
+        localStorage.setItem('fn-adaptive/currentItem', current_item);
+    }
+    console.log("current_item: " + current_item);
+
 	function loadLogicTree() {
-		readItemsCSV(url_items);
-	}
+		readItemsCSV(url_items)
+        .then(itemDict => {
+			test_items = itemDict;
+            loadEntitiesA(current_item);
+	    })
+    }
 
-	function createTree() {
-		logic_tree = new LogicTree(tree, items, "FN");
-		loadEntitiesA();
-	}
-
-	function readLogicTreeCSV(csv) {
-		$.get(csv, function( data ) {
-			//this.tree = Papa.parse(data);
-			tree = Papa.parse(data);
-			createTree();
-		});
-	}
-
-	function readItemsCSV(csv, readCSV) {
-		$.get(csv, function( data ) {
-			//this.items = Papa.parse(data);
-			items = Papa.parse(data);
-			readLogicTreeCSV(url_tree);
-		});
-	}
+	function readItemsCSV(csv) {
+        return fetch(csv)
+        .then(response => response.text())
+        .then(csvText => {
+            const lines = csvText.split("\n");
+            const headers = lines[0].split(",").map(header => header.trim());
+            const itemDict = {};
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(",").map(value => value.trim());
+                const itemNumber = parseInt(values[0]);
+                const time = parseInt(values[1]);
+                const target_img = values[2];
+                const triangle_yellow = values[3];
+                const triangle_yellow_mirrored = values[4];
+                const box_yellow = values[5];
+                const triangle_green = values[6];
+                const quarter_green = values[7];
+                const triangle_red = values[8];
+                const box_red = values[9];
+				const name = values[10];
+                itemDict[itemNumber] = {
+                    time,
+                    target_img,
+                    triangle_yellow,
+                    triangle_yellow_mirrored,
+                    box_yellow,
+                    triangle_green,
+                    quarter_green,
+                    triangle_red,
+                    box_red,
+					name
+                };
+            }
+            return itemDict;
+        });
+    }
 }
 
+
+
 function startFNA() {
+	initFnAdaptiveData();
 	if(questionCode.indexOf("UBD") != -1 || questionCode.indexOf("UBV") != -1 || questionCode.indexOf("RD") != -1 || questionCode.indexOf("RV") != -1) {
-		$(":root").css("--duration", "180s");
 	}else {
-		$("#proceed-button").css("display", "block");
+		$("#proceed-button").css("display", "none");
 	}
 	start = performance.now();
 	TimeRestrictionsFNA();
@@ -194,85 +231,204 @@ function startFNA() {
 	}, 2000);
 }
 
-function loadEntitiesA() {
-
-	//Übungsblock 1
-	var triangle_red_proto = [V(0, -103.92), V(-90, 51.96), V(90, 51.96)];
-	var box_red_proto = [V(-90, -90), V(90, -90), V(90, 90), V(-90, 90)];
-
-	//Übungsblock 2
-	// var para_proto_mirrored_blue = [V(-243.63, -63.63), V(116.37, -63.63), V(243.63, 63.63), V(-116.37, 63.63)];
-	// var para_proto_blue = [V(-116.37, -63.63), V(243.63, -63.63), V(116.37, 63.63), V(-243.63, 63.63)];
-	var para_proto_blue = [V(-26.36, -63.63), V(153.64, -63.63), V(26.36, 63.63), V(-153.64, 63.63)];
-	var para_proto_mirrored_blue = [V(-153.64, -63.63), V(26.36, -63.63), V(153.64, 63.63), V(-26.36, 63.63)];
-
-	//Übungsblock 3
-	var triangle_green_proto = [V(0, -63.64), V(127.28, 63.64), V(-127.28, 63.64)];
-
-	//Testungsblock
-	var triangle_yellow_proto = [V(-90, 51.95), V(-90, -51.95), V(90, 51.95)];
-	var triangle_yellow_proto_mirrored = [V(-90, 51.95), V(90, -51.95), V(90, 51.95)];
-	var box_yellow_proto = [V(-90,-51.95), V(90,-51.95), V(90,51.95), V(-90,51.95)];
-
-	let item = logic_tree.getItemByRow(current_row);
-	let triangle_yellow = item.triangle_yellow;
-	let triangle_yellow_mirrored = item.triangle_yellow_mirrored;
-	let box_yellow = item.box_yellow;
-	let triangle_green = item.triangle_green;
-	let quarter_green = item.quarter_green;
-	let triangle_red = item.triangle_red;
-	let box_red = item.box_red;
-	let thumbnails = [["triangle_yellow", triangle_yellow], ["triangle_yellow_mirrored", triangle_yellow_mirrored], ["box_yellow", box_yellow], ["triangle_green", triangle_green], ["quarter_green", quarter_green], ["triangle_red", triangle_red], ["box_red", box_red]];
-	let total_entities = triangle_yellow + triangle_yellow_mirrored + box_yellow + triangle_green + triangle_green + quarter_green + triangle_red + box_red;
-	let entities_left = total_entities;
-	rowCounterA(total_entities);
-	let src = $(".fnImg").attr("src").split("/");
-	src.splice(src.length - 2, 2);
-	let srcS = src.join("/");
-
-	$(".fnImg").attr("src", srcS + "/fn"+ item.item + "/" + item.target);
-
-	for (var i = thumbnails.length - 1; i >= 0; i--) {
-		let name = thumbnails[i][0];
-		let amount = thumbnails[i][1];
-		//let position = V(500, 500);
-		while(amount > 0) {
-			let position = getEntityPosition(total_entities, entities_left);
-			if(name == "triangle_yellow") {
-				var triangle = world.addEntity(P(position, triangle_yellow_proto), IDS2EntityOptions);
-			}else if(name == "triangle_yellow_mirrored") {
-				var triangle = world.addEntity(P(position, triangle_yellow_proto_mirrored), IDS2EntityOptions);
-			}else if(name == "box_yellow") {
-				var box = world.addEntity(P(position, box_yellow_proto), IDS2EntityOptions);
-			}else if(name == "triangle_green") {
-				var triangle = world.addEntity(P(position, triangle_green_proto), block3EntityOptions);
-			}else if(name == "circle_green") {
-				var circle = world.addEntity(C(position, 90), block3EntityOptions);
-			}else if(name == "quarter_green") {
-				var quarter = world.addEntity(Q(position, 90), block3EntityOptions);
-			}else if(name == "halfcircle_blue") {
-				var halfcircle = world.addEntity(H(position, 90), block2EntityOptions);
-			}else if(name == "para_blue") {
-				var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
-			}else if(name == "para_blue_mirrored") {
-				var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
-			}else if(name == "triangle_red") {
-				var triangle = world.addEntity(P(position, triangle_red_proto), block1EntityOptions);
-			}else if(name == "box_red") {
-				var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
-			}
-			amount--;
-			entities_left--;
+function TimeRestrictionsFNA() {
+	let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
+    let itemObject = test_items[current_item];
+    var time = itemObject.time;
+	$(":root").css("--duration", time +"ms");
+	setTimeout(function() {
+		if(!locked) {
+			end = performance.now();
+			abort();
 		}
-	}
-
-	$("#play-button").css("display", "block");
+	}, time);
 }
 
-function TimeRestrictionsFNA() {
-	let item = logic_tree.getItemByRow(current_row);
-	$(":root").css("--duration", item.time_barrier +"ms");
-	setTimeout(abort, item.time_barrier);
+function feedbackFNA() {
+	feedback();
+}
+
+function loadEntitiesA(questionNumber) {
+	if (localStorage.getItem('fn-adaptive/louScreen1')) {
+        const variable_container = document.getElementById("variable-container");
+		//get element by classname
+		const fn_container = document.getElementsByClassName("fn-container")[0];
+		const clock = document.getElementById("clock");
+
+        variable_container.remove();
+        fn_container.remove();
+		clock.remove();
+
+        //add new img element with 500px width and height
+        const img = document.createElement("img");
+        const srcS = localStorage.getItem('fn-adaptive/source');
+        img.setAttribute("src", srcS + "/4.jpg");
+        img.setAttribute("width", "500px");
+        img.setAttribute("height", "500px");
+		
+		$("#proceed-button").css("display", "block");
+
+        img.style.display = "block"; // Set the image as a block-level element
+        img.style.margin = "auto"; // Center horizontally using auto margins
+        img.style.position = "absolute"; // Positioning for vertical centering
+        img.style.top = "50%"; // Align vertically to the middle
+        img.style.left = "50%"; // Align horizontally to the middle
+        img.style.transform = "translate(-50%, -50%)"; // Center both horizontally and vertically
+
+        document.body.appendChild(img);
+
+		$("#page-load-screen").css("display", "none");
+        $("#proceed-button").css("display", "block");
+        $("#tp-response-button").css("display", "none");
+
+        localStorage.setItem('fn-adaptive/louScreen2', 1);
+		localStorage.removeItem('fn-adaptive/louScreen1');
+    }
+    else if (localStorage.getItem('fn-adaptive/louScreen2')) {
+        localStorage.setItem('fn-adaptive/endTest', 1);
+        localStorage.removeItem('fn-adaptive/louScreen2');
+
+        const variable_container = document.getElementById("variable-container");
+		//get element by classname
+		const fn_container = document.getElementsByClassName("fn-container")[0];
+		const clock = document.getElementById("clock");
+
+        variable_container.remove();
+        fn_container.remove();
+		clock.remove();
+
+        // Define srcS or retrieve it from localStorage as needed
+        const srcS = localStorage.getItem('fn-adaptive/source');
+        // Check if srcS is defined and not null
+        if (srcS) {
+        const imageUrls = [
+            `${srcS}/5_bearbeitet_ms.jpeg`,
+            `${srcS}/7.jpg`,
+            `${srcS}/8_bearbeitet_ms.jpg`,
+            `${srcS}/3_bearbeitet_ms.jpg`
+        ];
+
+        // Create a container div to center the images
+        const container = document.createElement("div");
+        container.style.display = "flex";
+        container.style.alignItems = "center";
+        container.style.justifyContent = "center";
+        container.style.height = "90vh"; // Center vertically within the viewport
+
+        // Loop through the image URLs and create img elements for each
+        imageUrls.forEach(url => {
+            const img = document.createElement("img");
+            img.className = "lou-img";
+            img.src = url;
+            img.style.width = "250px";
+            img.style.height = "248px"; // Adjust the height as needed
+
+            // Append the img element to the container
+            container.appendChild(img);
+        });
+
+        // Append the container to the document body or another container
+        document.body.appendChild(container); // You can change the parent container here
+
+        // Additional code
+        $("#page-load-screen").css("display", "none");
+        $("#proceed-button").css("display", "block");
+        $("#tp-response-button").css("display", "none");
+        } else {
+        console.error('srcS is not defined or is null.');
+        }
+    }
+
+    else if (localStorage.getItem('fn-adaptive/endTest')) {
+        localStorage.removeItem('fn-adaptive/endTest');
+        const variable_container = document.getElementById("variable-container");
+		//get element by classname
+		const fn_container = document.getElementsByClassName("fn-container")[0];
+		const clock = document.getElementById("clock");
+
+        variable_container.remove();
+        fn_container.remove();
+		clock.remove();
+        progressTest();
+    }
+    else {
+
+		//Übungsblock 1
+		var triangle_red_proto = [V(0, -103.92), V(-90, 51.96), V(90, 51.96)];
+		var box_red_proto = [V(-90, -90), V(90, -90), V(90, 90), V(-90, 90)];
+
+		//Übungsblock 2
+		// var para_proto_mirrored_blue = [V(-243.63, -63.63), V(116.37, -63.63), V(243.63, 63.63), V(-116.37, 63.63)];
+		// var para_proto_blue = [V(-116.37, -63.63), V(243.63, -63.63), V(116.37, 63.63), V(-243.63, 63.63)];
+		var para_proto_blue = [V(-26.36, -63.63), V(153.64, -63.63), V(26.36, 63.63), V(-153.64, 63.63)];
+		var para_proto_mirrored_blue = [V(-153.64, -63.63), V(26.36, -63.63), V(153.64, 63.63), V(-26.36, 63.63)];
+
+		//Übungsblock 3
+		var triangle_green_proto = [V(0, -63.64), V(127.28, 63.64), V(-127.28, 63.64)];
+
+		//Testungsblock
+		var triangle_yellow_proto = [V(-90, 51.95), V(-90, -51.95), V(90, 51.95)];
+		var triangle_yellow_proto_mirrored = [V(-90, 51.95), V(90, -51.95), V(90, 51.95)];
+		var box_yellow_proto = [V(-90,-51.95), V(90,-51.95), V(90,51.95), V(-90,51.95)];
+
+		const itemNumber = parseInt(questionNumber);
+		var itemObject = test_items[itemNumber];
+		var target_img = itemObject.target_img;
+		var triangle_yellow = itemObject.triangle_yellow;
+		var triangle_yellow_mirrored = itemObject.triangle_yellow_mirrored;
+		var box_yellow = itemObject.box_yellow;
+		var triangle_green = itemObject.triangle_green;
+		var quarter_green = itemObject.quarter_green;
+		var triangle_red = itemObject.triangle_red;
+		var box_red = itemObject.box_red;
+		var name = itemObject.name;
+		
+		let thumbnails = [["triangle_yellow", triangle_yellow], ["triangle_yellow_mirrored", triangle_yellow_mirrored], ["box_yellow", box_yellow], ["triangle_green", triangle_green], ["quarter_green", quarter_green], ["triangle_red", triangle_red], ["box_red", box_red]];
+		let total_entities = triangle_yellow + triangle_yellow_mirrored + box_yellow + triangle_green + triangle_green + quarter_green + triangle_red + box_red;
+		let entities_left = total_entities;
+		rowCounterA(total_entities);
+		let src = $(".fnImg").attr("src").split("/");
+		src.splice(src.length - 2, 2);
+		let srcS = src.join("/");
+		localStorage.setItem('fn-adaptive/source', srcS);
+
+		$(".fnImg").attr("src", srcS + "/fn"+ itemNumber + "/" + target_img);
+
+		for (var i = thumbnails.length - 1; i >= 0; i--) {
+			let name = thumbnails[i][0];
+			let amount = thumbnails[i][1];
+			//let position = V(500, 500);
+			while(amount > 0) {
+				let position = getEntityPosition(total_entities, entities_left);
+				if(name == "triangle_yellow") {
+					var triangle = world.addEntity(P(position, triangle_yellow_proto), IDS2EntityOptions);
+				}else if(name == "triangle_yellow_mirrored") {
+					var triangle = world.addEntity(P(position, triangle_yellow_proto_mirrored), IDS2EntityOptions);
+				}else if(name == "box_yellow") {
+					var box = world.addEntity(P(position, box_yellow_proto), IDS2EntityOptions);
+				}else if(name == "triangle_green") {
+					var triangle = world.addEntity(P(position, triangle_green_proto), block3EntityOptions);
+				}else if(name == "circle_green") {
+					var circle = world.addEntity(C(position, 90), block3EntityOptions);
+				}else if(name == "quarter_green") {
+					var quarter = world.addEntity(Q(position, 90), block3EntityOptions);
+				}else if(name == "halfcircle_blue") {
+					var halfcircle = world.addEntity(H(position, 90), block2EntityOptions);
+				}else if(name == "para_blue") {
+					var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
+				}else if(name == "para_blue_mirrored") {
+					var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
+				}else if(name == "triangle_red") {
+					var triangle = world.addEntity(P(position, triangle_red_proto), block1EntityOptions);
+				}else if(name == "box_red") {
+					var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
+				}
+				amount--;
+				entities_left--;
+			}
+		}
+		$("#play-button").click();	
+	}
 }
 
 function checkForEntitiesOnStartup() {
@@ -299,7 +455,6 @@ function abort() {
 	//end = new Date();
 	if(!evaluation_undergoing) {
 		locked = true;
-		$("#tp-response-button").css("display", "none");
 		$("#fn-thumbnails").css("display", "none");
 		evaluateFNA();
 	}
@@ -309,41 +464,142 @@ function evaluateFNA() {
 	end = performance.now();
 	evaluation_undergoing = true;
 	let time = end - start;
-
-	//all existing evaluation point lists are contained in data.js in the same folder
-	let eval_points = test_block[logic_tree.getItemByRow(current_row).item - 1];
-	var correct = evaluateCalcPoints(world.entities, eval_points);
-
-	let item = logic_tree.getItemByRow(current_row);
-	let rows = logic_tree.getRowsByItem(item.item);
-	let row;
-	for (var i = rows.length - 1; i >= 0; i--) {
-		r = rows[i];
-		if (correct && r.score == 1) {
-			row = r;
-		}else if(!correct && r.score == 0) {
-			row = r;
+	let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
+    let itemObject = test_items[current_item];
+	console.log("name: " + itemObject.name);
+	if (itemObject.name == "R10") {
+		let eval_points = getElementByName("R10_1");
+		var correct = evaluateCalcPoints(world.entities, eval_points);
+		if (!correct) {
+			eval_points = getElementByName("R10_2");
+			correct = evaluateCalcPoints(world.entities, eval_points);
 		}
 	}
+	//do the same for R11 and R14
+	else if (itemObject.name == "R11") {
+		let eval_points = getElementByName("R11_1");
+		var correct = evaluateCalcPoints(world.entities, eval_points);
+		if (!correct) {
+			eval_points = getElementByName("R11_2");
+			correct = evaluateCalcPoints(world.entities, eval_points);
+		}
+	}
+	else if (itemObject.name == "R14") {
+		let eval_points = getElementByName("R14_1");
+		var correct = evaluateCalcPoints(world.entities, eval_points);
+		if (!correct) {
+			eval_points = getElementByName("R14_2");
+			correct = evaluateCalcPoints(world.entities, eval_points);
+		}
+	}
+	//all existing evaluation point lists are contained in data.js in the same folder
+	else {
+		let eval_points = getElementByName(itemObject.name);
+		var correct = evaluateCalcPoints(world.entities, eval_points);
+	}
+		console.log(correct);
+
+	if (!localStorage.getItem('fn-adaptive/accumulatedWrong')) {
+        localStorage.setItem('fn-adaptive/accumulatedWrong', 0);
+    }
+
+	if (!localStorage.getItem('fn-adaptive/solvedArray') || !Array.isArray(JSON.parse(localStorage.getItem('fn-adaptive/solvedArray')))) {
+        var initialArray = [];
+        localStorage.setItem('fn-adaptive/solvedArray', JSON.stringify(initialArray));
+    }
+    if (!localStorage.getItem('fn-adaptive/accumulatedWrong')) {
+        localStorage.setItem('fn-adaptive/accumulatedWrong', 0);
+    }
+    var solvedArrayString = localStorage.getItem('fn-adaptive/solvedArray');
+
+    var solvedArrayString = localStorage.getItem('fn-adaptive/solvedArray');
+    var solvedArray = solvedArrayString ? JSON.parse(solvedArrayString) : [];
+    solvedArray.push(current_item); // Wir fügen die Frage zur Liste der beantworteten Fragen hinzu
+    var updateSolvedArrayString = JSON.stringify(solvedArray);
+    localStorage.setItem('fn-adaptive/solvedArray', updateSolvedArrayString); // Wir speichern die Liste der beantworteten Fragen
+
+    if (!localStorage.getItem('fn-adaptive/lastCorrect')) { // Wir prüfen, ob die letzte korrekt beantwortete Frage gespeichert ist
+        var last_correct = 0; // Wenn nicht, setzen wir sie auf 0
+    }
+    else { // Wenn ja, holen wir sie uns
+        var last_correct = parseInt(localStorage.getItem('fn-adaptive/lastCorrect'));
+    }
+
+    if (correct) {
+        last_correct = current_item; // Wenn ja, setzen wir die letzte korrekt beantwortete Frage auf die aktuelle Frage
+        localStorage.setItem("fn-adaptive/lastCorrect", last_correct); // Wir speichern die letzte korrekt beantwortete Frage
+        next_item = last_correct + 3; // Wir springen 3 Fragen weiter
+        while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
+            next_item++; // Falls ja, springen wir eine Frage weiter
+        }
+        localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+    }else {
+        next_item = current_item - 2;
+        if (next_item <1) {
+            next_item = 1;
+        }
+
+         // Wir setzen die nächste frage auf die letzte korrekt beantwortete Frage + 1
+        while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
+            next_item--; // Falls ja, springen wir eine Frage weiter
+        }
+        if (next_item <1) {
+            next_item = 1;
+        }
+        while (solvedArray.includes(next_item)) {
+            next_item++;
+        }
+        localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+    }
+	if(correct) {
+		answered_correctly = true;
+        localStorage.setItem('fn-adaptive/accumulatedWrong', 0);
+	}else {
+		answered_correctly = false;
+        //set accumulated wrong to 1 + its current value
+        var accumulatedWrong = parseInt(localStorage.getItem('fn-adaptive/accumulatedWrong'));
+        accumulatedWrong++;
+        localStorage.setItem('fn-adaptive/accumulatedWrong', accumulatedWrong);
+    }
+	$("#answer"+ questionID +"NextRow").attr("value", 0);
+	$("#answer"+ questionID +"Abort").attr("value", 0);
 	$("#answer"+ questionID +"Shape").attr("value", correct);
 	$("#answer"+ questionID +"Angle").attr("value", angle_of_shape);
 	$("#answer"+ questionID +"Time").attr("value", time);
 	$("#answer"+ questionID +"Moves").attr("value", moves);
 	$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
-	$("#answer"+ questionID +"NextRow").attr("value", row.next_row);
-	$("#answer"+ questionID +"Abort").attr("value", row.abort);
 	
 	// if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 	// 	$("#feedback-button").css("display", "block");
 	// }else {
 	// 	$("#proceed-button").css("display", "block");
 	// }
-	feedbackFN();
-	$("#proceed-button").css("display", "block");
-}
+	if (questionCode.indexOf("FNAD") != -1 || questionCode.indexOf("FNAV") != -1) {
+		feedbackFN();
+	}
+	else {
+		$("#proceed-button").click();
+	}
+	if (accumulatedWrong >= 3) {
+        $("#answer"+ questionID +"Abort").attr("value", 1);
+        //clear next item and solvedarray
+        localStorage.removeItem('fn-adaptive/solvedArray');
+        localStorage.removeItem('fn-adaptive/accumulatedWrong');
+        localStorage.setItem("fn-adaptive/louScreen1", 1);      
+    }
 
-function feedbackFNA() {
-	feedback();
+    if (next_item > 41) { // Wir prüfen, ob die nächste Frage größer als 30 ist
+        if (current_item != 41) { // Wir prüfen, ob die aktuelle Frage nicht 30 ist
+            next_item = 41; // Wenn dies der Fall ist, setzen wir die nächste Frage auf 30
+            localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+        }
+        else {
+            //clear next item and solvedarray
+			localStorage.removeItem('fn-adaptive/solvedArray');
+			localStorage.removeItem('fn-adaptive/accumulatedWrong');
+            localStorage.setItem("fn-adaptive/louScreen1", 1);            
+        }
+    }
 }
 
 function setupCanvasA() {
