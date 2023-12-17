@@ -50,7 +50,7 @@ function startSF() {
 		setTimeout(function() {
 			locked = true;
 			$("#pause-button").css("display", "none");
-			evaluateAA();
+			evaluateSF();
 			if(!pause_pressed) {
 				$("#proceed-button").click();
 			}else {
