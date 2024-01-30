@@ -597,7 +597,7 @@ function evaluateFNA() {
             //clear next item and solvedarray
 			localStorage.removeItem('fn-adaptive/solvedArray');
 			localStorage.removeItem('fn-adaptive/accumulatedWrong');
-            localStorage.setItem("fn-adaptive/louScreen1", 1);            
+            localStorage.setItem("fn-adaptive/louScreen1", 1);
         }
     }
 }

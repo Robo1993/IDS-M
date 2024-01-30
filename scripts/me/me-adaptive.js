@@ -338,7 +338,8 @@ function evaluateMEA() {
         localStorage.removeItem('me-adaptive/nextItem');
         localStorage.removeItem('me-adaptive/solvedArray');
         localStorage.removeItem('me-adaptive/accumulatedWrong');
-        localStorage.setItem("me-adaptive/louScreen1", 1);      
+        localStorage.setItem("me-adaptive/louScreen1", 1);
+        localStorage.setItem("idsm/me", "true");
     }
 
     if (next_item > 66) { // Wir prüfen, ob die nächste Frage größer als 30 ist
@@ -351,7 +352,8 @@ function evaluateMEA() {
             localStorage.removeItem('me-adaptive/nextItem');
             localStorage.removeItem('me-adaptive/solvedArray');
             localStorage.removeItem('me-adaptive/accumulatedWrong');
-            localStorage.setItem("me-adaptive/louScreen1", 1);      
+            localStorage.setItem("me-adaptive/louScreen1", 1);  
+            localStorage.setItem("idsm/me", "true");
         }
     }
 }
