@@ -569,7 +569,7 @@ function evaluateFNA() {
 	$("#answer"+ questionID +"Time").attr("value", time);
 	$("#answer"+ questionID +"Moves").attr("value", moves);
 	$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
-	$("#answer"+ questionID +"ID").attr("value", current_name);
+	$("#answer"+ questionID +"ID").attr("value", current_item);
 	// if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 	// 	$("#feedback-button").css("display", "block");
 	// }else {
