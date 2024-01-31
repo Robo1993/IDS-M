@@ -357,6 +357,32 @@ function setup() {
 		displayISHNumber();
 	}
 
+	if (questionCode.indexOf("StartI97") != -1) {
+
+		let birthdate = localStorage.getItem("idsm/birthdate");
+
+		var parts = birthdate.split('.');
+		var formattedBirthdate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+	
+		// Parse the formatted birthdate
+		var birthDate = new Date(formattedBirthdate);
+		
+		// Get today's date
+		var today = new Date();
+	
+		// Calculate initial age based on year difference
+		var age = today.getFullYear() - birthDate.getFullYear();
+	
+		// Adjust age if today's date is before the birthdate in the current year
+		if (today.getMonth() < birthDate.getMonth() - 1 || 
+		   (today.getMonth() === birthDate.getMonth() - 1 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+
+		$("#answer"+ questionID + "Age").attr("value", age);
+		console.log(age);
+	}
+
 	if(questionCode.indexOf("I99") != -1) {
 		// if(localStorage.getItem("idsm/order_counter")) {
 		// 	order_counter = localStorage.getItem("idsm/order_counter");
