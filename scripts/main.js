@@ -258,7 +258,7 @@ $( document ).ready(function() {
 		let code = localStorage.getItem("idsm/code");
 		let input = $("#skip-box-input-code").val();
 		let reason = $("#skip-box-reason").val();
-		let code_check = (input == code || input == 'idsm2024') ? true : false;
+		let code_check = (input == code || input == '0000') ? true : false;
 		let reason_check = (reason != "") ? true : false;
 		if(code_check && reason_check) {
 			localStorage.setItem("idsm/skip", "true");
@@ -281,7 +281,7 @@ $( document ).ready(function() {
 		let code = localStorage.getItem("idsm/code");
 		let input = $("#skip-box-input-code").val();
 		let reason = $("#skip-box-reason").val();
-		let code_check = (input == code || input == 'idsm2024') ? true : false;
+		let code_check = (input == code || input == '0000') ? true : false;
 		let reason_check = (reason != "") ? true : false;
 		if(code_check && reason_check) {
 			window.location.replace(test_order[test_order.length - 1]);
