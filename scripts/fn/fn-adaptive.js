@@ -591,7 +591,7 @@ function evaluateFNA() {
     }
 
     if (next_item > 41) { // Wir prüfen, ob die nächste Frage größer als 30 ist
-        if (current_item != 41) { // Wir prüfen, ob die aktuelle Frage nicht 30 ist
+        if (current_item != 41 && ! solvedArray.includes(41)) {
             next_item = 41; // Wenn dies der Fall ist, setzen wir die nächste Frage auf 30
             localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
         }
