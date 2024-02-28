@@ -40,9 +40,10 @@ const mt = "https://survey-1.psychologie.unibas.ch/roman/index.php/352793?lang=d
 const vm_eval = "https://survey-1.psychologie.unibas.ch/roman/index.php/925914?lang=de"
 const end_test = "https://survey-1.psychologie.unibas.ch/roman/index.php/856746?lang=de";
 const da = "https://survey-1.psychologie.unibas.ch/roman/index.php/258512?lang=de";
+const rm = "https://survey-1.psychologie.unibas.ch/roman/index.php/946666?lang=de";
 
-const test_order = [da, ppvt, ish, rg, fn, sf, fw, me, aa, tfz, vm, mt, vm_eval, end_test];
-const test_test_order = [["da", da], ["ppvt", ppvt], ["ish", ish], ["rg", rg], ["fn", fn], ["sf", sf], ["fw", fw], ["me", me], ["aa", aa], ["tfz", tfz], ["vm", vm], ["mt", mt], ["vm_Eval", vm_eval], ["end_test", end_test]];
+const test_order = [da, ppvt, ish, rg, fn, sf, fw, me, aa, tfz, vm, mt, vm_eval, rm, end_test];
+const test_test_order = [["da", da], ["ppvt", ppvt], ["ish", ish], ["rg", rg], ["fn", fn], ["sf", sf], ["fw", fw], ["me", me], ["aa", aa], ["tfz", tfz], ["vm", vm], ["mt", mt], ["vm_Eval", vm_eval], ["end_test", end_test], ["rm", rm]];
 let order_counter = localStorage.getItem("idsm/order_counter");
 
 $( document ).ready(function() {
@@ -93,7 +94,7 @@ $( document ).ready(function() {
 				startVM();
 			}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
 				startVMA();
-			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
+			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
 				startME();
 			}else if(questionCode.indexOf("AA") != -1) {
 				startAA();
@@ -145,7 +146,7 @@ $( document ).ready(function() {
 			feedbackVM();
 		}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
 			feedbackVMA();
-		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
+		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
 			feedbackME();
 		}else if(questionCode.indexOf("AA") != -1) {
 			feedbackAA();
@@ -352,6 +353,7 @@ function setup() {
 		localStorage.setItem("idsm/ish", "false");
 		localStorage.setItem("idsm/mt", "false");
 		localStorage.setItem("idsm/da", "false")
+		localStorage.setItem("idsm/rm", "false");
 	}
 
 	if(questionCode.indexOf("I98") != -1) {
@@ -452,7 +454,7 @@ function initialize() {
 		unLock();
 		$("#proceed-button").css("display", "block");
 	}else {
-		if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
+		if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
 			initME();
 		}else if(questionCode.indexOf("PPVT") != -1) {
 			initPPVT();
@@ -500,7 +502,8 @@ function initMenu() {
 	let ish_menu = localStorage.getItem("idsm/ish");
 	let mt_menu = localStorage.getItem("idsm/mt");
 	let da_menu = localStorage.getItem("idsm/da");
-	let test_battery = [["aa", aa_menu], ["fn", fn_menu], ["fw", fw_menu], ["me", me_menu], ["rg", rg_menu], ["sf", sf_menu], ["tfz", tfz_menu], ["vm", vm_menu], ["vm_Eval", vm_Eval_menu],["ppvt", ppvt_menu], ["ish", ish_menu], ["mt", mt_menu], ["da", da_menu]];
+	let rm_menu = localStorage.getItem("idsm/rm");
+	let test_battery = [["aa", aa_menu], ["fn", fn_menu], ["fw", fw_menu], ["me", me_menu], ["rg", rg_menu], ["sf", sf_menu], ["tfz", tfz_menu], ["vm", vm_menu], ["vm_Eval", vm_Eval_menu],["ppvt", ppvt_menu], ["ish", ish_menu], ["mt", mt_menu], ["da", da_menu], ["rm", rm_menu]];
 
 	test_battery.forEach(function (test, index) {
 		let ppvt_test = getByIndex(test_battery, "ppvt");
@@ -595,7 +598,7 @@ function getByIndex(d_array, str) {
 }
 
 function pasteAnswers() {
-	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
 		evaluateME();
 	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 		evaluateVM();
@@ -640,7 +643,7 @@ function feedback() {
 }
 
 function next() {
-	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
 		nextME();
 	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 		nextVM();
@@ -673,7 +676,7 @@ function checkOrientation() {
 		horizontalAlert();
 	}else if(questionCode.indexOf("I99") != -1) {
 		horizontalAlert();
-	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("MEA") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("FWA") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) && questionCode.indexOf("FAA") == -1) {
+	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("AA") != -1 || questionCode.indexOf("ME") != -1 || questionCode.indexOf("MEA") != -1 || questionCode.indexOf("TFZ") != -1 || questionCode.indexOf("FW") != -1 || questionCode.indexOf("FWA") != -1 || questionCode.indexOf("PPVT") != -1 || questionCode.indexOf("ISH") != -1) && questionCode.indexOf("FAA") == -1 || questionCode.indexOf("RM") != -1) {
 		horizontalAlert();
 	}else if(questionCode.indexOf("FA") != -1 || questionCode.indexOf("FN") != -1 || questionCode.indexOf("RG") != -1) {
 		verticalAlert();
@@ -861,6 +864,12 @@ function showSkip() {
 		unfinished_tests.push("Demographische Angaben");
 		unfinished = true;
 	}
+
+	if (localStorage.getItem("idsm/rm") == "false") {
+		unfinished_tests.push("Raven Matrizen");
+		unfinished = true;
+	}
+
 	if (unfinished && getTestCode() === undefined) {
 		document.getElementById("unfinished-tests").innerText = "Sie haben folgende Tests noch nicht bearbeitet: \n" + unfinished_tests.join(", ");
 	}
@@ -913,6 +922,8 @@ function getTestCode() {
 		return "fw";
 	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		return "me";
+	}else if (questionCode.indexOf("RM") != -1) {
+		return "rm";
 	}else if(questionCode.indexOf("RG") != -1) {
 		return "rg";
 	}else if(questionCode.indexOf("SF") != -1) {
@@ -945,6 +956,8 @@ function getTestCodeFormal() {
 		return "Figuren wiedererkennen";
 	}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		return "Matrizen ergänzen";
+	}else if (questionCode.indexOf("RM") != -1) {
+		return "Raven Matrizen";
 	}else if(questionCode.indexOf("RG") != -1) {
 		return "Reaktiongeschwindigkeit";
 	}else if(questionCode.indexOf("SF") != -1) {
