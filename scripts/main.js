@@ -94,8 +94,10 @@ $( document ).ready(function() {
 				startVM();
 			}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
 				startVMA();
-			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
+			}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 				startME();
+			}else if (questionCode.indexOf("RM") != -1) {
+				startRM();
 			}else if(questionCode.indexOf("AA") != -1) {
 				startAA();
 			}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
@@ -146,8 +148,10 @@ $( document ).ready(function() {
 			feedbackVM();
 		}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
 			feedbackVMA();
-		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
+		}else if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 			feedbackME();
+		}else if (questionCode.indexOf("RM") != -1) {
+			feedbackRM();
 		}else if(questionCode.indexOf("AA") != -1) {
 			feedbackAA();
 		}else if(questionCode.indexOf("FN") != -1 && questionCode.indexOf("FNA") == -1) {
@@ -454,8 +458,10 @@ function initialize() {
 		unLock();
 		$("#proceed-button").css("display", "block");
 	}else {
-		if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
+		if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 			initME();
+		}else if (questionCode.indexOf("RM") != -1) {
+			initRM();
 		}else if(questionCode.indexOf("PPVT") != -1) {
 			initPPVT();
 		}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
@@ -598,8 +604,10 @@ function getByIndex(d_array, str) {
 }
 
 function pasteAnswers() {
-	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		evaluateME();
+	}else if (questionCode.indexOf("RM") != -1) {
+		evaluateRM();
 	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 		evaluateVM();
 	}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
@@ -643,8 +651,10 @@ function feedback() {
 }
 
 function next() {
-	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1 || questionCode.indexOf("RM") != -1) {
+	if(questionCode.indexOf("ME") != -1 && questionCode.indexOf("MEA") == -1) {
 		nextME();
+	}else if (questionCode.indexOf("RM") != -1) {
+		nextRM();
 	}else if((questionCode.indexOf("EZLE") != -1 || questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) && (questionCode.indexOf("EZLEA") == -1 && questionCode.indexOf("FSA") == -1 && questionCode.indexOf("FAA") == -1)) {
 		nextVM();
 	}else if(questionCode.indexOf("EZLEA") != -1 || questionCode.indexOf("FSA") != -1 || questionCode.indexOf("FAA") != -1) {
