@@ -147,10 +147,10 @@ function evaluateFW() {
 	$("#answer"+ questionID +"Correct").attr("value", correct_figures);
 	$("#answer"+ questionID +"Wrong").attr("value", wrong_figures);
 
-	if((correct_figures - wrong_figures) < 0) {
-		$("#answer"+ questionID +"Total").attr("value", 0);
+	if((correct_figures - wrong_figures - false_left_out) < 0) {
+		$("#answer"+ questionID +"Answer").attr("value", 0);
 	}else {
-		$("#answer"+ questionID +"Total").attr("value", correct_figures - wrong_figures);
+		$("#answer"+ questionID +"Answer").attr("value", correct_figures - wrong_figures - false_left_out);
 	}
 
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
