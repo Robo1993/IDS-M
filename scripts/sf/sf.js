@@ -83,7 +83,7 @@ function evaluateSF() {
 	$("#answer"+ questionID +"SymbolsCorrect").attr("value", correct_crossed);
 	$("#answer"+ questionID +"SymbolsWrong").attr("value", false_crossed);
 	$("#answer"+ questionID +"SymbolsMissed").attr("value", false_left_out);
-	$("#answer"+ questionID +"Total").attr("value", correct_crossed - false_crossed);
+	$("#answer"+ questionID +"Total").attr("value", correct_crossed - false_crossed - false_left_out);
 	$("#answer"+ questionID +"Time").attr("value", time_total);
 		
 	if(correct_crossed >= (false_left_out + false_crossed)) {

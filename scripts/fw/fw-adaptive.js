@@ -218,10 +218,10 @@ function evaluateFWA() {
 
 	//at the moment we use the logic tree as follows: when total points are > 0, we will jump to the next row that is in row_when_correct. We need to define a better solution for this.
 	//Maybe we could define a threshhold for what counts as correct and put it in fw-tree.csv
-	if((correct_figures - wrong_figures) < 0) {
-		$("#answer"+ questionID +"Total").attr("value", 0);
+	if((correct_figures - wrong_figures - false_left_out) < 0) {
+		$("#answer"+ questionID +"Answer").attr("value", 0);
 	}else {
-		$("#answer"+ questionID +"Total").attr("value", correct_figures - wrong_figures);
+		$("#answer"+ questionID +"Answer").attr("value", correct_figures - wrong_figures - false_left_out);
 	}
 
 	$("#answer"+ questionID +"NextRow").attr("value", row.next_row);
