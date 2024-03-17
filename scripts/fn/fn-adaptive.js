@@ -217,6 +217,7 @@ function initFNA() {
 }
 
 
+
 function startFNA() {
 	initFnAdaptiveData();
 	if(questionCode.indexOf("UBD") != -1 || questionCode.indexOf("UBV") != -1 || questionCode.indexOf("RD") != -1 || questionCode.indexOf("RV") != -1) {
@@ -235,6 +236,7 @@ function TimeRestrictionsFNA() {
 	let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
     let itemObject = test_items[current_item];
     var time = itemObject.time;
+	var item_name = itemObject.name;
 	$(":root").css("--duration", time +"ms");
 	setTimeout(function() {
 		if(!locked) {
