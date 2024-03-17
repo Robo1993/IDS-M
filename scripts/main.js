@@ -125,7 +125,7 @@ $( document ).ready(function() {
 
 	});
 
-	$("#tp-response-button").on("click", function() {
+	$("#tp-response-button").on("touchstart", function() {
 		if (questionCode.indexOf("testAdaptive") != -1) { 
 			evaluateTest();
 		}

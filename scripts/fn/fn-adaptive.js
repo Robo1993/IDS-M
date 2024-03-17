@@ -167,7 +167,6 @@ function initFNA() {
         var current_item = parseInt(localStorage.getItem('fn-adaptive/nextItem'));
         localStorage.setItem('fn-adaptive/currentItem', current_item);
     }
-    console.log("current_item: " + current_item);
 
 	function loadLogicTree() {
 		readItemsCSV(url_items)
@@ -187,17 +186,19 @@ function initFNA() {
             for (let i = 1; i < lines.length; i++) {
                 const values = lines[i].split(",").map(value => value.trim());
                 const itemNumber = parseInt(values[0]);
-                const time = parseInt(values[1]);
-                const target_img = values[2];
-                const triangle_yellow = values[3];
-                const triangle_yellow_mirrored = values[4];
-                const box_yellow = values[5];
-                const triangle_green = values[6];
-                const quarter_green = values[7];
-                const triangle_red = values[8];
-                const box_red = values[9];
-				const name = values[10];
+				const itemID = parseInt(values[1])
+                const time = parseInt(values[2]);
+                const target_img = values[3];
+                const triangle_yellow = values[4];
+                const triangle_yellow_mirrored = values[5];
+                const box_yellow = values[6];
+                const triangle_green = values[7];
+                const quarter_green = values[8];
+                const triangle_red = values[9];
+                const box_red = values[10];
+				const name = values[11];
                 itemDict[itemNumber] = {
+					itemID,
                     time,
                     target_img,
                     triangle_yellow,
@@ -214,7 +215,6 @@ function initFNA() {
         });
     }
 }
-
 
 
 function startFNA() {
@@ -373,6 +373,7 @@ function loadEntitiesA(questionNumber) {
 
 		const itemNumber = parseInt(questionNumber);
 		var itemObject = test_items[itemNumber];
+		var itemID = itemObject.itemID;
 		var target_img = itemObject.target_img;
 		var triangle_yellow = itemObject.triangle_yellow;
 		var triangle_yellow_mirrored = itemObject.triangle_yellow_mirrored;
@@ -382,6 +383,9 @@ function loadEntitiesA(questionNumber) {
 		var triangle_red = itemObject.triangle_red;
 		var box_red = itemObject.box_red;
 		var name = itemObject.name;
+
+		console.log("item rank: " + itemNumber);
+		console.log("Item name: " + name);
 		
 		let thumbnails = [["triangle_yellow", triangle_yellow], ["triangle_yellow_mirrored", triangle_yellow_mirrored], ["box_yellow", box_yellow], ["triangle_green", triangle_green], ["quarter_green", quarter_green], ["triangle_red", triangle_red], ["box_red", box_red]];
 		let total_entities = triangle_yellow + triangle_yellow_mirrored + box_yellow + triangle_green + triangle_green + quarter_green + triangle_red + box_red;
@@ -392,11 +396,13 @@ function loadEntitiesA(questionNumber) {
 		let srcS = src.join("/");
 		localStorage.setItem('fn-adaptive/source', srcS);
 
-		$(".fnImg").attr("src", srcS + "/fn"+ itemNumber + "/" + target_img);
+		$(".fnImg").attr("src", srcS + "/fn"+ itemID + "/" + target_img);
 
 		for (var i = thumbnails.length - 1; i >= 0; i--) {
 			let name = thumbnails[i][0];
 			let amount = thumbnails[i][1];
+
+
 			//let position = V(500, 500);
 			while(amount > 0) {
 				let position = getEntityPosition(total_entities, entities_left);
@@ -466,7 +472,6 @@ function evaluateFNA() {
 	let time = end - start;
 	let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
     let itemObject = test_items[current_item];
-	console.log("name: " + itemObject.name);
 	let current_name = itemObject.name;
 	if (itemObject.name == "R10") {
 		let eval_points = getElementByName("R10_1");
@@ -500,16 +505,9 @@ function evaluateFNA() {
 	}
 		console.log(correct);
 
-	if (!localStorage.getItem('fn-adaptive/accumulatedWrong')) {
-        localStorage.setItem('fn-adaptive/accumulatedWrong', 0);
-    }
-
 	if (!localStorage.getItem('fn-adaptive/solvedArray') || !Array.isArray(JSON.parse(localStorage.getItem('fn-adaptive/solvedArray')))) {
         var initialArray = [];
         localStorage.setItem('fn-adaptive/solvedArray', JSON.stringify(initialArray));
-    }
-    if (!localStorage.getItem('fn-adaptive/accumulatedWrong')) {
-        localStorage.setItem('fn-adaptive/accumulatedWrong', 0);
     }
     var solvedArrayString = localStorage.getItem('fn-adaptive/solvedArray');
 
@@ -553,14 +551,33 @@ function evaluateFNA() {
         localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
     }
 	if(correct) {
+		if (!localStorage.getItem('fn-adaptive/lastFiveArray')) {
+			var lastFiveArray = [1,1,1,1,1];
+		} else {
+			var lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
+		}
+
+		lastFiveArray.push(1);
+		if (lastFiveArray.length > 5) {
+			lastFiveArray.shift();
+		}
+		console.log(lastFiveArray);
+		localStorage.setItem('fn-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
 		answered_correctly = true;
-        localStorage.setItem('fn-adaptive/accumulatedWrong', 0);
 	}else {
+		if (!localStorage.getItem('fn-adaptive/lastFiveArray')) {
+			var lastFiveArray = [1,1,1,1,1];
+		} else {
+			var lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
+		}
+
+		lastFiveArray.push(0);
+		if (lastFiveArray.length > 5) {
+			lastFiveArray.shift();
+		}
+		console.log(lastFiveArray);
+		localStorage.setItem('fn-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
 		answered_correctly = false;
-        //set accumulated wrong to 1 + its current value
-        var accumulatedWrong = parseInt(localStorage.getItem('fn-adaptive/accumulatedWrong'));
-        accumulatedWrong++;
-        localStorage.setItem('fn-adaptive/accumulatedWrong', accumulatedWrong);
     }
 	$("#answer"+ questionID +"NextRow").attr("value", 0);
 	$("#answer"+ questionID +"Abort").attr("value", 0);
@@ -569,7 +586,9 @@ function evaluateFNA() {
 	$("#answer"+ questionID +"Time").attr("value", time);
 	$("#answer"+ questionID +"Moves").attr("value", moves);
 	$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
-	$("#answer"+ questionID +"ID").attr("value", current_item);
+	$("#answer"+ questionID +"ID").attr("value", itemObject.itemID);
+	$("#answer"+ questionID +"Rank").attr("value", current_item);
+	$("#answer"+ questionID +"Name").attr("value", itemObject.name);
 	// if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 	// 	$("#feedback-button").css("display", "block");
 	// }else {
@@ -581,11 +600,21 @@ function evaluateFNA() {
 	else {
 		$("#proceed-button").click();
 	}
+
+	let accumulatedWrong = 0;
+	//if lastfivearray has more than 3 0s, set abort to 1
+	lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
+	for (var j = 0; j < lastFiveArray.length; j++) {
+		if (lastFiveArray[j] == 0) {
+			accumulatedWrong++;
+		}
+	}
+
 	if (accumulatedWrong >= 3) {
         $("#answer"+ questionID +"Abort").attr("value", 1);
         //clear next item and solvedarray
         localStorage.removeItem('fn-adaptive/solvedArray');
-        localStorage.removeItem('fn-adaptive/accumulatedWrong');
+        localStorage.removeItem('fn-adaptive/lastFiveArray');
         localStorage.setItem("fn-adaptive/louScreen1", 1);
 		localStorage.setItem("idsm/fn", "true");    
     }
@@ -598,8 +627,8 @@ function evaluateFNA() {
         else {
             //clear next item and solvedarray
 			localStorage.removeItem('fn-adaptive/solvedArray');
-			localStorage.removeItem('fn-adaptive/accumulatedWrong');
             localStorage.setItem("fn-adaptive/louScreen1", 1);
+			localStorage.removeItem('fn-adaptive/lastFiveArray');
 			localStorage.setItem("idsm/fn", "true");
         }
     }
