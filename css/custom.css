@@ -434,6 +434,10 @@ Layout for the Sketch Book
         margin-top: 0rem;
         width: 90vw;
     }
+
+    #horse-button {
+        margin-bottom: -10vh;
+    }
     
 }
 
@@ -1123,6 +1127,7 @@ TFZ content
         width: 25vh;
         margin-left: 1vh;
     }
+    
 }
 
 /*

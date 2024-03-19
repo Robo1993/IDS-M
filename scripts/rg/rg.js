@@ -4,6 +4,24 @@ const demo_delay = [1268, 547, 2422, 3281, 4970, 1436, 2338, 700, 2004, 2751];
 const pseudo_delay = [0];
 const x_values = [669, 387, 866, 267, 834, 747, 582, 666, 806, 811, 92, 847, 484, 380, 457, 228, 682, 871, 294];
 const y_values = [295, 1138, 616, 1033, 215, 981, 1119, 781, 685, 1009, 1147, 282, 838, 1042, 583, 183, 576, 420, 571];
+
+let height = window.screen.height
+let width = window.screen.width
+
+let standard_height = 1366
+let standard_width = 1024
+
+let ratio_height = height/standard_height
+let ratio_width = width/standard_width
+
+for(var i=0; i<y_values.length; i++) {
+    y_values[i] *= ratio_height;
+}
+
+for(var i=0; i<x_values.length; i++) {
+    x_values[i] *= ratio_width;
+}
+
 let delay;
 let item = 0;
 let counter;
