@@ -366,6 +366,12 @@ function setup() {
 
 	if (questionCode.indexOf("StartI97") != -1) {
 
+		let width = window.screen.width;
+		let height = window.screen.height;
+
+		$("#answer"+ questionID + "ScreenHeight").attr("value", height);
+		$("#answer"+ questionID + "ScreenWidth").attr("value", width);
+
 		let birthdate = localStorage.getItem("idsm/birthdate");
 
 		var parts = birthdate.split('.');

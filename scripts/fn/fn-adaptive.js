@@ -30,6 +30,7 @@ var src;
 var srcS;
 var itemObject;
 
+
 // Default entity options that will just highlight entities when they overlap
 var defaultEntityOptions = {
 	solid: true,
@@ -106,18 +107,22 @@ var lineOptions = {
 	}
 };
 
-test_url_adaptive = "https://raw.githubusercontent.com/adgohar/IDS-M-adaptive/main/";
+test_url_adaptive = "https://raw.githubusercontent.com/adgohar/IDS-M-adaptive/test/";
 test_items = [];
+var itemsWithCategoryOne = [];
+var itemsWithCategoryTwo = [];
+var itemsWithCategoryThree = [];
 
 
 function initFNA() {
 	if(!(questionCode.indexOf("FND") != -1 || questionCode.indexOf("FNV") != -1)) {
 		$("#clock").css("display", "block");
 	}
+
 	url_items = test_url_adaptive + "fn.csv";
+	url_demo = test_url_adaptive + "fn-demo.csv";
 	initializeFNCore();
 	setupCanvasA();
-	loadLogicTree();
 	$("#canvas-container").on("click", function(e) {
 		var rect = canvass.canvas.getBoundingClientRect();
 		var cursorX = e.clientX - rect.left;
@@ -156,64 +161,179 @@ function initFNA() {
 
 	$("#page-load-screen").css("display", "none");
 
-    if (!localStorage.getItem('fn-adaptive/nextItem')) {
-        var random_item = Math.floor(Math.random() * 3) + 1;
-        var next_item = random_item;
-        var current_item = random_item;
-        localStorage.setItem('fn-adaptive/currentItem', current_item);
-    }
-    else {
-        var next_item = parseInt(localStorage.getItem('fn-adaptive/nextItem'));
-        var current_item = parseInt(localStorage.getItem('fn-adaptive/nextItem'));
-        localStorage.setItem('fn-adaptive/currentItem', current_item);
-    }
+	if (questionCode.indexOf("AD") == -1) {
 
-	function loadLogicTree() {
-		readItemsCSV(url_items)
-        .then(itemDict => {
-			test_items = itemDict;
-            loadEntitiesA(current_item);
-	    })
-    }
+		if (!localStorage.getItem('fn-adaptive/nextItem')) {
+			var random_item = Math.floor(Math.random() * 3) + 1;
+			var next_item = random_item;
+			var current_item = random_item;
+			localStorage.setItem('fn-adaptive/currentItem', current_item);
+		}
+		else {
+			var next_item = parseInt(localStorage.getItem('fn-adaptive/nextItem'));
+			var current_item = parseInt(localStorage.getItem('fn-adaptive/nextItem'));
+			localStorage.setItem('fn-adaptive/currentItem', current_item);
+		}
 
-	function readItemsCSV(csv) {
-        return fetch(csv)
-        .then(response => response.text())
-        .then(csvText => {
-            const lines = csvText.split("\n");
-            const headers = lines[0].split(",").map(header => header.trim());
-            const itemDict = {};
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(",").map(value => value.trim());
-                const itemNumber = parseInt(values[0]);
-				const itemID = parseInt(values[1])
-                const time = parseInt(values[2]);
-                const target_img = values[3];
-                const triangle_yellow = values[4];
-                const triangle_yellow_mirrored = values[5];
-                const box_yellow = values[6];
-                const triangle_green = values[7];
-                const quarter_green = values[8];
-                const triangle_red = values[9];
-                const box_red = values[10];
-				const name = values[11];
-                itemDict[itemNumber] = {
-					itemID,
-                    time,
-                    target_img,
-                    triangle_yellow,
-                    triangle_yellow_mirrored,
-                    box_yellow,
-                    triangle_green,
-                    quarter_green,
-                    triangle_red,
-                    box_red,
-					name
-                };
-            }
-            return itemDict;
-        });
-    }
+		function loadLogicTree() {
+			readItemsCSV(url_items)
+			.then(itemDict => {
+				test_items = itemDict;
+				loadEntitiesA(current_item);
+			})
+		}
+
+		function readItemsCSV(csv) {
+			return fetch(csv)
+			.then(response => response.text())
+			.then(csvText => {
+				const lines = csvText.split("\n");
+				const headers = lines[0].split(",").map(header => header.trim());
+				const itemDict = {};
+				for (let i = 1; i < lines.length; i++) {
+					const values = lines[i].split(",").map(value => value.trim());
+					const itemNumber = parseInt(values[0]);
+					const itemID = parseInt(values[1])
+					const time = parseInt(values[2]);
+					const target_img = values[3];
+					const triangle_yellow = values[4];
+					const triangle_yellow_mirrored = values[5];
+					const box_yellow = values[6];
+					const triangle_green = values[7];
+					const quarter_green = values[8];
+					const triangle_red = values[9];
+					const box_red = values[10];
+					const name = values[11];
+					itemDict[itemNumber] = {
+						itemID,
+						time,
+						target_img,
+						triangle_yellow,
+						triangle_yellow_mirrored,
+						box_yellow,
+						triangle_green,
+						quarter_green,
+						triangle_red,
+						box_red,
+						name
+					};
+				}
+				return itemDict;
+			});
+		}
+	} else {
+		if (questionCode.indexOf("AD01") != -1) {
+			var demo_difficulty = 1;
+		} else if (questionCode.indexOf("AD02") != -1) {
+			var demo_difficulty = 2;
+		} else if (questionCode.indexOf("AD03") != -1) {
+			var demo_difficulty = 3;
+		}
+
+		function loadLogicTree() {
+			readItemsCSVDemo(url_demo)
+			.then(itemDict => {
+				test_items = itemDict;
+				loadEntitiesADemo(demo_difficulty);
+			})
+		}
+
+		function readItemsCSVDemo(csv) {
+			return fetch(csv)
+			.then(response => response.text())
+			.then(csvText => {
+				const lines = csvText.split("\n");
+				const headers = lines[0].split(",").map(header => header.trim());
+				for (let i = 1; i < lines.length; i++) {
+					const values = lines[i].split(",").map(value => value.trim());
+					const category = values[12]; // Assuming category is the last column
+					if (category == 1) {
+						const itemNumber = parseInt(values[0]);
+						const itemID = parseInt(values[1])
+						const time = parseInt(values[2]);
+						const target_img = values[3];
+						const triangle_yellow = values[4];
+						const triangle_yellow_mirrored = values[5];
+						const box_yellow = values[6];
+						const triangle_green = values[7];
+						const quarter_green = values[8];
+						const triangle_red = values[9];
+						const box_red = values[10];
+						const name = values[11];
+						itemsWithCategoryOne.push({
+							itemID,
+							time,
+							target_img,
+							triangle_yellow,
+							triangle_yellow_mirrored,
+							box_yellow,
+							triangle_green,
+							quarter_green,
+							triangle_red,
+							box_red,
+							name,
+							category
+						});
+					} else if (category == 2) {
+						const itemNumber = parseInt(values[0]);
+						const itemID = parseInt(values[1])
+						const time = parseInt(values[2]);
+						const target_img = values[3];
+						const triangle_yellow = values[4];
+						const triangle_yellow_mirrored = values[5];
+						const box_yellow = values[6];
+						const triangle_green = values[7];
+						const quarter_green = values[8];
+						const triangle_red = values[9];
+						const box_red = values[10];
+						const name = values[11];
+						itemsWithCategoryTwo.push({
+							itemID,
+							time,
+							target_img,
+							triangle_yellow,
+							triangle_yellow_mirrored,
+							box_yellow,
+							triangle_green,
+							quarter_green,
+							triangle_red,
+							box_red,
+							name,
+							category
+						});
+					} else if (category == 3) {
+						const itemNumber = parseInt(values[0]);
+						const itemID = parseInt(values[1])
+						const time = parseInt(values[2]);
+						const target_img = values[3];
+						const triangle_yellow = values[4];
+						const triangle_yellow_mirrored = values[5];
+						const box_yellow = values[6];
+						const triangle_green = values[7];
+						const quarter_green = values[8];
+						const triangle_red = values[9];
+						const box_red = values[10];
+						const name = values[11];
+						itemsWithCategoryThree.push({
+							itemID,
+							time,
+							target_img,
+							triangle_yellow,
+							triangle_yellow_mirrored,
+							box_yellow,
+							triangle_green,
+							quarter_green,
+							triangle_red,
+							box_red,
+							name,
+							category
+						});
+					}
+				}
+			});
+		}
+		loadLogicTree();
+	}
 }
 
 
@@ -233,22 +353,185 @@ function startFNA() {
 }
 
 function TimeRestrictionsFNA() {
-	let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
-    let itemObject = test_items[current_item];
-    var time = itemObject.time;
-	var item_name = itemObject.name;
-	$(":root").css("--duration", time +"ms");
-	setTimeout(function() {
-		if(!locked) {
-			end = performance.now();
-			abort();
+	if (questionCode.indexOf("AD") == -1) {
+
+		let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
+		let itemObject = test_items[current_item];
+		var time = itemObject.time;
+		var item_name = itemObject.name;
+		$(":root").css("--duration", time +"ms");
+		setTimeout(function() {
+			if(!locked) {
+				end = performance.now();
+				abort();
+			}
+		}, time);
+	} else {
+		if (questionCode.indexOf("AD01") != -1) {
+			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem1'));
+			let itemObject = itemsWithCategoryOne[current_item];
+			var time = itemObject.time;
+			var item_name = itemObject.name;
+		} else if (questionCode.indexOf("AD02") != -1) {
+			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem2'));
+			let itemObject = itemsWithCategoryTwo[current_item];
+			var time = itemObject.time;
+			var item_name = itemObject.name;
+		} else if (questionCode.indexOf("AD03") != -1) {
+			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem3'));
+			let itemObject = itemsWithCategoryThree[current_item];
+			var time = itemObject.time;
+			var item_name = itemObject.name;
 		}
-	}, time);
+		$(":root").css("--duration", time +"ms");
+		setTimeout(function() {
+			if(!locked) {
+				end = performance.now();
+				abort();
+			}
+		}, time);
+	}
 }
 
 function feedbackFNA() {
 	feedback();
 }
+
+function loadEntitiesADemo(difficulty) {
+	//Übungsblock 1
+	var triangle_red_proto = [V(0, -103.92), V(-90, 51.96), V(90, 51.96)];
+	var box_red_proto = [V(-90, -90), V(90, -90), V(90, 90), V(-90, 90)];
+
+	//Übungsblock 2
+	// var para_proto_mirrored_blue = [V(-243.63, -63.63), V(116.37, -63.63), V(243.63, 63.63), V(-116.37, 63.63)];
+	// var para_proto_blue = [V(-116.37, -63.63), V(243.63, -63.63), V(116.37, 63.63), V(-243.63, 63.63)];
+	var para_proto_blue = [V(-26.36, -63.63), V(153.64, -63.63), V(26.36, 63.63), V(-153.64, 63.63)];
+	var para_proto_mirrored_blue = [V(-153.64, -63.63), V(26.36, -63.63), V(153.64, 63.63), V(-26.36, 63.63)];
+
+	//Übungsblock 3
+	var triangle_green_proto = [V(0, -63.64), V(127.28, 63.64), V(-127.28, 63.64)];
+
+	//Testungsblock
+	var triangle_yellow_proto = [V(-90, 51.95), V(-90, -51.95), V(90, 51.95)];
+	var triangle_yellow_proto_mirrored = [V(-90, 51.95), V(90, -51.95), V(90, 51.95)];
+	var box_yellow_proto = [V(-90,-51.95), V(90,-51.95), V(90,51.95), V(-90,51.95)];
+	if (difficulty == 1) {
+		if (itemsWithCategoryOne.length > 0) {
+			if (!localStorage.getItem('fn-adaptive/demoItem1')) {
+				var randomIndex = Math.floor(Math.random() * itemsWithCategoryOne.length);
+				localStorage.setItem('fn-adaptive/demoItem1', randomIndex);
+			}
+			else {
+				var randomIndex = parseInt(localStorage.getItem('fn-adaptive/demoItem1'));
+			}
+			const itemObject = itemsWithCategoryOne[randomIndex];
+			var itemID = itemObject.itemID;
+			var target_img = itemObject.target_img;
+			var triangle_yellow = itemObject.triangle_yellow;
+			var triangle_yellow_mirrored = itemObject.triangle_yellow_mirrored;
+			var box_yellow = itemObject.box_yellow;
+			var triangle_green = itemObject.triangle_green;
+			var quarter_green = itemObject.quarter_green;
+			var triangle_red = itemObject.triangle_red;
+			var box_red = itemObject.box_red;
+			var name = itemObject.name;
+		}
+	} else if (difficulty == 2) {
+		if (itemsWithCategoryTwo.length > 0) {
+			if (!localStorage.getItem('fn-adaptive/demoItem2')) {
+				var randomIndex = Math.floor(Math.random() * itemsWithCategoryTwo.length);
+				localStorage.setItem('fn-adaptive/demoItem2', randomIndex);
+			}
+			else {
+				var randomIndex = parseInt(localStorage.getItem('fn-adaptive/demoItem2'));
+			}
+			const itemObject = itemsWithCategoryTwo[randomIndex];
+			var itemID = itemObject.itemID;
+			var target_img = itemObject.target_img;
+			var triangle_yellow = itemObject.triangle_yellow;
+			var triangle_yellow_mirrored = itemObject.triangle_yellow_mirrored;
+			var box_yellow = itemObject.box_yellow;
+			var triangle_green = itemObject.triangle_green;
+			var quarter_green = itemObject.quarter_green;
+			var triangle_red = itemObject.triangle_red;
+			var box_red = itemObject.box_red;
+			var name = itemObject.name;
+		}
+	} else if (difficulty == 3) {
+		if (itemsWithCategoryThree.length > 0) {
+			if (!localStorage.getItem('fn-adaptive/demoItem3')) {
+				var randomIndex = Math.floor(Math.random() * itemsWithCategoryThree.length);
+				localStorage.setItem('fn-adaptive/demoItem3', randomIndex);
+			}
+			else {
+				var randomIndex = parseInt(localStorage.getItem('fn-adaptive/demoItem3'));
+			}
+			const itemObject = itemsWithCategoryThree[randomIndex];
+			var itemID = itemObject.itemID;
+			var target_img = itemObject.target_img;
+			var triangle_yellow = itemObject.triangle_yellow;
+			var triangle_yellow_mirrored = itemObject.triangle_yellow_mirrored;
+			var box_yellow = itemObject.box_yellow;
+			var triangle_green = itemObject.triangle_green;
+			var quarter_green = itemObject.quarter_green;
+			var triangle_red = itemObject.triangle_red;
+			var box_red = itemObject.box_red;
+			var name = itemObject.name;
+		}
+	}
+
+	console.log("Item name: " + name);
+	
+	let thumbnails = [["triangle_yellow", triangle_yellow], ["triangle_yellow_mirrored", triangle_yellow_mirrored], ["box_yellow", box_yellow], ["triangle_green", triangle_green], ["quarter_green", quarter_green], ["triangle_red", triangle_red], ["box_red", box_red]];
+	let total_entities = triangle_yellow + triangle_yellow_mirrored + box_yellow + triangle_green + triangle_green + quarter_green + triangle_red + box_red;
+	let entities_left = total_entities;
+	rowCounterA(total_entities);
+	let src = $(".fnImg").attr("src").split("/");
+	src.splice(src.length - 2, 2);
+	let srcS = src.join("/");
+	localStorage.setItem('fn-adaptive/source', srcS);
+
+	$(".fnImg").attr("src", srcS + "/fn"+ itemID + "/" + target_img);
+
+	for (var i = thumbnails.length - 1; i >= 0; i--) {
+		let name = thumbnails[i][0];
+		let amount = thumbnails[i][1];
+
+
+		//let position = V(500, 500);
+		while(amount > 0) {
+			let position = getEntityPosition(total_entities, entities_left);
+			if(name == "triangle_yellow") {
+				var triangle = world.addEntity(P(position, triangle_yellow_proto), IDS2EntityOptions);
+			}else if(name == "triangle_yellow_mirrored") {
+				var triangle = world.addEntity(P(position, triangle_yellow_proto_mirrored), IDS2EntityOptions);
+			}else if(name == "box_yellow") {
+				var box = world.addEntity(P(position, box_yellow_proto), IDS2EntityOptions);
+			}else if(name == "triangle_green") {
+				var triangle = world.addEntity(P(position, triangle_green_proto), block3EntityOptions);
+			}else if(name == "circle_green") {
+				var circle = world.addEntity(C(position, 90), block3EntityOptions);
+			}else if(name == "quarter_green") {
+				var quarter = world.addEntity(Q(position, 90), block3EntityOptions);
+			}else if(name == "halfcircle_blue") {
+				var halfcircle = world.addEntity(H(position, 90), block2EntityOptions);
+			}else if(name == "para_blue") {
+				var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
+			}else if(name == "para_blue_mirrored") {
+				var poly = world.addEntity(P(position, para_proto_blue), block2EntityOptions);
+			}else if(name == "triangle_red") {
+				var triangle = world.addEntity(P(position, triangle_red_proto), block1EntityOptions);
+			}else if(name == "box_red") {
+				var box = world.addEntity(P(position, box_red_proto), block1EntityOptions);
+			}
+			amount--;
+			entities_left--;
+		}
+	}
+	$("#play-button").click();
+
+}
+
 
 function loadEntitiesA(questionNumber) {
 	if (localStorage.getItem('fn-adaptive/louScreen1')) {
@@ -469,171 +752,236 @@ function abort() {
 }
 
 function evaluateFNA() {
-	end = performance.now();
-	evaluation_undergoing = true;
-	let time = end - start;
-	let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
-    let itemObject = test_items[current_item];
-	let current_name = itemObject.name;
-	if (itemObject.name == "R10") {
-		let eval_points = getElementByName("R10_1");
-		var correct = evaluateCalcPoints(world.entities, eval_points);
-		if (!correct) {
-			eval_points = getElementByName("R10_2");
-			correct = evaluateCalcPoints(world.entities, eval_points);
+	if (questionCode.indexOf("AD") == -1) {
+
+		end = performance.now();
+		evaluation_undergoing = true;
+		let time = end - start;
+		let current_item = parseInt(localStorage.getItem('fn-adaptive/currentItem'));
+		let itemObject = test_items[current_item];
+		let current_name = itemObject.name;
+		if (itemObject.name == "R10") {
+			let eval_points = getElementByName("R10_1");
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+			if (!correct) {
+				eval_points = getElementByName("R10_2");
+				correct = evaluateCalcPoints(world.entities, eval_points);
+			}
 		}
-	}
-	//do the same for R11 and R14
-	else if (itemObject.name == "R11") {
-		let eval_points = getElementByName("R11_1");
-		var correct = evaluateCalcPoints(world.entities, eval_points);
-		if (!correct) {
-			eval_points = getElementByName("R11_2");
-			correct = evaluateCalcPoints(world.entities, eval_points);
+		//do the same for R11 and R14
+		else if (itemObject.name == "R11") {
+			let eval_points = getElementByName("R11_1");
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+			if (!correct) {
+				eval_points = getElementByName("R11_2");
+				correct = evaluateCalcPoints(world.entities, eval_points);
+			}
 		}
-	}
-	else if (itemObject.name == "R14") {
-		let eval_points = getElementByName("R14_1");
-		var correct = evaluateCalcPoints(world.entities, eval_points);
-		if (!correct) {
-			eval_points = getElementByName("R14_2");
-			correct = evaluateCalcPoints(world.entities, eval_points);
+		else if (itemObject.name == "R14") {
+			let eval_points = getElementByName("R14_1");
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+			if (!correct) {
+				eval_points = getElementByName("R14_2");
+				correct = evaluateCalcPoints(world.entities, eval_points);
+			}
 		}
-	}
-	//all existing evaluation point lists are contained in data.js in the same folder
-	else {
-		let eval_points = getElementByName(itemObject.name);
-		var correct = evaluateCalcPoints(world.entities, eval_points);
-	}
+		//all existing evaluation point lists are contained in data.js in the same folder
+		else {
+			let eval_points = getElementByName(itemObject.name);
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+		}
+			console.log(correct);
+
+		if (!localStorage.getItem('fn-adaptive/solvedArray') || !Array.isArray(JSON.parse(localStorage.getItem('fn-adaptive/solvedArray')))) {
+			var initialArray = [];
+			localStorage.setItem('fn-adaptive/solvedArray', JSON.stringify(initialArray));
+		}
+		var solvedArrayString = localStorage.getItem('fn-adaptive/solvedArray');
+
+		var solvedArrayString = localStorage.getItem('fn-adaptive/solvedArray');
+		var solvedArray = solvedArrayString ? JSON.parse(solvedArrayString) : [];
+		solvedArray.push(current_item); // Wir fügen die Frage zur Liste der beantworteten Fragen hinzu
+		var updateSolvedArrayString = JSON.stringify(solvedArray);
+		localStorage.setItem('fn-adaptive/solvedArray', updateSolvedArrayString); // Wir speichern die Liste der beantworteten Fragen
+
+		if (!localStorage.getItem('fn-adaptive/lastCorrect')) { // Wir prüfen, ob die letzte korrekt beantwortete Frage gespeichert ist
+			var last_correct = 0; // Wenn nicht, setzen wir sie auf 0
+		}
+		else { // Wenn ja, holen wir sie uns
+			var last_correct = parseInt(localStorage.getItem('fn-adaptive/lastCorrect'));
+		}
+
+		if (correct) {
+			last_correct = current_item; // Wenn ja, setzen wir die letzte korrekt beantwortete Frage auf die aktuelle Frage
+			localStorage.setItem("fn-adaptive/lastCorrect", last_correct); // Wir speichern die letzte korrekt beantwortete Frage
+			next_item = last_correct + 3; // Wir springen 3 Fragen weiter
+			while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
+				next_item++; // Falls ja, springen wir eine Frage weiter
+			}
+			localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+		}else {
+			next_item = current_item - 2;
+			if (next_item <1) {
+				next_item = 1;
+			}
+
+			// Wir setzen die nächste frage auf die letzte korrekt beantwortete Frage + 1
+			while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
+				next_item--; // Falls ja, springen wir eine Frage weiter
+			}
+			if (next_item <1) {
+				next_item = 1;
+			}
+			while (solvedArray.includes(next_item)) {
+				next_item++;
+			}
+			localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+		}
+		if(correct) {
+			if (!localStorage.getItem('fn-adaptive/lastFiveArray')) {
+				var lastFiveArray = [1,1,1,1,1];
+			} else {
+				var lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
+			}
+
+			lastFiveArray.push(1);
+			if (lastFiveArray.length > 5) {
+				lastFiveArray.shift();
+			}
+			console.log(lastFiveArray);
+			localStorage.setItem('fn-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
+			answered_correctly = true;
+		}else {
+			if (!localStorage.getItem('fn-adaptive/lastFiveArray')) {
+				var lastFiveArray = [1,1,1,1,1];
+			} else {
+				var lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
+			}
+
+			lastFiveArray.push(0);
+			if (lastFiveArray.length > 5) {
+				lastFiveArray.shift();
+			}
+			console.log(lastFiveArray);
+			localStorage.setItem('fn-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
+			answered_correctly = false;
+		}
+		$("#answer"+ questionID +"NextRow").attr("value", 0);
+		$("#answer"+ questionID +"Abort").attr("value", 0);
+		$("#answer"+ questionID +"Shape").attr("value", correct);
+		$("#answer"+ questionID +"Angle").attr("value", angle_of_shape);
+		$("#answer"+ questionID +"Time").attr("value", time);
+		$("#answer"+ questionID +"Moves").attr("value", moves);
+		$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
+		$("#answer"+ questionID +"ID").attr("value", itemObject.itemID);
+		$("#answer"+ questionID +"Rank").attr("value", current_item);
+		$("#answer"+ questionID +"Name").attr("value", itemObject.name);
+		// if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
+		// 	$("#feedback-button").css("display", "block");
+		// }else {
+		// 	$("#proceed-button").css("display", "block");
+		// }
+		if (questionCode.indexOf("FNAD") != -1 || questionCode.indexOf("FNAV") != -1) {
+			feedbackFN();
+		}
+		else {
+			$("#proceed-button").click();
+		}
+
+		let accumulatedWrong = 0;
+		//if lastfivearray has more than 3 0s, set abort to 1
+		lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
+		for (var j = 0; j < lastFiveArray.length; j++) {
+			if (lastFiveArray[j] == 0) {
+				accumulatedWrong++;
+			}
+		}
+
+		if (accumulatedWrong >= 3) {
+			$("#answer"+ questionID +"Abort").attr("value", 1);
+			//clear next item and solvedarray
+			localStorage.removeItem('fn-adaptive/solvedArray');
+			localStorage.removeItem('fn-adaptive/lastFiveArray');
+			localStorage.setItem("fn-adaptive/louScreen1", 1);
+			localStorage.setItem("idsm/fn", "true");    
+		}
+
+		if (next_item > 41) { // Wir prüfen, ob die nächste Frage größer als 30 ist
+			if (current_item != 41 && ! solvedArray.includes(41)) {
+				next_item = 41; // Wenn dies der Fall ist, setzen wir die nächste Frage auf 30
+				localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
+			}
+			else {
+				//clear next item and solvedarray
+				localStorage.removeItem('fn-adaptive/solvedArray');
+				localStorage.setItem("fn-adaptive/louScreen1", 1);
+				localStorage.removeItem('fn-adaptive/lastFiveArray');
+				localStorage.setItem("idsm/fn", "true");
+			}
+		}
+	} else {
+		end = performance.now();
+		evaluation_undergoing = true;
+		let time = end - start;
+		if (questionCode.indexOf("AD01") != -1) {
+			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem1'));
+			itemObject = itemsWithCategoryOne[current_item];
+			let current_name = itemObject.name;
+		} else if (questionCode.indexOf("AD02") != -1) {
+			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem2'));
+			itemObject = itemsWithCategoryTwo[current_item];
+			let current_name = itemObject.name;
+		} else if (questionCode.indexOf("AD03") != -1) {
+			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem3'));
+			itemObject = itemsWithCategoryThree[current_item];
+			let current_name = itemObject.name;
+		}
+		
+		if (itemObject.name == "R10") {
+			let eval_points = getElementByName("R10_1");
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+			if (!correct) {
+				eval_points = getElementByName("R10_2");
+				correct = evaluateCalcPoints(world.entities, eval_points);
+			}
+		}
+		//do the same for R11 and R14
+		else if (itemObject.name == "R11") {
+			let eval_points = getElementByName("R11_1");
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+			if (!correct) {
+				eval_points = getElementByName("R11_2");
+				correct = evaluateCalcPoints(world.entities, eval_points);
+			}
+		}
+		else if (itemObject.name == "R14") {
+			let eval_points = getElementByName("R14_1");
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+			if (!correct) {
+				eval_points = getElementByName("R14_2");
+				correct = evaluateCalcPoints(world.entities, eval_points);
+			}
+		}
+		//all existing evaluation point lists are contained in data.js in the same folder
+		else {
+			let eval_points = getElementByName(itemObject.name);
+			var correct = evaluateCalcPoints(world.entities, eval_points);
+		}
 		console.log(correct);
+		$("#answer"+ questionID +"NextRow").attr("value", 0);
+		$("#answer"+ questionID +"Abort").attr("value", 0);
+		$("#answer"+ questionID +"Shape").attr("value", correct);
+		$("#answer"+ questionID +"Angle").attr("value", angle_of_shape);
+		$("#answer"+ questionID +"Time").attr("value", time);
+		$("#answer"+ questionID +"Moves").attr("value", moves);
+		$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
+		$("#answer"+ questionID +"ID").attr("value", itemObject.itemID);
+		$("#answer"+ questionID +"Rank").attr("value", itemObject.itemNumber);
+		$("#answer"+ questionID +"Name").attr("value", itemObject.name);
 
-	if (!localStorage.getItem('fn-adaptive/solvedArray') || !Array.isArray(JSON.parse(localStorage.getItem('fn-adaptive/solvedArray')))) {
-        var initialArray = [];
-        localStorage.setItem('fn-adaptive/solvedArray', JSON.stringify(initialArray));
-    }
-    var solvedArrayString = localStorage.getItem('fn-adaptive/solvedArray');
-
-    var solvedArrayString = localStorage.getItem('fn-adaptive/solvedArray');
-    var solvedArray = solvedArrayString ? JSON.parse(solvedArrayString) : [];
-    solvedArray.push(current_item); // Wir fügen die Frage zur Liste der beantworteten Fragen hinzu
-    var updateSolvedArrayString = JSON.stringify(solvedArray);
-    localStorage.setItem('fn-adaptive/solvedArray', updateSolvedArrayString); // Wir speichern die Liste der beantworteten Fragen
-
-    if (!localStorage.getItem('fn-adaptive/lastCorrect')) { // Wir prüfen, ob die letzte korrekt beantwortete Frage gespeichert ist
-        var last_correct = 0; // Wenn nicht, setzen wir sie auf 0
-    }
-    else { // Wenn ja, holen wir sie uns
-        var last_correct = parseInt(localStorage.getItem('fn-adaptive/lastCorrect'));
-    }
-
-    if (correct) {
-        last_correct = current_item; // Wenn ja, setzen wir die letzte korrekt beantwortete Frage auf die aktuelle Frage
-        localStorage.setItem("fn-adaptive/lastCorrect", last_correct); // Wir speichern die letzte korrekt beantwortete Frage
-        next_item = last_correct + 3; // Wir springen 3 Fragen weiter
-        while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
-            next_item++; // Falls ja, springen wir eine Frage weiter
-        }
-        localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
-    }else {
-        next_item = current_item - 2;
-        if (next_item <1) {
-            next_item = 1;
-        }
-
-         // Wir setzen die nächste frage auf die letzte korrekt beantwortete Frage + 1
-        while (solvedArray.includes(next_item)) { // Wir prüfen, ob die Frage schon beantwortet wurde
-            next_item--; // Falls ja, springen wir eine Frage weiter
-        }
-        if (next_item <1) {
-            next_item = 1;
-        }
-        while (solvedArray.includes(next_item)) {
-            next_item++;
-        }
-        localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
-    }
-	if(correct) {
-		if (!localStorage.getItem('fn-adaptive/lastFiveArray')) {
-			var lastFiveArray = [1,1,1,1,1];
-		} else {
-			var lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
-		}
-
-		lastFiveArray.push(1);
-		if (lastFiveArray.length > 5) {
-			lastFiveArray.shift();
-		}
-		console.log(lastFiveArray);
-		localStorage.setItem('fn-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
-		answered_correctly = true;
-	}else {
-		if (!localStorage.getItem('fn-adaptive/lastFiveArray')) {
-			var lastFiveArray = [1,1,1,1,1];
-		} else {
-			var lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
-		}
-
-		lastFiveArray.push(0);
-		if (lastFiveArray.length > 5) {
-			lastFiveArray.shift();
-		}
-		console.log(lastFiveArray);
-		localStorage.setItem('fn-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
-		answered_correctly = false;
-    }
-	$("#answer"+ questionID +"NextRow").attr("value", 0);
-	$("#answer"+ questionID +"Abort").attr("value", 0);
-	$("#answer"+ questionID +"Shape").attr("value", correct);
-	$("#answer"+ questionID +"Angle").attr("value", angle_of_shape);
-	$("#answer"+ questionID +"Time").attr("value", time);
-	$("#answer"+ questionID +"Moves").attr("value", moves);
-	$("#answer"+ questionID +"Centroid").attr("value", Math.round(centroid.x * 100) / 100 + ";" + Math.round(centroid.y * 100) / 100);
-	$("#answer"+ questionID +"ID").attr("value", itemObject.itemID);
-	$("#answer"+ questionID +"Rank").attr("value", current_item);
-	$("#answer"+ questionID +"Name").attr("value", itemObject.name);
-	// if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-	// 	$("#feedback-button").css("display", "block");
-	// }else {
-	// 	$("#proceed-button").css("display", "block");
-	// }
-	if (questionCode.indexOf("FNAD") != -1 || questionCode.indexOf("FNAV") != -1) {
 		feedbackFN();
 	}
-	else {
-		$("#proceed-button").click();
-	}
 
-	let accumulatedWrong = 0;
-	//if lastfivearray has more than 3 0s, set abort to 1
-	lastFiveArray = JSON.parse(localStorage.getItem('fn-adaptive/lastFiveArray'));
-	for (var j = 0; j < lastFiveArray.length; j++) {
-		if (lastFiveArray[j] == 0) {
-			accumulatedWrong++;
-		}
-	}
-
-	if (accumulatedWrong >= 3) {
-        $("#answer"+ questionID +"Abort").attr("value", 1);
-        //clear next item and solvedarray
-        localStorage.removeItem('fn-adaptive/solvedArray');
-        localStorage.removeItem('fn-adaptive/lastFiveArray');
-        localStorage.setItem("fn-adaptive/louScreen1", 1);
-		localStorage.setItem("idsm/fn", "true");    
-    }
-
-    if (next_item > 41) { // Wir prüfen, ob die nächste Frage größer als 30 ist
-        if (current_item != 41 && ! solvedArray.includes(41)) {
-            next_item = 41; // Wenn dies der Fall ist, setzen wir die nächste Frage auf 30
-            localStorage.setItem("fn-adaptive/nextItem", next_item); // Wir speichern die nächste Frage
-        }
-        else {
-            //clear next item and solvedarray
-			localStorage.removeItem('fn-adaptive/solvedArray');
-            localStorage.setItem("fn-adaptive/louScreen1", 1);
-			localStorage.removeItem('fn-adaptive/lastFiveArray');
-			localStorage.setItem("idsm/fn", "true");
-        }
-    }
 }
 
 function setupCanvasA() {
