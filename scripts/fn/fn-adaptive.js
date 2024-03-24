@@ -221,6 +221,7 @@ function initFNA() {
 				return itemDict;
 			});
 		}
+		loadLogicTree();
 	} else {
 		if (questionCode.indexOf("AD01") != -1) {
 			var demo_difficulty = 1;
