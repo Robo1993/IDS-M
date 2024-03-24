@@ -107,7 +107,7 @@ var lineOptions = {
 	}
 };
 
-test_url_adaptive = "https://raw.githubusercontent.com/adgohar/IDS-M-adaptive/test/";
+test_url_adaptive = "https://raw.githubusercontent.com/adgohar/IDS-M-adaptive/main/";
 test_items = [];
 var itemsWithCategoryOne = [];
 var itemsWithCategoryTwo = [];
