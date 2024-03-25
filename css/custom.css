@@ -492,8 +492,6 @@ General Layout for Subtests
     justify-content: center;
     height: 6rem;
     position: sticky;
-    z-index: 99999;
-    /*background-color: #F597A1;*/
 }
 
 #item-area {
@@ -686,6 +684,7 @@ button svg {
     position: fixed;
     bottom: 0;
     left: 47%;
+    z-index: 999999;
 }
 
 #horse-button {
@@ -1441,5 +1440,22 @@ MT content
         width: 20vw !important;
         height: 20vw !important;
     }
+
+    #tp-area {
+        position: absolute;
+        width: 100vw;
+        bottom: 0;
+    }
+
+    #tl-area {
+        z-index: 1;
+    }
+    
+    #canvas-container {
+        z-index: 5 !important;
+        position: relative;
+        margin-bottom: 2vh;
+    }
+    
     
 }
