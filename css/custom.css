@@ -1452,7 +1452,7 @@ MT content
     }
     
     #canvas-container {
-        z-index: 5 !important;
+        z-index: 5;
         position: relative;
         margin-bottom: 2vh;
     }

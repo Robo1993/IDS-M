@@ -51,6 +51,7 @@ function startVM() {
 }
 
 function feedbackVM() {
+	document.getElementById("canvas-container").style.zIndex = -1;
 	$("#clock").css("display", "none");
 	$("#speed").css("display", "none");
 	if(questionCode.indexOf("FS") != -1 || questionCode.indexOf("FA") != -1) {
