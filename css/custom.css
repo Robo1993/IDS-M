@@ -1102,31 +1102,11 @@ TFZ content
 }
 
 .tierfarben-img {
-    width: 28rem;
-    width: 0rem;
-    height: 25vh;
-}
-
-@media screen and (max-width: 1024px){
-    .tierfarben-img {
-        width: 28rem;
-    }
+    width: 38rem;
 }
 
 .tierfarben-img-demo {
     width: 28rem;
-}
-
-@media screen and (max-width: 1024px){
-    .tierfarben-img {
-        width: 28rem;
-    }
-
-    .tierfarben-img-demo {
-        width: 25vh;
-        margin-left: 1vh;
-    }
-    
 }
 
 /*
