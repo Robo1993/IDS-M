@@ -97,15 +97,25 @@ function estimateTime() {
 	let time = 0;
 	let targets = target_figures.length;
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
-		$(":root").css("--duration", "15s");
+		//$(":root").css("--duration", "15s");
+		if(targets <= 2) {
+			time = 5000;
+			$(":root").css("--duration", "5s");
+		}else if(targets >= 3 && targets < 6) {
+			time = 10000;
+			$(":root").css("--duration", "10s");
+		}else if(targets >= 6) {
+			time = 15000;
+			$(":root").css("--duration", "15s");
+		}
 	}else {
 		if(targets <= 2) {
 			time = 5000;
 			$(":root").css("--duration", "5s");
-		}else if(targets == 3) {
+		}else if(targets >= 3 && targets < 6) {
 			time = 10000;
 			$(":root").css("--duration", "10s");
-		}else if(targets >= 4) {
+		}else if(targets >= 6) {
 			time = 15000;
 			$(":root").css("--duration", "15s");
 		}
