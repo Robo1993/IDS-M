@@ -410,7 +410,7 @@ function setup() {
 		$("#buttons-top-middle .btn").css("display", "none")
 		$("#external-button").css("display", "block");
 		$("#formular-book-button").css("display", "block");
-		let test_code = getTestCode();
+		let test_code = getTestCodeSkip();
 		localStorage.setItem("idsm/" + test_code, "true");
 		$("#ids-m-menu-box").css("display", "flex");
 		$("#sketch-book-button").css("display", "block");
@@ -435,7 +435,7 @@ function skipTest() {
 	$(".answers textarea").each(function() {
 		$(this).val("skipped");
 	});
-	let testcode = getTestCode();
+	let testcode = getTestCodeSkip();
 	let menu_url = menu + "&lasttest=" +testcode;
 	window.location.href = menu_url;
 }
@@ -728,7 +728,7 @@ function progressTest() {
 	// $("#background-banner").css("display", "block");
 	// $("#page-load-screen").css("display", "none");
 	// reLock();
-	let testcode = getTestCode();
+	let testcode = getTestCodeSkip();
 	let menu_url = menu + "&lasttest=" + testcode;
 	window.location.href = menu_url;
 }
@@ -960,6 +960,39 @@ function getTestCode() {
 		return "mea";
 	}else if(questionCode.indexOf("FWA") != -1) {
 		return "fwa";
+	}else if(questionCode.indexOf("FNA") != -1) {
+		return "fna";
+	}
+}
+
+
+function getTestCodeSkip() {
+	if(questionCode.indexOf("AA") != -1) {
+		return "aa";
+	}else if(questionCode.indexOf("FN") != -1) {
+		return "fn";
+	}else if(questionCode.indexOf("FW") != -1) {
+		return "fw";
+	}else if(questionCode.indexOf("ME") != -1) {
+		return "me";
+	}else if (questionCode.indexOf("RM") != -1) {
+		return "rm";
+	}else if(questionCode.indexOf("RG") != -1) {
+		return "rg";
+	}else if(questionCode.indexOf("SF") != -1) {
+		return "sf";
+	}else if(questionCode.indexOf("TFZ") != -1) {
+		return "tfz";
+	}else if (questionCode.indexOf("VE") != -1) {
+		return "vm_Eval";
+	}else if(questionCode.indexOf("VM") != -1) {
+		return "vm";
+	}else if(questionCode.indexOf("PPVT") != -1) {
+		return "ppvt";
+	}else if(questionCode.indexOf("ISH") != -1) {
+		return "ish";
+	}else if(questionCode.indexOf("MT") != -1) {
+		return "mt";
 	}
 }
 
