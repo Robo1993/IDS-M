@@ -375,12 +375,12 @@ function TimeRestrictionsFNA() {
 			var item_name = itemObject.name;
 		} else if (questionCode.indexOf("AD02") != -1) {
 			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem2'));
-			let itemObject = itemsWithCategoryTwo[current_item];
+			let itemObject = itemsWithCategoryOne[current_item];
 			var time = itemObject.time;
 			var item_name = itemObject.name;
 		} else if (questionCode.indexOf("AD03") != -1) {
 			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem3'));
-			let itemObject = itemsWithCategoryThree[current_item];
+			let itemObject = itemsWithCategoryTwo[current_item];
 			var time = itemObject.time;
 			var item_name = itemObject.name;
 		}
@@ -438,15 +438,24 @@ function loadEntitiesADemo(difficulty) {
 			var name = itemObject.name;
 		}
 	} else if (difficulty == 2) {
-		if (itemsWithCategoryTwo.length > 0) {
+		if (itemsWithCategoryOne.length > 0) {
 			if (!localStorage.getItem('fn-adaptive/demoItem2')) {
-				var randomIndex = Math.floor(Math.random() * itemsWithCategoryTwo.length);
-				localStorage.setItem('fn-adaptive/demoItem2', randomIndex);
+				let previousItem = localStorage.getItem('fn-adaptive/demoItem1');
+				if (previousItem) {
+					var randomIndex = Math.floor(Math.random() * itemsWithCategoryOne.length);
+					while (randomIndex == previousItem) {
+						randomIndex = Math.floor(Math.random() * itemsWithCategoryOne.length);
+					}
+					localStorage.setItem('fn-adaptive/demoItem2', randomIndex);
+				} else {
+					var randomIndex = Math.floor(Math.random() * itemsWithCategoryOne.length);
+					localStorage.setItem('fn-adaptive/demoItem2', randomIndex);
+				}
 			}
 			else {
 				var randomIndex = parseInt(localStorage.getItem('fn-adaptive/demoItem2'));
 			}
-			const itemObject = itemsWithCategoryTwo[randomIndex];
+			const itemObject = itemsWithCategoryOne[randomIndex];
 			var itemID = itemObject.itemID;
 			var target_img = itemObject.target_img;
 			var triangle_yellow = itemObject.triangle_yellow;
@@ -459,15 +468,15 @@ function loadEntitiesADemo(difficulty) {
 			var name = itemObject.name;
 		}
 	} else if (difficulty == 3) {
-		if (itemsWithCategoryThree.length > 0) {
+		if (itemsWithCategoryTwo.length > 0) {
 			if (!localStorage.getItem('fn-adaptive/demoItem3')) {
-				var randomIndex = Math.floor(Math.random() * itemsWithCategoryThree.length);
+				var randomIndex = Math.floor(Math.random() * itemsWithCategoryTwo.length);
 				localStorage.setItem('fn-adaptive/demoItem3', randomIndex);
 			}
 			else {
 				var randomIndex = parseInt(localStorage.getItem('fn-adaptive/demoItem3'));
 			}
-			const itemObject = itemsWithCategoryThree[randomIndex];
+			const itemObject = itemsWithCategoryTwo[randomIndex];
 			var itemID = itemObject.itemID;
 			var target_img = itemObject.target_img;
 			var triangle_yellow = itemObject.triangle_yellow;
@@ -930,11 +939,11 @@ function evaluateFNA() {
 			let current_name = itemObject.name;
 		} else if (questionCode.indexOf("AD02") != -1) {
 			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem2'));
-			itemObject = itemsWithCategoryTwo[current_item];
+			itemObject = itemsWithCategoryOne[current_item];
 			let current_name = itemObject.name;
 		} else if (questionCode.indexOf("AD03") != -1) {
 			let current_item = parseInt(localStorage.getItem('fn-adaptive/demoItem3'));
-			itemObject = itemsWithCategoryThree[current_item];
+			itemObject = itemsWithCategoryTwo[current_item];
 			let current_name = itemObject.name;
 		}
 		
