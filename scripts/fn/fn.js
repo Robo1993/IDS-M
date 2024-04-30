@@ -221,7 +221,7 @@ function startFN() {
 	}
 	loadEntities();
 	start = performance.now();
-	TimeRestrictions();
+	TimeRestrictionsFNA();
 	activateClock();
 	if(questionCode.indexOf("UB") != -1 || questionCode.indexOf("T") != -1 || questionCode.indexOf("R") != -1) {
 		setTimeout(function() {
