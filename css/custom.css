@@ -220,6 +220,10 @@ img {
     font-size: 12pt;
 }
 
+.answers ul {
+    width: max-content;
+}
+
 .dc-i {
     margin-bottom: 2rem;
 }
@@ -247,7 +251,9 @@ CSS for the Test-Menu
 */
 #ids-m-menu-box {
     display: none;
-    width: 75vw;
+    width: 100vw;
+    transform: scale(0.7);
+    margin-bottom: 8vh;
     flex-flow: wrap row;
     justify-content: space-between;
 }
@@ -377,7 +383,7 @@ Layout for the Sketch Book
 }
 
 #sketch-container {
-    margin-top: -35rem;
+    margin-top: 0rem;
     width: 60vw;
     padding: 4rem;
     box-shadow: var(--theme-colour) 0px 0px 12px 2px;
@@ -423,8 +429,8 @@ Layout for the Sketch Book
 }
 
 #formular-container {
-    margin-top: -35rem;
-    width: 60vw;
+    margin-top: 0rem;
+    width: 80vw;
     padding: 4rem;
     box-shadow: var(--theme-colour) 0px 0px 12px 2px;
 }
@@ -1385,7 +1391,7 @@ ISH content
 */
 
 .ish-img {
-    width: 80rem;
+    width: 60rem;
 }
 
 /*

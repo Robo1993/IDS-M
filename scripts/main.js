@@ -22,25 +22,31 @@ let prevent = false;
 
 let feedback_mode = false;
 
+const url = window.location.href;
+
+const indexPosition = url.indexOf("index.php");
+
+let baseURL = indexPosition > -1 ? url.substring(0, indexPosition) : url;
+
 const url_adaptive = "https://raw.githubusercontent.com/Robo1993/IDS-M_adaptive_testing/main/";
 
-const menu = "https://survey-1.psychologie.unibas.ch/roman/index.php/365852?lang=de";
+const menu = baseURL + "index.php/365852?lang=de";
 
-const ppvt = "https://survey-1.psychologie.unibas.ch/roman/index.php/243727?lang=de";
-const ish = "https://survey-1.psychologie.unibas.ch/roman/index.php/518669?lang=de";
-const rg = "https://survey-1.psychologie.unibas.ch/roman/index.php/258331?lang=de";
-const fn = "https://survey-1.psychologie.unibas.ch/roman/index.php/984174?lang=en";
-const sf = "https://survey-1.psychologie.unibas.ch/roman/index.php/921174?lang=en";
-const fw = "https://survey-1.psychologie.unibas.ch/roman/index.php/718389?lang=en";
-const me = "https://survey-1.psychologie.unibas.ch/roman/index.php/829952?lang=en";
-const aa = "https://survey-1.psychologie.unibas.ch/roman/index.php/481429?lang=en";
-const tfz = "https://survey-1.psychologie.unibas.ch/roman/index.php/715445?lang=en";
-const vm = "https://survey-1.psychologie.unibas.ch/roman/index.php/891837?lang=de";
-const mt = "https://survey-1.psychologie.unibas.ch/roman/index.php/352793?lang=de";
-const vm_eval = "https://survey-1.psychologie.unibas.ch/roman/index.php/925914?lang=de"
-const end_test = "https://survey-1.psychologie.unibas.ch/roman/index.php/856746?lang=de";
-const da = "https://survey-1.psychologie.unibas.ch/roman/index.php/258512?lang=de";
-const rm = "https://survey-1.psychologie.unibas.ch/roman/index.php/946666?lang=de";
+const ppvt = baseURL + "index.php/243727?lang=de";
+const ish = baseURL + "index.php/518669?lang=de";
+const rg = baseURL + "index.php/258331?lang=de";
+const fn = baseURL + "index.php/984174?lang=en";
+const sf = baseURL + "index.php/921174?lang=en";
+const fw = baseURL + "index.php/718389?lang=en";
+const me = baseURL + "index.php/829952?lang=en";
+const aa = baseURL + "index.php/481429?lang=en";
+const tfz = baseURL + "index.php/715445?lang=en";
+const vm = baseURL + "index.php/891837?lang=de";
+const mt = baseURL + "index.php/352793?lang=de";
+const vm_eval = baseURL + "index.php/925914?lang=de"
+const end_test = baseURL + "index.php/856746?lang=de";
+const da = baseURL + "index.php/258512?lang=de";
+const rm = baseURL + "index.php/946666?lang=de";
 
 const test_order = [da, ppvt, ish, rg, fn, sf, fw, me, aa, tfz, vm, mt, vm_eval, rm, end_test];
 const test_test_order = [["da", da], ["ppvt", ppvt], ["ish", ish], ["rg", rg], ["fn", fn], ["sf", sf], ["fw", fw], ["me", me], ["aa", aa], ["tfz", tfz], ["vm", vm], ["mt", mt], ["vm_Eval", vm_eval], ["end_test", end_test], ["rm", rm]];
