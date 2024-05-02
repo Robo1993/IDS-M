@@ -11,6 +11,34 @@ function initSF() {
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#clock").css("display", "block");
 	//}
+	if (questionCode.indexOf("SF2UB") != -1 || questionCode.indexO("SFT") != -1) {
+		// Select the element with the ID 'arrow-container'
+		const arrowContainer = document.getElementById('arrow-container');
+
+		// Remove any existing transform effects
+		arrowContainer.style.transform = '';
+
+		// Set a new transform effect to rotate the element by 90 degrees
+		arrowContainer.style.transform = 'rotate(90deg)';
+	} else if (questionCode.indexOf("SF3UB") != -1) {
+		// Select the element with the ID 'arrow-container'
+		const arrowContainer = document.getElementById('arrow-container');
+
+		// Remove any existing transform effects
+		arrowContainer.style.transform = '';
+
+		// Set a new transform effect to rotate the element by 90 degrees
+		arrowContainer.style.transform = 'rotate(180deg)';
+	} else if (questionCode.indexOf("SF4UB") != -1) {
+		// Select the element with the ID 'arrow-container'
+		const arrowContainer = document.getElementById('arrow-container');
+
+		// Remove any existing transform effects
+		arrowContainer.style.transform = '';
+
+		// Set a new transform effect to rotate the element by 90 degrees
+		arrowContainer.style.transform = 'rotate(270deg)';
+	}
 	if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#play-button").css("display", "block");
 	}else {
