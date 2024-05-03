@@ -700,6 +700,7 @@ button svg {
     bottom: 2rem;
     border: 1px solid #333;
     background-color: fff;
+    transform: scale(0.9);
 }
 
 #horse-button > img {
@@ -985,7 +986,7 @@ VM Eval content
 #eval-container {
     width: 500px;
     height: 500px;
-    position: relative;
+    position: absolute;
 }
 
 #field-container {
@@ -1139,6 +1140,8 @@ AA content
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    transform: scale(0.9);
+    margin-top: -5vh;
 }
 
 .aa_img {
