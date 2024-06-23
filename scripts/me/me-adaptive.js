@@ -309,18 +309,34 @@ function evaluateMEA() {
     }
 	if(file.indexOf("correct") != -1) {
 		$("#answer"+ questionID +"Answer").attr("value", 1);
-		answered_correctly = true;
-        localStorage.setItem('me-adaptive/accumulatedWrong', 0);
-        console.log(0);
+        if (!localStorage.getItem('me-adaptive/lastFiveArray')) {
+            var lastFiveArray = [1,1,1,1,1];
+        } else {
+            var lastFiveArray = JSON.parse(localStorage.getItem('me-adaptive/lastFiveArray'));
+        }
+
+        lastFiveArray.push(1);
+        if (lastFiveArray.length > 5) {
+            lastFiveArray.shift();
+        }
+        console.log(lastFiveArray);
+        localStorage.setItem('me-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
+        answered_correctly = true;
 	}else {
 		$("#answer"+ questionID +"Answer").attr("value", 0);
-		answered_correctly = false;
-        //set accumulated wrong to 1 + its current value
-        var accumulatedWrong = parseInt(localStorage.getItem('me-adaptive/accumulatedWrong'));
-        accumulatedWrong++;
-        localStorage.setItem('me-adaptive/accumulatedWrong', accumulatedWrong);
-        //check if accumulatedWrong is 3 or more
-        console.log(accumulatedWrong);
+		if (!localStorage.getItem('me-adaptive/lastFiveArray')) {
+            var lastFiveArray = [1,1,1,1,1];
+        } else {
+            var lastFiveArray = JSON.parse(localStorage.getItem('me-adaptive/lastFiveArray'));
+        }
+
+        lastFiveArray.push(0);
+        if (lastFiveArray.length > 5) {
+            lastFiveArray.shift();
+        }
+        console.log(lastFiveArray);
+        localStorage.setItem('me-adaptive/lastFiveArray', JSON.stringify(lastFiveArray));
+        answered_correctly = false;
     }
 	$("#answer"+ questionID +"Selection").attr("value", file);
 	$("#answer"+ questionID +"Time").attr("value", time);
@@ -331,6 +347,15 @@ function evaluateMEA() {
 	}else {
 		$("#proceed-button").click();
 	}
+
+    let accumulatedWrong = 0;
+    //if lastfivearray has more than 3 0s, set abort to 1
+    lastFiveArray = JSON.parse(localStorage.getItem('me-adaptive/lastFiveArray'));
+    for (var j = 0; j < lastFiveArray.length; j++) {
+        if (lastFiveArray[j] == 0) {
+            accumulatedWrong++;
+        }
+    }
 
     if (accumulatedWrong >= 3) {
         $("#answer"+ questionID +"Abort").attr("value", 1);
@@ -353,6 +378,7 @@ function evaluateMEA() {
             localStorage.removeItem('me-adaptive/solvedArray');
             localStorage.removeItem('me-adaptive/accumulatedWrong');
             localStorage.setItem("me-adaptive/louScreen1", 1);  
+            localStorage.removeItem('me-adaptive/lastFiveArray');
             localStorage.setItem("idsm/me", "true");
         }
     }
