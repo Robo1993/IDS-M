@@ -11,7 +11,7 @@ function initSF() {
 	//if(questionCode.indexOf("D") != -1 || questionCode.indexOf("V") != -1) {
 		$("#clock").css("display", "block");
 	//}
-	if (questionCode.indexOf("SF2UB") != -1 || questionCode.indexO("SFT") != -1) {
+	if (questionCode.indexOf("SF2UB") != -1 || questionCode.indexOf("SFT") != -1) {
 		// Select the element with the ID 'arrow-container'
 		const arrowContainer = document.getElementById('arrow-container');
 
