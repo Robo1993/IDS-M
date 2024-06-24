@@ -1203,6 +1203,7 @@ SF content
 }
 
 .custom-answer-block-2 {
+    margin-top: 10vh;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -1210,6 +1211,7 @@ SF content
 }
 
 .custom-answer-block-4 {
+    margin-top: 10vh;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
