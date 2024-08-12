@@ -532,6 +532,7 @@ General Layout for Subtests
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: -1;
 }
 
 #question-code {
