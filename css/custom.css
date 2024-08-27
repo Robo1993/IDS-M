@@ -987,7 +987,7 @@ VM Eval content
 #eval-container {
     width: 500px;
     height: 500px;
-    position: absolute;
+    position: relative;
 }
 
 #field-container {
