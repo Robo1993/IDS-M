@@ -34,6 +34,7 @@ function initVM() {
 
 	if (questionCode.indexOf("Eval") != -1) {
 		//document.getElementById("eval-container").style.cssText = "transform: scale(1.2)"
+		document.getElementById("eval-container").style.position = "relative";
 	}
 
 	if (questionCode.indexOf("FA01Eval") != -1) {
@@ -194,7 +195,6 @@ function initVM() {
 			document.getElementById("b11").style.cssText = "width: 56px; height: 31px; left: 276px; top: 203px;";
 			document.getElementById("b12").style.cssText = "width: 56px; height: 29px; left: 276px; top: 323px;";
 		} else if (questionCode.indexOf("FS01Eval") != -1) {
-			document.getElementById("eval-together").style.cssText = "margin-top: -25vh;"
 			// Setting styles for elements with class "evaluation-field"
 			document.getElementById("a1").style.cssText = "width: 107px; height: 95px; left: 26px; top: 135px;";
 			document.getElementById("a2").style.cssText = "width: 106px; height: 92px; left: 129px; top: 304px;";
@@ -207,7 +207,6 @@ function initVM() {
 			document.getElementById("b3").style.cssText = "width: 39px; height: 97px; left: 116px; top: 402px;";
 			document.getElementById("b4").style.cssText = "width: 35px; height: 95px; left: 31px; top: 403px;";
 		} else if (questionCode.indexOf("FS02Eval") != -1) {
-			document.getElementById("eval-together").style.cssText = "margin-top: -25vh;"
 			// Setting styles for elements with class "evaluation-field"
 			document.getElementById("a1").style.cssText = "width: 33px; height: 66px; left: 419px; top: 20px;";
 			document.getElementById("a2").style.cssText = "width: 73px; height: 64px; left: 297px; top: 152px;";
@@ -220,7 +219,6 @@ function initVM() {
 			document.getElementById("b3").style.cssText = "width: 73px; height: 70px; left: 310px; top: 311px;";
 			document.getElementById("b4").style.cssText = "width: 35px; height: 69px; left: 417px; top: 417px;";
 		} else if (questionCode.indexOf("FS03Eval") != -1) {
-			document.getElementById("eval-together").style.cssText = "margin-top: -25vh;"
 			// Setting styles for elements with class "evaluation-field"
 			document.getElementById("a1").style.cssText = "width: 48px; height: 46px; left: 7px; top: 84px;";
 			document.getElementById("a2").style.cssText = "width: 28px; height: 38px; left: 120px; top: 135px;";
@@ -237,7 +235,6 @@ function initVM() {
 			document.getElementById("b5").style.cssText = "width: 28px; height: 38px; left: 120px; top: 330px;";
 			document.getElementById("b6").style.cssText = "width: 48px; height: 44px; left: 7px; top: 376px;";
 		} else if (questionCode.indexOf("FS04Eval") != -1) {
-			document.getElementById("eval-together").style.cssText = "margin-top: -25vh;"
 			// Setting styles for elements with class "evaluation-field"
 			document.getElementById("a1").style.cssText = "width: 43px; height: 59px; left: 321px; top: 48px;";
 			document.getElementById("a2").style.cssText = "width: 61px; height: 38px; left: 234px; top: 155px;";
@@ -255,7 +252,6 @@ function initVM() {
 			document.getElementById("b6").style.cssText = "width: 57px; height: 61px; left: 396px; top: 270px;";
 
 		} else if (questionCode.indexOf("FS05Eval") != -1) {
-			document.getElementById("eval-together").style.cssText = "margin-top: -25vh;"
 			// Setting styles for elements with class "evaluation-field"
 			document.getElementById("a1").style.cssText = "width: 44px; height: 51px; left: 183px; top: 30px;";
 			document.getElementById("a2").style.cssText = "width: 50px; height: 23px; left: 278px; top: 101px;";
