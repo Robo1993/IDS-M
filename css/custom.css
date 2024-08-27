@@ -1032,6 +1032,7 @@ FN content
 .fnImg {
     width: 56rem;
     transform: scale(0.8);
+    margin-bottom: -15vh;
 }
 
 .pre-img {
@@ -1042,7 +1043,7 @@ FN content
     border: 1px solid #ccc;
     max-width: 902px;
     max-height: 722px;
-    margin-top: -10vh;
+    margin-bottom: 20vh;
 
 }
 
