@@ -233,6 +233,7 @@ function loadQuestion(questionNumber) {
                 allImagesLoaded();
             }
         }
+        document.getElementById("item-area").style.transform = "scale(0.8)";
 
         function allImagesLoaded() {
             setTimeout(function() {

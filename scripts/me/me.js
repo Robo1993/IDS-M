@@ -4,6 +4,8 @@ function initME() {
 
 	$("#clock").css("display", "block");
 
+	document.getElementById("item-area").style.transform = "scale(0.8)";
+
 	startME();
 
 	// Option selection

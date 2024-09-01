@@ -101,6 +101,7 @@ function initRM() {
         progressTest();
     }
 	else {
+        document.getElementById("item-area").style.transform = "scale(0.8)";
 
 		startRM();
 
